@@ -1,0 +1,14 @@
+# venv
+venv/
+env/
+
+# python
+__pycache__/
+*.pyc
+
+# vscode
+.vscode/
+
+# outputs (opcional - se não quiser subir imagens e reports)
+# reports/
+# data/

@@ -1,0 +1,26 @@
+=== DIAGNOSTIC COLONNES (original -> standard) ===
+- Quel est votre âge ?  -->  Age
+- Êtes-vous :  -->  Genre
+- Quelle est votre situation professionnelle ?  -->  Situation_Pro
+- En moyenne, à quelle fréquence achetez-vous des vêtements ?  -->  Frequence_Achat
+- Où achetez-vous le plus souvent ? (choix multiples)  -->  Canal_Achat
+- Quel est le cycle de vie moyen d’un vêtement dans votre garde-robe avant que vous ne vous en sépariez ?  -->  Duree_Vie_GardeRobe
+- Que faites-vous le plus souvent des vêtements dont vous souhaitez vous séparer ? (choix multiples)  -->  Destination_Fin_Vie
+- Après avoir acheté des vêtements, à quelle fréquence finissent-ils par ne jamais être portés ?  -->  Vetements_Jamais_Portes
+- (Quand vous achetez un produit, à quel point chacune des caractéristiques suivantes est-elle importante pour vous ?) Prix  -->  Importance_Prix
+- (Quand vous achetez un produit, à quel point chacune des caractéristiques suivantes est-elle importante pour vous ? ) Qualité  -->  Importance_Qualite
+- (Quand vous achetez un produit, à quel point chacune des caractéristiques suivantes est-elle importante pour vous ? ) Marque  -->  Importance_Marque
+- (Quand vous achetez un produit, à quel point chacune des caractéristiques suivantes est-elle importante pour vous ? ) Confort  -->  Importance_Confort
+- (Quand vous achetez un produit, à quel point chacune des caractéristiques suivantes est-elle importante pour vous ? ) Mode / tendances  -->  Importance_Tendance
+- Jusqu’à quel point les tendances actuelles influencent-elles vos décisions d’achat ?  -->  Influence_Tendances
+- Jusqu’à quel point les réseaux sociaux (influenceurs, célébrités) dictent-ils vos choix vestimentaires ?  -->  Influence_Reseaux
+- Avez-vous déjà ressenti une pression sociale liée à la mode ?  -->  Pression_Sociale
+- Avez-vous déjà évité de porter un vêtement parce qu’il n’était “plus à la mode” ?  -->  Peur_Etre_Demode
+- Dans quelle mesure vos vêtements contribuent-ils à votre confiance en vous ?  -->  Impact_Confiance
+- Avez-vous déjà ressenti un sentiment de culpabilité après avoir acheté un article tendance vu sur les réseaux sociaux ?  -->  Sentiment_Culpabilite
+- Connaissez-vous le concept de “fast fashion” ?  -->  Connaissance_FastFashion
+- “La fast fashion, ou « mode rapide », est une façon de produire et vendre des vêtements très vite, en suivant les dernières tendances, à des prix très bas.” __Avez-vous déjà consommé sur des plateformes de fast fashion (Shein, Temu, etc.) ?  -->  Utilise_FastFashion
+- Pour quelles raisons achetez-vous des vêtements de marques considérées comme fast fashion ? (Choix multiples)  -->  Motivations_FastFashion
+- Avez-vous déjà acheté certains de ces articles ? (choix multiples)  -->  Type_Articles_Achetes
+- Dans quelle mesure les considérations éthiques (conditions de travail)/environnementales (pollution, matériaux)  affectent-elles vos achats ?  -->  Souci_Ethique
+- Si un vêtement éthique (bio, local, éco-responsable) coûtait 20 % plus cher, dans quelle mesure seriez-vous prêt(e) à l’acheter ?  -->  Pret_A_Payer_Plus

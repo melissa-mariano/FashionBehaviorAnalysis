@@ -1,0 +1,4 @@
+- N réponses: 428
+- Souci éthique (moyenne): 5.82 / 10
+- Prêt à payer +20% (moyenne): 5.22 / 10
+- Influence réseaux (moyenne): 4.02 / 10

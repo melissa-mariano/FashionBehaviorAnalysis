@@ -1,0 +1,429 @@
+Age,Influence_Tendances,Influence_Reseaux,Impact_Confiance,Importance_Prix,Importance_Qualite,Importance_Marque,Importance_Tendance,Importance_Confort,Cluster,Utilise_FastFashion,Souci_Ethique,Pression_Sociale,Sentiment_Culpabilite,Peur_Etre_Demode,Type_Articles_Achetes,Canal_Achat
+29,10,10,10,10,8,9,10,6,2,Oui,5,4.0,7.0,3.0,Pantalon cargo;Campus;Samba,Magasin physique;Internet
+27,5,1,8,8,6,9,5,10,0,"Non, mais je connais ces plateformes",1,1.0,,1.0,Pantalon cargo,Magasin physique
+19,9,8,9,4,7,3,5,6,2,Oui,10,4.0,10.0,3.0,Pantalon cargo;Campus;Sonny Angel;Tote bag,Magasin physique
+41,4,2,7,7,8,9,5,7,0,"Non, mais je connais ces plateformes",7,2.0,1.0,3.0,Aucun,Magasin physique;Internet
+17,3,1,10,10,10,10,10,10,0,Oui,3,1.0,,1.0,Pantalon cargo;Campus;Sonny Angel;Samba,Magasin physique
+24,3,4,9,7,6,7,4,3,3,Oui,5,1.0,,1.0,Pantalon cargo;Tote bag,Magasin physique;Friperie / Seconde main
+19,5,5,6,5,5,5,5,3,3,Oui,4,3.0,3.0,2.0,Pantalon cargo;Sonny Angel,Magasin physique;Internet
+17,2,3,7,6,8,4,3,10,1,"Non, mais je connais ces plateformes",9,1.0,,1.0,Aucun,Magasin physique;Friperie / Seconde main
+18,7,5,7,5,9,5,7,10,2,Oui,8,3.0,4.0,3.0,Pantalon cargo;Sonny Angel,Magasin physique;Internet
+19,2,1,10,9,7,3,2,9,1,Oui,4,2.0,1.0,3.0,Pantalon cargo;Tote bag,Magasin physique;Internet
+45,1,1,1,10,10,1,1,10,1,"Non, mais je connais ces plateformes",8,1.0,,1.0,Campus,Magasin physique;Internet
+20,7,8,7,5,8,10,8,9,2,Oui,8,2.0,3.0,2.0,Pantalon cargo;Campus;Samba,Internet
+22,5,5,9,8,10,9,7,7,2,Oui,5,1.0,,3.0,Pantalon cargo;Campus;Tote bag,Internet
+55,4,1,7,8,8,6,5,10,0,Oui,5,1.0,,1.0,Aucun,Magasin physique;Internet;Friperie / Seconde main
+19,7,8,8,10,9,7,8,10,2,Oui,5,4.0,7.0,3.0,Sonny Angel;Tote bag;Samba,Internet
+18,8,7,8,7,8,5,9,7,2,Oui,4,2.0,4.0,3.0,Samba,Magasin physique;Internet
+15,5,1,10,6,3,1,5,5,3,Oui,1,1.0,,1.0,Pantalon cargo;Campus;Sonny Angel;Stanley Cup;Samba,Magasin physique
+21,5,5,5,8,10,7,5,7,2,Oui,5,2.0,1.0,2.0,Pantalon cargo;Sonny Angel,Magasin physique
+20,4,4,7,8,6,7,3,8,3,Oui,8,1.0,,3.0,Pantalon cargo,Friperie / Seconde main
+20,8,8,7,7,8,5,7,8,2,Oui,4,1.0,,2.0,Pantalon cargo;Campus,Magasin physique
+18,7,3,6,10,4,1,5,10,1,Oui,8,3.0,1.0,2.0,Pantalon cargo;Campus,Magasin physique;Internet
+19,7,7,8,7,9,5,3,8,2,"Non, mais je connais ces plateformes",8,2.0,3.0,2.0,Pantalon cargo;Tote bag,Magasin physique
+19,4,1,6,10,6,3,5,10,1,Oui,5,2.0,1.0,1.0,Pantalon cargo;Tote bag,Magasin physique;Internet
+25,3,3,8,10,8,2,3,8,1,Oui,5,1.0,,3.0,Stanley Cup,Magasin physique;Internet
+22,7,6,9,10,7,3,7,8,2,Oui,5,4.0,4.0,2.0,Samba,Magasin physique
+24,6,1,9,10,9,4,6,8,0,"Non, mais je connais ces plateformes",2,3.0,5.0,2.0,Stanley Cup,Magasin physique;Internet
+23,6,4,7,9,8,1,5,7,1,Oui,7,2.0,2.0,3.0,Tote bag;Samba,Magasin physique;Internet;Friperie / Seconde main
+21,5,3,5,9,8,1,5,9,1,"Non, mais je connais ces plateformes",7,2.0,6.0,1.0,Pantalon cargo;Tote bag,Magasin physique;Friperie / Seconde main
+17,4,3,6,8,5,3,5,3,3,Oui,2,3.0,5.0,1.0,Sonny Angel,Internet
+18,8,7,3,10,7,3,7,7,2,"Non, mais je connais ces plateformes",6,1.0,,2.0,Pantalon cargo,Magasin physique
+17,7,7,1,10,8,3,8,6,2,"Non, mais je connais ces plateformes",3,1.0,,2.0,Aucun,Magasin physique;Internet
+24,8,7,10,7,8,8,10,4,2,Oui,5,3.0,1.0,3.0,Pantalon cargo;Tote bag;Stanley Cup,Magasin physique;Friperie / Seconde main
+17,3,3,7,8,4,6,3,3,3,Oui,3,2.0,6.0,1.0,Pantalon cargo,Magasin physique;Internet;Friperie / Seconde main
+19,6,5,8,10,8,5,5,10,2,"Non, mais je connais ces plateformes",7,4.0,6.0,2.0,Aucun,Magasin physique
+20,8,7,8,6,8,8,4,9,2,Oui,8,3.0,6.0,2.0,Sonny Angel,Magasin physique;Internet
+22,10,7,10,5,9,2,8,10,2,Oui,6,3.0,1.0,2.0,Aucun,Magasin physique
+20,4,6,7,9,8,5,7,8,2,"Non, mais je connais ces plateformes",5,3.0,3.0,2.0,Pantalon cargo;Campus,Magasin physique
+19,1,1,7,7,10,1,1,10,1,"Non, mais je connais ces plateformes",7,1.0,,1.0,Aucun,Magasin physique
+20,4,2,4,8,8,3,3,10,1,Oui,1,1.0,,1.0,Pantalon cargo,Magasin physique
+19,5,3,8,8,10,1,8,5,2,Oui,7,2.0,3.0,2.0,Pantalon cargo;Campus,Internet
+19,7,8,7,9,6,4,7,9,2,"Non, mais je connais ces plateformes",7,3.0,2.0,1.0,Pantalon cargo,Magasin physique;Internet;Friperie / Seconde main
+19,2,1,7,8,7,5,3,9,1,"Non, mais je connais ces plateformes",8,1.0,,2.0,Aucun,Magasin physique
+20,8,8,10,7,10,7,5,10,2,"Non, mais je connais ces plateformes",5,1.0,,3.0,Pantalon cargo,Magasin physique;Internet
+30,6,8,10,8,9,1,7,5,2,Oui,2,3.0,3.0,2.0,Aucun,Internet
+33,8,6,9,10,10,7,8,10,2,Oui,7,3.0,2.0,3.0,Campus;Stanley Cup,Magasin physique
+20,5,5,8,6,8,2,8,8,2,Oui,10,3.0,7.0,4.0,Pantalon cargo;Campus;Sonny Angel;Tote bag,Magasin physique
+18,7,5,8,7,8,7,7,8,2,Oui,7,2.0,1.0,2.0,Campus,Magasin physique;Internet
+18,7,1,7,10,7,7,7,7,2,Oui,3,4.0,1.0,4.0,Pantalon cargo;Campus,Magasin physique;Internet
+19,7,7,8,3,8,9,9,7,2,Oui,7,2.0,2.0,1.0,Aucun,Magasin physique;Internet
+19,8,7,8,10,10,3,8,8,2,Oui,8,4.0,6.0,4.0,Pantalon cargo;Tote bag,Magasin physique;Internet
+19,7,6,7,10,8,6,7,7,2,Oui,7,3.0,8.0,2.0,Pantalon cargo;Tote bag;Samba,Friperie / Seconde main
+42,1,1,9,10,10,1,10,1,3,Oui,5,3.0,1.0,1.0,Pantalon cargo;Stanley Cup,Marché local
+20,6,6,8,8,5,1,5,9,2,Oui,3,1.0,,1.0,Pantalon cargo;Samba,Magasin physique
+19,1,1,1,7,9,4,1,8,1,"Non, mais je connais ces plateformes",1,1.0,,1.0,Aucun,Magasin physique
+20,8,1,8,6,9,4,6,5,2,"Non, mais je connais ces plateformes",6,3.0,7.0,4.0,Pantalon cargo,Magasin physique;Internet
+23,6,4,8,8,9,1,4,10,1,"Non, mais je connais ces plateformes",5,1.0,,2.0,Aucun,Magasin physique
+18,5,1,6,8,6,8,5,10,1,Oui,7,1.0,,1.0,Pantalon cargo,Magasin physique;Internet
+22,1,1,8,8,6,1,1,5,3,"Non, mais je connais ces plateformes",6,1.0,,1.0,Aucun,Magasin physique
+20,2,1,7,10,5,1,4,6,3,"Non, mais je connais ces plateformes",8,1.0,,1.0,Campus,Magasin physique
+19,7,7,8,8,10,4,9,8,2,"Non, mais je connais ces plateformes",1,3.0,5.0,4.0,Pantalon cargo,Magasin physique;Internet
+19,5,1,5,10,10,3,5,6,1,"Non, mais je connais ces plateformes",5,1.0,,1.0,Aucun,Magasin physique;Internet
+21,5,5,8,7,7,3,3,8,1,Oui,6,3.0,8.0,2.0,Pantalon cargo;Campus;Samba,Magasin physique;Friperie / Seconde main
+21,2,1,5,10,8,2,2,10,1,Oui,7,1.0,,1.0,Pantalon cargo;Campus,Internet
+66,1,1,1,10,1,1,1,1,3,"Non, je ne connais pas ces plateformes",1,1.0,,1.0,Labubu,Marché local
+19,4,1,10,7,7,3,5,10,1,Oui,8,2.0,6.0,1.0,Aucun,Internet;Friperie / Seconde main
+19,8,6,9,7,8,7,7,9,2,Oui,1,1.0,,1.0,Pantalon cargo,Magasin physique
+20,4,7,7,6,10,1,6,10,1,"Non, mais je connais ces plateformes",10,3.0,1.0,1.0,Pantalon cargo,Magasin physique
+18,2,3,8,9,7,4,3,9,1,"Non, mais je connais ces plateformes",6,1.0,,2.0,Pantalon cargo;Campus,Magasin physique
+17,4,3,7,8,4,4,4,8,3,Oui,3,3.0,4.0,3.0,Pantalon cargo;Campus;Sonny Angel;Tote bag,Magasin physique;Internet
+19,1,1,7,10,10,2,1,10,1,"Non, mais je connais ces plateformes",8,1.0,,1.0,Pantalon cargo,Magasin physique
+18,7,5,6,8,9,3,6,8,2,Oui,6,3.0,1.0,2.0,Pantalon cargo,Magasin physique;Internet
+19,7,6,7,8,8,6,5,10,2,Oui,7,2.0,5.0,2.0,Aucun,Magasin physique;Internet
+17,4,4,6,3,7,6,5,7,3,"Non, mais je connais ces plateformes",7,2.0,5.0,1.0,Campus,Magasin physique
+17,8,9,9,9,8,5,8,7,2,Oui,5,4.0,3.0,4.0,Pantalon cargo;Tote bag;Samba,Magasin physique
+19,7,8,8,8,7,7,7,6,2,"Non, mais je connais ces plateformes",7,3.0,6.0,4.0,Pantalon cargo;Balletcore flats,Magasin physique;Internet;Friperie / Seconde main
+20,6,7,8,7,9,5,7,9,2,"Non, mais je connais ces plateformes",6,3.0,3.0,2.0,Pantalon cargo,Magasin physique;Friperie / Seconde main
+19,2,1,5,8,6,7,1,9,1,"Non, mais je connais ces plateformes",8,3.0,1.0,1.0,Aucun,Magasin physique;Internet
+18,8,5,8,6,6,5,6,8,2,Oui,5,2.0,4.0,2.0,Tote bag;Samba,Magasin physique;Internet;Friperie / Seconde main;Marché local
+17,5,6,8,10,6,4,6,8,2,Oui,8,2.0,6.0,3.0,Pantalon cargo;Sonny Angel,Magasin physique;Friperie / Seconde main
+18,8,6,8,5,8,6,9,7,2,"Non, je ne connais pas ces plateformes",10,3.0,3.0,3.0,Pantalon cargo;Campus,Magasin physique
+19,7,10,10,10,10,1,4,7,2,Oui,10,4.0,10.0,1.0,Tote bag,Internet;Friperie / Seconde main
+23,6,9,9,7,7,7,6,8,2,"Non, mais je connais ces plateformes",6,3.0,7.0,3.0,Pantalon cargo;Samba,Magasin physique
+18,5,5,10,10,6,5,4,8,2,Oui,5,3.0,5.0,2.0,Stanley Cup,Magasin physique
+18,3,2,7,9,7,3,2,8,1,Oui,1,2.0,1.0,1.0,Pantalon cargo,Magasin physique;Internet
+19,4,5,5,7,7,3,5,9,1,"Non, mais je connais ces plateformes",4,3.0,2.0,2.0,Aucun,Magasin physique
+20,6,7,8,8,7,5,7,8,2,Oui,4,2.0,1.0,1.0,Pantalon cargo;Campus;Tote bag;Samba,Magasin physique;Internet
+22,6,7,8,9,9,9,8,10,2,Oui,6,3.0,2.0,3.0,Pantalon cargo;Tote bag;Samba,Magasin physique;Internet
+19,6,4,9,8,9,9,9,9,2,"Non, mais je connais ces plateformes",7,3.0,9.0,1.0,Pantalon cargo;Campus;Tote bag,Magasin physique
+20,5,2,9,10,9,6,6,10,0,Oui,9,2.0,2.0,2.0,Pantalon cargo;Tote bag,Internet;Friperie / Seconde main
+19,3,3,8,4,6,8,5,9,3,"Non, mais je connais ces plateformes",2,1.0,,2.0,Aucun,Internet
+19,7,6,10,10,7,1,6,7,2,Oui,9,3.0,1.0,2.0,Pantalon cargo;Campus,Magasin physique
+22,5,1,7,8,8,2,6,10,1,Oui,4,3.0,8.0,3.0,Pantalon cargo;Campus,Magasin physique;Internet
+19,7,6,9,10,8,5,7,9,2,Oui,6,2.0,5.0,2.0,Pantalon cargo;Tote bag,Magasin physique
+15,7,7,10,10,10,5,6,10,2,Oui,6,3.0,5.0,2.0,Tote bag,Magasin physique;Internet
+18,7,6,7,5,7,3,5,8,2,"Non, mais je connais ces plateformes",5,2.0,1.0,1.0,Pantalon cargo;Tote bag,Internet
+19,5,4,4,10,8,5,3,7,1,"Non, je ne connais pas ces plateformes",1,1.0,,1.0,Pantalon cargo,Magasin physique;Internet
+19,8,8,10,10,7,3,7,5,2,Oui,5,3.0,3.0,3.0,Pantalon cargo;Sonny Angel;Tote bag,Magasin physique;Friperie / Seconde main
+22,7,7,10,8,6,4,7,8,2,Oui,2,3.0,8.0,2.0,Pantalon cargo;Stanley Cup,Magasin physique
+20,7,4,8,8,9,3,6,10,2,Oui,10,2.0,4.0,1.0,Tote bag,Magasin physique;Friperie / Seconde main
+19,3,6,8,10,10,1,4,10,1,"Non, mais je connais ces plateformes",5,1.0,,1.0,Pantalon cargo,Magasin physique;Friperie / Seconde main
+20,4,4,7,8,6,1,4,4,3,"Non, mais je connais ces plateformes",4,3.0,1.0,2.0,Pantalon cargo;Tote bag,Friperie / Seconde main
+21,2,3,8,10,8,2,1,9,1,Oui,10,2.0,2.0,3.0,Pantalon cargo,Internet;Friperie / Seconde main
+16,10,6,9,4,10,7,9,10,2,Oui,8,2.0,2.0,3.0,Pantalon cargo;Campus;Sonny Angel;Labubu;Tote bag;Stanley Cup;Samba,Magasin physique;Internet;Friperie / Seconde main
+18,7,7,8,2,10,5,9,10,2,Oui,6,4.0,6.0,3.0,Campus;Tote bag;Samba,Magasin physique;Internet
+18,5,5,7,9,9,3,6,8,2,"Non, mais je connais ces plateformes",7,3.0,3.0,2.0,Aucun,Magasin physique;Friperie / Seconde main
+25,1,1,7,10,10,1,1,10,1,Oui,7,1.0,,1.0,Tote bag,Internet;Friperie / Seconde main;Marché local
+19,3,1,5,10,10,4,3,8,1,Oui,3,1.0,,2.0,Pantalon cargo,Internet
+19,7,5,6,10,7,5,5,6,2,Oui,6,3.0,5.0,2.0,Aucun,Magasin physique;Friperie / Seconde main
+14,4,1,5,7,10,3,5,10,1,Oui,1,1.0,,1.0,Pantalon cargo,Magasin physique;Internet
+14,8,7,6,7,9,4,6,8,2,"Non, mais je connais ces plateformes",6,1.0,,2.0,Pantalon cargo;Campus;Sonny Angel,Magasin physique
+19,6,4,10,7,9,6,5,9,2,Oui,5,3.0,1.0,3.0,Pantalon cargo;Samba,Internet
+21,2,8,10,7,7,7,3,1,3,Oui,10,2.0,3.0,2.0,Aucun,Magasin physique
+21,2,7,9,8,6,7,2,4,3,Oui,6,3.0,8.0,1.0,Aucun,Magasin physique
+17,4,3,6,6,5,3,3,6,3,"Non, mais je connais ces plateformes",5,1.0,,1.0,Tote bag;Stanley Cup,Magasin physique;Internet
+19,9,7,9,8,9,2,8,5,2,Oui,8,3.0,4.0,2.0,Pantalon cargo;Campus;Tote bag;Stanley Cup;Samba,Magasin physique
+19,2,2,7,7,10,5,5,10,1,"Non, mais je connais ces plateformes",8,3.0,8.0,2.0,Aucun,Magasin physique;Internet
+18,7,5,8,10,10,10,1,10,2,Oui,5,3.0,5.0,4.0,Pantalon cargo;Tote bag;Samba,Magasin physique
+18,3,1,1,6,8,5,3,7,1,Oui,9,1.0,,1.0,Pantalon cargo,Magasin physique
+20,5,4,8,10,8,1,2,8,1,Oui,10,3.0,5.0,2.0,Tote bag,Magasin physique;Internet
+17,9,9,8,4,7,10,8,7,2,Oui,2,3.0,4.0,2.0,Aucun,Magasin physique
+18,3,2,3,8,7,7,6,8,1,Oui,5,1.0,,2.0,Pantalon cargo,Magasin physique;Internet
+22,5,5,9,8,8,5,4,5,3,Oui,3,3.0,5.0,3.0,Pantalon cargo;Campus,Internet
+18,5,1,6,7,8,5,7,8,1,"Non, mais je connais ces plateformes",5,1.0,,2.0,Pantalon cargo,Magasin physique;Internet
+17,4,3,8,8,8,1,4,5,3,Oui,4,3.0,1.0,3.0,Pantalon cargo;Tote bag,Magasin physique
+19,3,3,8,10,7,1,5,10,1,"Non, mais je connais ces plateformes",4,2.0,1.0,1.0,Aucun,Internet
+19,7,6,9,8,6,5,6,4,2,Oui,6,2.0,5.0,4.0,Pantalon cargo;Tote bag,Magasin physique;Internet
+18,4,6,8,8,10,3,2,9,1,Oui,10,3.0,8.0,3.0,Pantalon cargo;Tote bag;Samba,Magasin physique;Internet
+45,5,1,7,8,10,5,5,9,0,Oui,8,3.0,1.0,1.0,Pantalon cargo;Campus,Magasin physique;Internet
+29,5,4,8,7,9,6,5,8,0,Oui,10,2.0,7.0,2.0,Aucun,Internet;Friperie / Seconde main
+23,5,4,6,6,8,2,1,10,1,"Non, mais je connais ces plateformes",8,3.0,1.0,2.0,Pantalon cargo,Internet
+22,3,1,8,8,5,1,3,7,3,"Non, mais je connais ces plateformes",9,2.0,1.0,1.0,Pantalon cargo;Tote bag,Magasin physique;Friperie / Seconde main
+17,4,2,6,8,7,4,4,9,1,"Non, mais je connais ces plateformes",6,3.0,2.0,2.0,Pantalon cargo,Magasin physique
+18,4,4,9,10,6,5,3,10,1,Oui,7,2.0,1.0,3.0,Pantalon cargo;Samba,Friperie / Seconde main
+18,5,2,4,7,7,3,4,8,1,"Non, mais je connais ces plateformes",6,3.0,1.0,3.0,Pantalon cargo;Tote bag,Magasin physique
+20,9,6,8,10,8,5,7,7,2,"Non, mais je connais ces plateformes",6,2.0,7.0,3.0,Samba,Magasin physique
+37,1,1,8,7,9,1,3,9,1,Oui,5,2.0,1.0,2.0,Aucun,Internet
+19,5,1,10,10,1,10,7,8,3,"Non, mais je connais ces plateformes",1,1.0,,2.0,Pantalon cargo,Magasin physique
+23,6,2,9,8,8,1,5,3,3,Oui,3,3.0,1.0,2.0,Pantalon cargo;Tote bag,Magasin physique;Friperie / Seconde main
+25,10,10,10,10,10,10,10,10,2,Oui,10,1.0,,2.0,Pantalon cargo,Internet
+22,6,7,7,6,7,8,8,6,2,"Non, je ne connais pas ces plateformes",7,2.0,8.0,2.0,Sonny Angel,Magasin physique;Internet
+18,1,1,10,10,10,1,1,10,1,"Non, mais je connais ces plateformes",1,1.0,,1.0,Pantalon cargo,Internet
+21,9,7,10,10,7,6,7,7,2,Oui,8,3.0,2.0,3.0,Aucun,Magasin physique
+22,8,6,8,7,9,6,10,7,2,Oui,5,3.0,2.0,4.0,Tote bag;Stanley Cup,Magasin physique
+22,9,7,10,8,8,5,7,7,2,Oui,9,4.0,8.0,4.0,Pantalon cargo;Campus;Tote bag;Samba,Magasin physique;Internet
+15,8,6,7,8,8,6,9,10,2,Oui,7,4.0,5.0,4.0,Pantalon cargo;Tote bag,Magasin physique
+15,7,3,7,9,7,9,9,10,2,Oui,4,4.0,4.0,4.0,Pantalon cargo;Campus;Sonny Angel,Magasin physique
+15,7,5,7,8,6,5,6,7,2,Oui,6,1.0,,1.0,Pantalon cargo,Magasin physique;Internet
+16,1,1,7,7,10,4,1,8,1,"Non, mais je connais ces plateformes",7,1.0,,1.0,Pantalon cargo,Magasin physique
+16,6,1,9,10,6,2,6,8,1,Oui,8,4.0,9.0,3.0,Pantalon cargo;Tote bag,Internet;Friperie / Seconde main;Marché local
+16,4,4,10,1,5,7,5,8,3,Oui,4,1.0,,3.0,Campus;Sonny Angel;Samba,Magasin physique;Internet
+16,3,3,8,10,10,1,1,10,1,"Non, mais je connais ces plateformes",8,3.0,1.0,2.0,Pantalon cargo,Magasin physique
+16,6,5,7,9,7,3,5,10,2,Oui,5,3.0,5.0,4.0,Pantalon cargo;Campus;Balletcore flats,Magasin physique
+16,1,1,1,10,10,3,1,8,1,"Non, mais je connais ces plateformes",10,3.0,1.0,2.0,Pantalon cargo,Magasin physique;Internet
+16,3,5,8,10,9,3,1,8,1,"Non, mais je connais ces plateformes",10,3.0,7.0,3.0,Pantalon cargo,Magasin physique;Internet
+16,8,7,8,8,8,4,5,7,2,"Non, mais je connais ces plateformes",4,3.0,9.0,3.0,Aucun,Magasin physique;Internet
+15,3,1,5,5,10,5,2,7,1,Oui,3,1.0,,1.0,Samba,Magasin physique;Internet
+16,5,6,9,10,5,3,7,9,2,Oui,7,3.0,9.0,3.0,Pantalon cargo;Campus,Magasin physique;Internet
+15,5,4,4,7,5,4,7,8,3,"Non, mais je connais ces plateformes",4,1.0,,1.0,Pantalon cargo;Tote bag,Magasin physique
+17,7,8,10,8,8,10,10,9,2,Oui,6,3.0,8.0,1.0,Pantalon cargo;Tote bag,Magasin physique;Internet;Friperie / Seconde main
+18,7,2,8,10,9,9,7,8,2,Oui,3,2.0,1.0,2.0,Campus;Tote bag;Samba,Magasin physique;Internet
+16,7,3,8,10,10,3,2,6,1,"Non, mais je connais ces plateformes",10,4.0,9.0,2.0,Pantalon cargo;Samba,Magasin physique
+15,5,3,5,8,9,7,5,10,1,"Non, mais je connais ces plateformes",3,2.0,2.0,3.0,Aucun,Magasin physique;Internet
+17,4,3,10,8,8,5,4,9,1,"Non, mais je connais ces plateformes",1,2.0,6.0,2.0,Aucun,Magasin physique;Internet
+17,1,7,10,9,8,2,2,8,1,Oui,6,1.0,,1.0,Pantalon cargo;Tote bag,Magasin physique;Internet
+16,7,1,8,10,8,5,6,8,2,"Non, mais je connais ces plateformes",4,2.0,1.0,2.0,Aucun,Magasin physique;Internet;Friperie / Seconde main
+17,8,8,8,10,6,1,10,10,2,Oui,5,2.0,1.0,4.0,Pantalon cargo;Campus;Sonny Angel;Labubu;Tote bag;Balletcore flats;Samba,Magasin physique;Internet
+17,8,6,10,10,10,1,5,5,2,Oui,2,4.0,8.0,3.0,Pantalon cargo;Campus;Samba,Magasin physique;Internet
+17,6,10,7,10,6,5,5,7,2,"Non, mais je connais ces plateformes",5,1.0,,1.0,Pantalon cargo,Magasin physique
+17,5,5,7,10,7,4,7,5,2,Oui,6,3.0,4.0,3.0,Campus;Samba,Magasin physique;Internet;Marché local
+16,9,7,10,7,10,1,8,10,2,"Non, mais je connais ces plateformes",10,1.0,,4.0,Pantalon cargo,Magasin physique;Internet
+15,6,2,7,10,7,4,8,6,2,"Non, mais je connais ces plateformes",3,1.0,,2.0,Pantalon cargo,Magasin physique
+17,6,3,8,9,7,3,7,9,2,"Non, mais je connais ces plateformes",9,2.0,3.0,2.0,Pantalon cargo,Magasin physique;Friperie / Seconde main
+17,5,1,5,10,10,5,5,10,1,"Non, je ne connais pas ces plateformes",1,1.0,,1.0,Pantalon cargo;Campus;Samba,Magasin physique;Internet
+18,7,7,8,7,9,8,8,8,2,Oui,6,1.0,,1.0,Pantalon cargo;Campus;Sonny Angel;Labubu;Tote bag,Magasin physique;Internet
+16,1,1,8,10,9,1,1,10,1,"Non, mais je connais ces plateformes",10,1.0,,1.0,Aucun,Magasin physique
+17,2,1,6,6,9,7,2,7,1,Oui,8,3.0,2.0,1.0,Aucun,Magasin physique;Internet;Friperie / Seconde main
+16,5,8,9,7,10,8,9,10,2,Oui,5,4.0,3.0,4.0,Pantalon cargo;Campus;Labubu;Samba,Magasin physique;Internet;Friperie / Seconde main;Marché local
+17,4,1,10,9,7,7,3,5,3,Oui,6,2.0,1.0,3.0,Aucun,Friperie / Seconde main
+17,8,9,10,10,8,4,8,10,2,Oui,6,4.0,6.0,4.0,Pantalon cargo;Samba,Magasin physique;Internet
+18,4,1,2,10,8,3,7,9,1,Oui,8,1.0,,1.0,Aucun,Magasin physique;Internet
+17,4,5,8,7,10,4,5,10,1,Oui,5,2.0,1.0,1.0,Pantalon cargo;Campus,Marché local
+16,5,4,8,5,7,8,9,10,2,Oui,6,2.0,3.0,3.0,Campus;Sonny Angel;Samba,Magasin physique;Internet
+20,5,6,9,9,8,1,5,5,2,"Non, mais je connais ces plateformes",9,2.0,1.0,3.0,Aucun,Internet;Friperie / Seconde main;Marché local
+16,3,4,6,5,8,8,5,8,1,"Non, mais je connais ces plateformes",6,1.0,,1.0,Aucun,Magasin physique;Internet
+16,7,8,7,6,8,8,8,8,2,Oui,5,3.0,3.0,4.0,Pantalon cargo,Magasin physique
+15,1,1,7,8,8,3,1,9,1,"Non, mais je connais ces plateformes",8,2.0,3.0,2.0,Aucun,Magasin physique
+15,1,1,4,10,5,1,1,10,1,"Non, mais je connais ces plateformes",5,1.0,,1.0,Pantalon cargo,Magasin physique;Friperie / Seconde main;Marché local
+17,3,2,4,4,8,2,2,9,1,"Non, mais je connais ces plateformes",7,1.0,,1.0,Samba,Magasin physique;Internet
+17,5,5,8,10,7,2,4,7,1,"Non, mais je connais ces plateformes",6,2.0,7.0,3.0,Pantalon cargo;Tote bag;Samba,Magasin physique;Internet
+16,7,6,9,10,5,4,6,10,2,Oui,7,2.0,1.0,1.0,Pantalon cargo;Campus,Magasin physique;Internet;Marché local
+16,9,7,10,7,4,5,10,3,2,Oui,6,4.0,4.0,3.0,Pantalon cargo;Campus;Sonny Angel;Tote bag;Samba,Magasin physique;Internet
+16,2,1,8,8,10,4,4,10,1,"Non, mais je connais ces plateformes",10,4.0,7.0,1.0,Aucun,Magasin physique
+17,8,9,8,10,6,6,6,6,2,Oui,5,3.0,6.0,4.0,Pantalon cargo;Sonny Angel;Samba,Magasin physique
+17,5,7,8,6,8,5,5,10,2,Oui,8,3.0,1.0,2.0,Pantalon cargo;Campus;Tote bag,Magasin physique;Internet
+17,7,6,8,7,5,2,6,8,2,Oui,9,2.0,8.0,4.0,Pantalon cargo;Sonny Angel;Tote bag;Samba,Magasin physique
+17,7,7,9,7,8,4,5,8,2,Oui,4,1.0,,2.0,Pantalon cargo;Campus,Magasin physique
+15,9,9,10,5,9,4,10,6,2,Oui,5,1.0,,4.0,Pantalon cargo;Campus;Sonny Angel;Tote bag;Samba,Magasin physique
+15,3,3,8,10,10,4,3,10,1,Oui,7,2.0,1.0,4.0,Tote bag,Magasin physique;Internet;Friperie / Seconde main
+15,1,1,1,8,8,3,1,8,1,Oui,1,3.0,1.0,1.0,Pantalon cargo,Magasin physique;Internet
+15,5,1,8,10,8,5,2,10,1,Oui,1,3.0,1.0,4.0,Pantalon cargo;Samba,Magasin physique;Internet
+16,3,1,1,7,6,5,1,1,3,"Non, mais je connais ces plateformes",1,2.0,1.0,1.0,Pantalon cargo,Magasin physique;Internet
+16,6,4,9,5,10,5,7,6,2,"Non, mais je connais ces plateformes",10,4.0,4.0,3.0,Tote bag,Magasin physique
+16,3,3,8,10,10,5,6,10,1,Oui,10,1.0,,3.0,Aucun,Magasin physique;Internet;Marché local
+16,6,5,9,10,10,7,6,8,2,"Non, mais je connais ces plateformes",10,2.0,8.0,2.0,Pantalon cargo,Magasin physique;Internet
+15,1,1,7,10,10,1,1,10,1,Oui,10,4.0,1.0,2.0,Pantalon cargo,Internet;Friperie / Seconde main
+16,4,9,9,10,8,3,2,7,2,Oui,10,1.0,,3.0,Pantalon cargo;Samba,Magasin physique;Internet
+18,6,6,9,5,9,9,9,9,2,"Non, mais je connais ces plateformes",10,2.0,8.0,3.0,Pantalon cargo;Labubu;Stanley Cup;Samba,Magasin physique;Internet
+16,9,10,9,6,9,5,9,9,2,Oui,8,3.0,6.0,3.0,Labubu;Samba,Magasin physique;Internet
+17,6,6,7,8,6,4,7,10,2,Oui,8,3.0,3.0,3.0,Pantalon cargo;Tote bag;Samba,Friperie / Seconde main
+16,6,6,8,8,6,3,7,7,2,Oui,5,2.0,7.0,3.0,Pantalon cargo;Tote bag;Samba,Internet
+18,5,2,8,1,10,1,6,1,3,Oui,6,1.0,,3.0,Pantalon cargo;Campus;Sonny Angel;Labubu;Tote bag;Stanley Cup;Balletcore flats;Samba,Magasin physique;Internet
+16,5,2,3,10,10,7,5,10,1,Oui,6,1.0,,1.0,Pantalon cargo,Magasin physique
+17,1,1,1,10,10,1,1,5,1,"Non, mais je connais ces plateformes",1,1.0,,1.0,Aucun,Magasin physique;Internet;Friperie / Seconde main;Marché local
+18,4,1,8,10,8,1,5,8,1,Oui,10,2.0,3.0,1.0,Pantalon cargo;Tote bag,Magasin physique;Internet;Friperie / Seconde main;Marché local
+34,8,7,8,10,6,7,10,7,2,Oui,6,4.0,5.0,3.0,Pantalon cargo;Campus;Samba,Magasin physique;Marché local
+15,2,4,7,8,8,2,2,8,1,"Non, mais je connais ces plateformes",8,2.0,2.0,1.0,Tote bag,Internet
+16,7,2,5,5,7,1,5,6,3,Oui,2,3.0,1.0,3.0,Aucun,Magasin physique;Internet;Marché local
+18,5,5,6,7,7,4,4,6,3,Oui,6,2.0,4.0,1.0,Samba,Magasin physique;Internet
+16,8,8,10,5,8,8,10,8,2,Oui,5,3.0,7.0,2.0,Pantalon cargo;Campus;Sonny Angel;Tote bag;Samba,Magasin physique;Internet
+15,2,4,9,7,6,3,1,5,3,Oui,10,3.0,3.0,1.0,Pantalon cargo;Tote bag,Magasin physique;Internet;Friperie / Seconde main
+17,8,5,8,9,5,2,8,10,2,Oui,7,3.0,7.0,4.0,Pantalon cargo;Campus,Magasin physique;Internet
+16,8,8,7,10,5,7,10,10,2,Oui,1,3.0,1.0,4.0,Aucun,Magasin physique;Internet
+16,8,6,1,5,10,4,7,10,2,Oui,1,4.0,1.0,3.0,Pantalon cargo;Campus;Sonny Angel,Magasin physique;Internet;Friperie / Seconde main;Marché local
+18,3,1,8,10,10,6,5,10,1,Oui,4,1.0,,1.0,Pantalon cargo;Campus,Magasin physique;Internet
+15,3,3,6,5,5,1,5,10,1,"Non, mais je connais ces plateformes",3,1.0,,1.0,Aucun,Magasin physique;Marché local
+16,7,6,9,9,5,6,8,6,2,Oui,4,3.0,2.0,3.0,Aucun,Magasin physique;Internet
+18,4,3,6,8,6,5,5,7,3,Oui,6,3.0,2.0,3.0,Pantalon cargo;Campus,Magasin physique;Internet
+17,9,5,9,10,2,1,8,8,2,Oui,6,1.0,,2.0,Pantalon cargo;Campus,Magasin physique
+18,5,1,5,7,7,6,1,10,1,"Non, mais je connais ces plateformes",1,1.0,,1.0,Pantalon cargo,Internet
+14,6,5,8,9,6,4,7,5,2,Oui,7,2.0,6.0,1.0,Campus;Sonny Angel,Magasin physique
+18,1,1,6,10,5,1,1,10,1,Oui,3,1.0,,1.0,Aucun,Internet;Marché local
+15,5,1,5,10,10,3,4,10,1,Oui,1,3.0,1.0,2.0,Pantalon cargo;Campus,Internet;Friperie / Seconde main;Marché local
+18,7,6,7,8,7,9,6,7,2,"Non, mais je connais ces plateformes",7,1.0,,1.0,Aucun,Magasin physique
+17,5,3,10,1,10,5,5,3,3,Oui,3,2.0,1.0,2.0,Samba,Magasin physique;Internet
+16,5,4,8,10,10,5,4,8,1,"Non, mais je connais ces plateformes",5,3.0,1.0,3.0,Pantalon cargo;Samba,Magasin physique;Friperie / Seconde main
+17,7,5,8,8,8,2,6,7,2,"Non, mais je connais ces plateformes",8,1.0,,1.0,Pantalon cargo;Campus;Samba,Magasin physique;Internet
+17,2,1,6,10,7,2,3,5,3,Oui,8,1.0,,1.0,Pantalon cargo;Tote bag,Internet;Friperie / Seconde main
+17,1,1,10,10,8,1,1,6,1,Oui,8,4.0,1.0,3.0,Tote bag,Internet
+15,2,3,5,7,8,3,1,5,3,Oui,5,2.0,1.0,1.0,Aucun,Internet
+18,6,5,8,10,5,5,1,7,3,Oui,9,4.0,1.0,3.0,Pantalon cargo;Samba,Magasin physique
+14,7,5,10,8,8,1,3,10,2,Oui,4,1.0,,1.0,Pantalon cargo,Magasin physique;Internet;Friperie / Seconde main;Marché local
+16,3,3,8,4,3,4,2,7,3,Oui,6,1.0,,1.0,Tote bag,Internet
+26,8,7,8,10,1,1,1,4,3,"Non, je ne connais pas ces plateformes",1,2.0,6.0,3.0,Aucun,Friperie / Seconde main;Marché local
+17,7,5,8,10,9,5,4,7,2,Oui,8,3.0,7.0,3.0,Pantalon cargo;Samba,Magasin physique;Friperie / Seconde main
+17,5,2,7,2,8,3,3,10,1,"Non, mais je connais ces plateformes",4,1.0,,1.0,Aucun,Magasin physique
+15,8,7,9,8,7,5,8,8,2,Oui,6,3.0,5.0,2.0,Campus,Magasin physique;Internet
+16,2,2,10,6,10,5,6,8,1,"Non, mais je connais ces plateformes",5,2.0,8.0,3.0,Campus,Magasin physique
+17,1,1,5,1,10,1,1,10,1,"Non, mais je connais ces plateformes",2,1.0,,1.0,Campus;Samba,Magasin physique
+35,1,9,7,7,7,5,5,3,3,Oui,5,3.0,2.0,2.0,Aucun,Magasin physique;Internet;Friperie / Seconde main
+16,3,1,6,10,7,3,2,9,1,Oui,4,1.0,,1.0,Aucun,Magasin physique;Internet
+44,7,1,10,10,10,5,5,10,0,Oui,1,2.0,1.0,3.0,Aucun,Internet
+69,7,1,3,10,5,1,6,10,0,"Non, je ne connais pas ces plateformes",7,1.0,,3.0,Aucun,Magasin physique;Marché local
+71,5,1,5,9,7,8,8,9,0,Oui,5,1.0,,1.0,Aucun,Magasin physique;Internet;Marché local
+15,7,6,7,9,7,5,4,10,2,"Non, mais je connais ces plateformes",7,3.0,4.0,2.0,Pantalon cargo;Tote bag,Magasin physique;Friperie / Seconde main
+49,3,3,10,10,8,1,1,8,1,Oui,5,1.0,,1.0,Aucun,Magasin physique;Internet
+17,3,1,3,5,10,5,3,10,1,"Non, mais je connais ces plateformes",1,1.0,,2.0,Aucun,Magasin physique
+50,3,4,6,10,8,4,3,8,0,"Non, je ne connais pas ces plateformes",2,2.0,3.0,1.0,Pantalon cargo,Internet
+51,1,1,8,9,7,1,1,8,1,"Non, mais je connais ces plateformes",8,3.0,1.0,1.0,Aucun,Magasin physique;Friperie / Seconde main
+54,4,3,8,8,8,8,8,8,0,"Non, mais je connais ces plateformes",9,2.0,4.0,2.0,Pantalon cargo;Campus;Samba,Friperie / Seconde main
+40,1,1,3,10,9,4,1,10,1,Oui,8,2.0,1.0,1.0,Aucun,Magasin physique
+42,4,2,8,3,7,3,7,10,0,Oui,8,2.0,2.0,1.0,Aucun,Magasin physique;Internet;Friperie / Seconde main
+47,3,1,10,10,8,5,7,10,0,Oui,5,1.0,,2.0,Labubu,Magasin physique
+49,2,1,9,9,8,2,5,7,0,"Non, mais je connais ces plateformes",8,3.0,1.0,3.0,Aucun,Magasin physique;Internet;Friperie / Seconde main
+45,1,3,6,7,7,6,1,6,3,"Non, mais je connais ces plateformes",5,1.0,,1.0,Aucun,Internet
+17,8,10,10,7,5,4,10,8,2,Oui,5,4.0,6.0,4.0,Pantalon cargo;Campus;Labubu;Tote bag,Magasin physique
+47,5,5,5,8,8,1,1,10,1,Oui,10,1.0,,1.0,Aucun,Magasin physique;Internet
+47,7,4,7,8,8,8,5,8,0,Oui,5,2.0,3.0,4.0,Aucun,Internet
+38,6,6,8,5,9,5,5,8,2,"Non, mais je connais ces plateformes",10,2.0,4.0,1.0,Sonny Angel,Friperie / Seconde main;Marché local
+16,7,5,9,7,9,8,7,9,2,Oui,5,2.0,4.0,2.0,Pantalon cargo;Stanley Cup,Magasin physique
+55,3,1,9,10,10,5,2,10,0,"Non, mais je connais ces plateformes",7,2.0,1.0,3.0,Aucun,Magasin physique
+21,5,1,5,10,7,7,3,9,1,"Non, mais je connais ces plateformes",6,1.0,,1.0,Aucun,Magasin physique
+40,2,2,8,9,8,2,1,10,1,Oui,10,3.0,1.0,2.0,Aucun,Magasin physique;Internet
+30,7,7,8,10,10,1,8,8,2,Oui,7,4.0,4.0,4.0,Aucun,Internet
+41,3,3,9,9,7,5,5,9,0,"Non, mais je connais ces plateformes",8,2.0,1.0,3.0,Aucun,Magasin physique
+44,2,1,7,7,8,1,1,10,1,Oui,3,2.0,2.0,2.0,Aucun,Internet
+36,5,5,9,8,8,7,7,8,0,"Non, mais je connais ces plateformes",7,2.0,7.0,3.0,Tote bag,Magasin physique
+11,1,10,4,6,10,10,1,2,3,"Non, mais je connais ces plateformes",9,2.0,10.0,1.0,Pantalon cargo,Magasin physique
+50,5,5,5,9,8,2,5,8,0,Oui,5,2.0,1.0,1.0,Aucun,Magasin physique;Internet
+17,3,1,7,8,7,6,3,8,1,Oui,9,3.0,2.0,1.0,Pantalon cargo,Magasin physique;Marché local
+38,7,3,9,8,8,2,7,8,0,Oui,8,2.0,3.0,3.0,Pantalon cargo;Campus;Tote bag,Magasin physique
+61,5,6,8,9,8,4,4,9,0,Oui,2,3.0,1.0,3.0,Tote bag,Internet;Friperie / Seconde main
+43,6,6,7,8,6,7,7,7,2,"Non, mais je connais ces plateformes",9,3.0,1.0,3.0,Aucun,Internet
+16,8,7,10,7,5,9,10,7,2,Oui,3,4.0,1.0,3.0,Campus;Samba,Magasin physique
+18,5,3,7,7,9,6,3,9,1,"Non, mais je connais ces plateformes",5,2.0,1.0,1.0,Aucun,Magasin physique
+17,5,8,8,8,6,8,1,10,2,Oui,1,2.0,1.0,1.0,Aucun,Magasin physique
+15,5,6,8,5,8,8,6,8,2,Oui,4,3.0,3.0,3.0,Pantalon cargo,Magasin physique;Marché local
+15,6,4,9,10,8,5,7,8,2,Oui,6,3.0,1.0,3.0,Pantalon cargo;Campus;Labubu,Magasin physique;Internet
+18,1,1,1,1,1,1,1,10,3,"Non, je ne connais pas ces plateformes",1,1.0,,1.0,Aucun,Magasin physique
+15,3,5,10,7,8,3,2,10,1,Oui,7,4.0,3.0,3.0,Pantalon cargo;Tote bag,Magasin physique;Friperie / Seconde main
+16,3,1,3,1,10,3,1,10,1,"Non, mais je connais ces plateformes",1,1.0,,1.0,Pantalon cargo,Magasin physique
+49,2,1,10,10,10,2,2,10,1,Oui,2,2.0,1.0,2.0,Aucun,Friperie / Seconde main
+65,1,1,5,6,7,1,1,8,1,"Non, mais je connais ces plateformes",7,2.0,1.0,2.0,Aucun,Friperie / Seconde main
+54,5,1,5,8,8,4,8,8,0,"Non, mais je connais ces plateformes",3,1.0,,1.0,Pantalon cargo;Tote bag,Magasin physique
+42,1,1,10,10,10,1,1,10,1,"Non, mais je connais ces plateformes",10,1.0,,1.0,Pantalon cargo,Friperie / Seconde main
+52,3,5,8,4,7,7,4,8,0,"Non, mais je connais ces plateformes",9,3.0,4.0,3.0,Aucun,Magasin physique;Internet
+15,9,8,8,5,9,7,10,7,2,Oui,4,1.0,,1.0,Tote bag;Stanley Cup;Samba,Internet
+16,5,7,8,8,5,7,5,6,2,Oui,6,3.0,8.0,1.0,Aucun,Magasin physique;Internet
+37,1,1,4,9,8,7,7,9,0,"Non, mais je connais ces plateformes",8,1.0,,1.0,Aucun,Magasin physique;Internet
+18,5,1,7,7,9,2,6,10,1,"Non, mais je connais ces plateformes",7,4.0,5.0,3.0,Aucun,Magasin physique
+16,7,7,8,8,8,2,5,9,2,Oui,4,3.0,4.0,2.0,Pantalon cargo;Sonny Angel;Tote bag,Magasin physique;Internet
+15,6,8,8,7,8,4,6,6,2,Oui,6,3.0,7.0,2.0,Samba,Magasin physique
+46,2,4,7,8,7,2,2,8,1,Oui,7,2.0,1.0,3.0,Pantalon cargo,Magasin physique
+15,3,3,7,9,9,5,1,9,1,Oui,5,1.0,,2.0,Pantalon cargo,Magasin physique;Marché local
+18,4,2,8,7,8,3,6,4,3,"Non, mais je connais ces plateformes",9,1.0,,1.0,Pantalon cargo,Magasin physique
+50,6,8,10,8,9,9,7,8,0,"Non, mais je connais ces plateformes",7,3.0,8.0,3.0,Tote bag,Magasin physique
+18,5,5,9,4,6,2,7,7,3,"Non, mais je connais ces plateformes",5,4.0,3.0,2.0,Campus;Samba,Magasin physique
+16,3,1,8,10,5,1,4,7,3,Oui,8,4.0,10.0,2.0,Aucun,Internet;Friperie / Seconde main
+18,3,3,8,5,10,3,3,10,1,"Non, mais je connais ces plateformes",1,1.0,,1.0,Aucun,Magasin physique
+55,6,1,9,6,9,6,6,9,0,"Non, mais je connais ces plateformes",8,1.0,,1.0,Aucun,Magasin physique
+55,5,1,10,8,8,7,5,8,0,Oui,8,1.0,,1.0,Aucun,Magasin physique
+40,1,1,7,10,7,1,1,10,1,Oui,4,1.0,,1.0,Aucun,Magasin physique;Internet;Friperie / Seconde main
+40,5,1,5,10,10,10,10,10,0,"Non, mais je connais ces plateformes",6,1.0,,1.0,Labubu,Magasin physique
+65,5,1,8,5,5,3,4,6,3,Oui,5,3.0,3.0,1.0,Aucun,Magasin physique
+47,5,1,6,10,6,1,4,7,3,Oui,6,3.0,7.0,3.0,Samba,Magasin physique;Internet;Friperie / Seconde main
+78,8,6,9,10,10,10,10,10,0,"Non, mais je connais ces plateformes",8,3.0,3.0,3.0,Pantalon cargo;Samba,Magasin physique;Internet;Friperie / Seconde main
+40,1,1,5,9,8,1,1,9,1,Oui,8,1.0,,1.0,Aucun,Magasin physique
+35,2,2,8,6,8,2,2,8,1,Oui,4,3.0,5.0,1.0,Aucun,Magasin physique
+43,1,3,6,9,8,1,1,7,1,Oui,3,4.0,1.0,3.0,Labubu,Internet
+59,3,3,8,7,9,5,3,9,0,"Non, je ne connais pas ces plateformes",7,2.0,2.0,2.0,Tote bag,Magasin physique
+65,9,6,9,8,10,8,10,10,0,Oui,6,2.0,1.0,3.0,Pantalon cargo;Sonny Angel,Internet
+74,3,2,8,8,8,4,7,10,0,"Non, mais je connais ces plateformes",4,3.0,1.0,3.0,Labubu,Magasin physique
+39,1,1,7,5,10,1,5,10,1,Oui,8,1.0,,1.0,Tote bag,Magasin physique;Friperie / Seconde main
+51,3,3,5,7,10,8,4,8,0,"Non, mais je connais ces plateformes",8,2.0,4.0,3.0,Aucun,Magasin physique;Friperie / Seconde main
+36,8,1,10,9,9,1,7,9,0,Oui,5,3.0,1.0,3.0,Aucun,Magasin physique;Friperie / Seconde main
+15,6,3,4,5,8,4,7,9,2,"Non, mais je connais ces plateformes",4,1.0,,2.0,Pantalon cargo,Magasin physique
+43,4,3,8,7,6,3,5,7,3,Oui,5,2.0,2.0,1.0,Pantalon cargo;Campus;Samba,Magasin physique;Internet
+16,2,3,10,8,7,1,3,9,1,Oui,10,4.0,1.0,1.0,Pantalon cargo,Magasin physique;Friperie / Seconde main
+60,5,1,6,10,10,10,5,10,0,"Non, mais je connais ces plateformes",9,3.0,1.0,3.0,Aucun,Internet;Friperie / Seconde main
+14,7,5,8,8,10,3,8,10,2,Oui,3,1.0,,2.0,Pantalon cargo;Samba,Internet
+34,4,6,6,10,8,4,4,8,1,Oui,3,1.0,,1.0,Pantalon cargo;Tote bag,Internet
+22,10,8,9,10,6,4,10,6,2,Oui,6,4.0,7.0,4.0,Pantalon cargo,Internet
+56,7,1,8,10,8,5,8,10,0,"Non, mais je connais ces plateformes",8,3.0,1.0,2.0,Aucun,Magasin physique;Internet;Marché local
+49,6,1,6,8,7,2,6,5,3,"Non, mais je connais ces plateformes",2,2.0,1.0,3.0,Aucun,Magasin physique;Friperie / Seconde main
+45,3,2,7,6,6,1,1,8,3,"Non, mais je connais ces plateformes",8,3.0,1.0,1.0,Pantalon cargo,Internet
+15,7,8,10,10,8,5,5,10,2,"Non, mais je connais ces plateformes",8,3.0,7.0,2.0,Sonny Angel;Balletcore flats,Magasin physique;Internet
+17,3,3,10,9,9,1,5,7,1,Oui,10,1.0,,1.0,Pantalon cargo;Balletcore flats,Internet;Friperie / Seconde main
+37,6,1,7,10,9,1,1,8,1,"Non, mais je connais ces plateformes",8,1.0,,1.0,Aucun,Internet
+31,7,7,8,8,8,5,8,8,2,Oui,6,2.0,1.0,3.0,Aucun,Magasin physique
+15,7,10,9,5,6,6,5,7,2,Oui,3,3.0,3.0,3.0,Campus;Sonny Angel;Samba,Magasin physique;Internet
+30,7,4,10,10,7,3,6,10,2,Oui,3,3.0,3.0,1.0,Aucun,Magasin physique
+17,6,7,8,8,8,4,6,8,2,Oui,4,4.0,2.0,2.0,Pantalon cargo;Samba,Magasin physique;Marché local
+16,6,6,8,7,9,5,4,6,2,Oui,9,2.0,1.0,2.0,Pantalon cargo;Samba,Magasin physique;Friperie / Seconde main
+15,8,8,9,7,7,4,6,5,2,Oui,7,3.0,3.0,2.0,Pantalon cargo;Samba,Magasin physique
+17,5,5,6,8,7,1,3,6,3,"Non, mais je connais ces plateformes",5,3.0,1.0,1.0,Aucun,Magasin physique;Friperie / Seconde main
+17,5,4,6,4,10,6,6,7,2,"Non, mais je connais ces plateformes",10,3.0,1.0,1.0,Pantalon cargo,Magasin physique
+58,3,1,10,9,9,8,3,3,0,Oui,6,1.0,,1.0,Aucun,Internet
+38,5,1,9,5,10,8,5,5,0,"Non, mais je connais ces plateformes",9,2.0,1.0,1.0,Aucun,Internet;Friperie / Seconde main
+61,7,2,8,10,10,5,8,10,0,"Non, mais je connais ces plateformes",8,3.0,1.0,4.0,Aucun,Magasin physique
+45,6,1,10,8,8,2,8,10,0,Oui,6,3.0,1.0,3.0,Aucun,Internet
+16,7,4,10,9,4,8,9,5,2,Oui,4,4.0,2.0,4.0,Pantalon cargo;Sonny Angel;Labubu,Internet;Friperie / Seconde main
+51,1,1,8,10,6,1,1,10,1,"Non, mais je connais ces plateformes",8,1.0,,1.0,Aucun,Magasin physique;Friperie / Seconde main
+61,7,1,8,8,8,6,6,8,0,Oui,7,1.0,,2.0,Aucun,Magasin physique;Internet
+16,5,5,9,7,8,5,5,8,2,"Non, mais je connais ces plateformes",7,3.0,5.0,2.0,Pantalon cargo,Magasin physique;Internet;Friperie / Seconde main
+17,6,5,8,9,5,3,7,8,2,Oui,6,4.0,5.0,3.0,Pantalon cargo;Campus,Magasin physique;Internet
+17,3,6,7,8,7,4,4,9,1,Oui,8,3.0,3.0,1.0,Pantalon cargo,Magasin physique
+16,1,2,10,8,9,1,3,5,1,"Non, mais je connais ces plateformes",9,4.0,1.0,4.0,Pantalon cargo,Magasin physique
+60,4,1,4,10,8,3,3,8,0,"Non, mais je connais ces plateformes",5,1.0,,1.0,Aucun,Magasin physique;Internet
+35,4,3,8,8,7,2,6,7,3,Oui,6,2.0,1.0,2.0,Aucun,Magasin physique;Internet
+32,5,5,8,10,10,5,5,7,0,Oui,7,1.0,,1.0,Tote bag,Magasin physique
+24,6,7,7,8,7,6,4,8,2,Oui,8,2.0,2.0,1.0,Pantalon cargo;Campus,Magasin physique;Internet;Friperie / Seconde main;Marché local
+17,9,8,9,10,5,8,9,6,2,Oui,7,4.0,7.0,4.0,Pantalon cargo;Campus,Internet;Friperie / Seconde main
+17,3,6,5,6,8,8,5,10,1,Oui,9,3.0,1.0,2.0,Pantalon cargo,Magasin physique;Internet
+15,6,3,8,5,8,6,7,3,3,Oui,3,3.0,1.0,2.0,Pantalon cargo,Magasin physique
+18,3,2,6,4,10,8,4,10,1,Oui,1,1.0,,2.0,Pantalon cargo;Campus;Sonny Angel;Labubu;Tote bag;Samba,Internet
+16,1,1,1,10,1,1,1,8,3,Oui,1,1.0,,1.0,Aucun,Magasin physique
+44,6,8,10,8,10,8,6,8,0,"Non, mais je connais ces plateformes",8,3.0,6.0,3.0,Sonny Angel,Magasin physique
+17,2,1,10,10,7,1,1,8,1,Oui,5,1.0,,1.0,Pantalon cargo;Tote bag,Internet;Friperie / Seconde main
+15,4,3,7,6,7,4,5,9,1,Oui,4,3.0,2.0,3.0,Aucun,Magasin physique;Internet
+55,6,7,7,8,7,8,7,8,0,Oui,6,3.0,2.0,3.0,Aucun,Magasin physique;Friperie / Seconde main
+62,3,1,8,8,7,2,7,7,0,"Non, mais je connais ces plateformes",4,4.0,1.0,2.0,Aucun,Magasin physique
+42,7,5,8,8,10,8,8,10,0,"Non, mais je connais ces plateformes",8,1.0,,1.0,Pantalon cargo;Tote bag,Internet
+34,6,4,7,10,8,5,8,8,0,Oui,7,3.0,1.0,2.0,Pantalon cargo,Magasin physique;Internet
+42,8,8,8,8,8,9,9,9,2,Oui,8,1.0,,1.0,Pantalon cargo;Samba,Magasin physique;Internet
+36,1,1,8,8,7,1,1,9,1,Oui,1,1.0,,1.0,Aucun,Magasin physique;Internet
+44,7,1,8,10,10,5,6,8,0,Oui,5,3.0,1.0,3.0,Sonny Angel;Labubu,Magasin physique;Internet;Friperie / Seconde main
+41,6,1,7,7,8,1,5,10,1,Oui,8,4.0,1.0,2.0,Pantalon cargo,Magasin physique;Internet
+21,5,7,7,10,8,2,5,10,2,Oui,5,2.0,5.0,2.0,Pantalon cargo,Magasin physique;Internet
+48,8,2,6,5,8,6,10,10,0,Oui,5,1.0,,3.0,Campus;Samba,Magasin physique;Internet;Friperie / Seconde main;Marché local
+37,10,6,10,8,10,6,10,9,2,"Non, mais je connais ces plateformes",10,2.0,1.0,3.0,Pantalon cargo,Magasin physique;Internet
+41,4,1,7,9,9,7,5,8,0,"Non, mais je connais ces plateformes",3,2.0,1.0,1.0,Aucun,Magasin physique;Internet
+19,7,3,1,5,10,8,8,8,2,"Non, mais je connais ces plateformes",1,3.0,3.0,2.0,Labubu,Magasin physique;Internet
+45,5,2,7,8,6,3,6,6,3,Oui,4,3.0,2.0,1.0,Tote bag;Samba,Magasin physique
+50,8,5,8,10,10,3,8,10,0,Oui,5,2.0,1.0,4.0,Pantalon cargo;Campus,Internet
+77,2,1,5,5,5,1,2,4,3,"Non, je ne connais pas ces plateformes",1,1.0,,1.0,Aucun,Magasin physique
+84,1,1,4,10,3,1,1,4,3,"Non, je ne connais pas ces plateformes",1,1.0,,1.0,Aucun,Magasin physique
+37,6,4,7,8,9,3,5,9,0,Oui,6,2.0,1.0,2.0,Aucun,Internet
+15,5,7,7,10,9,6,6,4,2,Oui,7,3.0,9.0,3.0,Pantalon cargo,Magasin physique;Internet
+14,9,7,10,5,10,8,10,10,2,Oui,5,3.0,6.0,3.0,Pantalon cargo;Campus;Labubu;Tote bag,Magasin physique;Internet
+16,6,4,2,10,10,6,1,10,1,Oui,1,2.0,1.0,1.0,Campus,Magasin physique;Internet
+15,3,1,5,9,8,2,3,9,1,Oui,6,1.0,,1.0,Pantalon cargo;Tote bag,Magasin physique
+16,7,1,7,10,7,7,2,10,1,Oui,1,3.0,1.0,1.0,Pantalon cargo;Campus,Magasin physique
+34,5,3,9,7,9,5,4,8,0,Oui,8,2.0,1.0,2.0,Aucun,Magasin physique
+17,3,1,9,5,8,1,1,8,1,"Non, mais je connais ces plateformes",7,2.0,3.0,1.0,Pantalon cargo;Tote bag,Friperie / Seconde main
+45,5,1,6,7,7,4,7,7,0,"Non, mais je connais ces plateformes",8,2.0,1.0,3.0,Aucun,Magasin physique;Internet
+49,7,7,8,10,10,6,8,10,0,"Non, je ne connais pas ces plateformes",1,1.0,,1.0,Aucun,Internet
+60,1,2,10,8,10,10,1,10,0,"Non, mais je connais ces plateformes",10,1.0,,1.0,Aucun,Magasin physique
+16,6,3,5,10,8,7,7,6,2,Oui,4,2.0,1.0,3.0,Pantalon cargo;Campus;Samba,Internet
+50,6,1,6,9,7,5,7,6,0,Oui,6,2.0,5.0,3.0,Pantalon cargo,Magasin physique;Friperie / Seconde main
+73,3,2,9,10,10,2,2,10,0,"Non, mais je connais ces plateformes",8,1.0,,2.0,Pantalon cargo,Internet;Marché local
+41,6,4,8,10,8,8,6,10,0,"Non, mais je connais ces plateformes",8,4.0,1.0,3.0,Aucun,Friperie / Seconde main
+44,7,2,8,7,7,4,9,8,0,"Non, mais je connais ces plateformes",8,3.0,1.0,1.0,Pantalon cargo;Tote bag,Magasin physique
+73,2,1,2,5,6,4,2,8,3,"Non, mais je connais ces plateformes",5,1.0,,1.0,Aucun,Magasin physique
+36,3,2,5,8,9,3,3,10,1,Oui,7,2.0,1.0,1.0,Aucun,Magasin physique;Internet;Friperie / Seconde main
+15,8,5,8,10,10,5,7,10,2,Oui,7,2.0,7.0,3.0,Pantalon cargo;Campus;Sonny Angel;Stanley Cup,Magasin physique;Internet
+54,6,4,7,8,6,7,5,9,0,Oui,6,2.0,5.0,3.0,Pantalon cargo;Campus,Magasin physique;Internet
+38,5,1,10,10,10,5,5,10,0,Oui,6,1.0,,2.0,Pantalon cargo;Campus;Labubu,Magasin physique;Internet
+17,4,4,5,9,9,1,3,7,1,Oui,10,4.0,2.0,1.0,Samba,Friperie / Seconde main
+17,7,7,5,7,7,3,7,9,2,Oui,2,2.0,1.0,2.0,Campus;Samba,Magasin physique;Internet
+17,7,5,8,9,9,3,7,7,2,Oui,5,2.0,3.0,3.0,Pantalon cargo;Campus,Internet
+30,3,1,2,8,8,3,1,8,1,"Non, mais je connais ces plateformes",6,2.0,1.0,1.0,Aucun,Magasin physique
+17,6,6,8,8,8,4,8,6,2,Oui,2,2.0,1.0,1.0,Aucun,Internet
+15,2,2,5,2,7,2,2,9,1,"Non, mais je connais ces plateformes",8,3.0,8.0,2.0,Pantalon cargo;Campus,Magasin physique
+15,7,5,10,8,8,5,6,8,2,Oui,6,3.0,3.0,2.0,Pantalon cargo;Sonny Angel;Labubu;Stanley Cup;Samba,Magasin physique;Friperie / Seconde main
+17,4,3,10,8,10,3,3,9,1,Oui,10,3.0,1.0,2.0,Aucun,Magasin physique;Internet;Friperie / Seconde main;Marché local
+53,6,3,9,8,9,5,8,9,0,"Non, mais je connais ces plateformes",7,1.0,,3.0,Tote bag,Magasin physique
+32,7,7,8,5,7,7,7,8,2,"Non, mais je connais ces plateformes",6,3.0,8.0,2.0,Pantalon cargo;Tote bag,Magasin physique
+15,8,8,9,6,9,7,6,10,2,"Non, mais je connais ces plateformes",6,2.0,2.0,2.0,Pantalon cargo,Magasin physique
+16,5,4,8,9,9,5,7,8,2,Oui,7,3.0,4.0,4.0,Pantalon cargo;Balletcore flats,Magasin physique
+40,8,1,8,5,10,5,8,10,0,"Non, mais je connais ces plateformes",5,2.0,1.0,4.0,Aucun,Magasin physique
+53,6,5,7,7,8,6,5,9,0,Oui,5,3.0,1.0,2.0,Aucun,Magasin physique
+16,1,5,1,5,7,4,1,4,3,"Non, mais je connais ces plateformes",1,1.0,,1.0,Aucun,Magasin physique;Friperie / Seconde main
+17,3,3,7,9,8,6,4,8,1,"Non, mais je connais ces plateformes",5,2.0,3.0,2.0,Pantalon cargo,Internet
+36,4,6,10,9,10,4,3,8,0,"Non, mais je connais ces plateformes",8,3.0,1.0,3.0,Sonny Angel,Friperie / Seconde main
+15,8,7,7,5,8,7,8,10,2,Oui,4,1.0,,2.0,Pantalon cargo;Stanley Cup;Samba,Magasin physique;Internet
+15,5,3,10,6,8,1,2,10,1,Oui,5,1.0,,1.0,Tote bag;Samba,Magasin physique;Friperie / Seconde main
+30,9,9,8,10,7,6,10,8,2,Oui,7,3.0,7.0,4.0,Tote bag;Samba,Internet
+17,5,6,8,6,8,2,5,10,2,Oui,4,4.0,2.0,3.0,Pantalon cargo,Magasin physique;Friperie / Seconde main
+16,4,2,4,8,6,3,4,2,3,"Non, mais je connais ces plateformes",6,2.0,3.0,3.0,Pantalon cargo,Magasin physique;Friperie / Seconde main
