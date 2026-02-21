@@ -79,6 +79,35 @@ Ce script :
 
 ## Visualisations principales
 
+## Galerie visuelle
+
+### Le Grand Paradoxe
+![Grand Paradoxe](reports/figures/grand_paradoxe.png)
+
+### Spirale de culpabilité
+![Spirale](reports/figures/spirale_culpabilite_reseaux.png)
+
+### Personas consommateurs
+![Personas](reports/figures/personas_scatter.png)
+
+### Carte des renoncements
+![Renoncements](reports/figures/carte_renoncements_par_cluster.png)
+
+### Obsolescence psychologique
+![Obsolescence](reports/figures/obsolescence_psy_par_cluster.png)
+
+### Heatmap des articles par cluster
+![Heatmap](reports/figures/heatmap_items_par_cluster.png)
+
+### Réseau des tendances
+![Reseau](reports/figures/reseau_items_tendance.png)
+
+### Éthique vs culpabilité
+![Ethique](reports/figures/ethique_vs_culpabilite_couleur_ff.png)
+
+### Arbre décisionnel
+![Arbre](reports/figures/arbre_decision_payer_plus.png)
+
 - Le Grand Paradoxe : discours éthique vs consommation réelle de fast fashion
 - Spirale de culpabilité : influence des réseaux sociaux et culpabilité post-achat
 - Personas consommateurs (K-Means)
