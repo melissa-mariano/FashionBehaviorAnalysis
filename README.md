@@ -1,124 +1,149 @@
-# Analyse de l’Industrie de la Mode
+# FashionBehaviorAnalysis
+## Quand le bleu céruléen devient une donnée
+
+---
+
+## Contexte
+
+Ce projet est inspiré du célèbre monologue du *bleu céruléen* dans **Le Diable s’habille en Prada**, qui illustre comment les tendances de la mode — souvent perçues comme des choix personnels — sont en réalité façonnées par une industrie complexe.
+
+L’objectif est d’explorer une question centrale :
+
+**Comment l’industrie de la mode influence-t-elle les comportements et les décisions individuelles dans notre société ?**
+
+À partir d’une enquête quantitative menée auprès de 428 répondants, ce projet combine data science, sociologie de la mode et storytelling visuel pour analyser les paradoxes entre discours éthique, pression sociale et pratiques réelles.
+
+---
 
 ## Problématique
-Comment l’industrie de la mode impacte-t-elle le comportement et les choix de notre société ?
+
+Comment l’industrie de la mode impacte-t-elle le comportement et les choix vestimentaires ?
+
+Plus précisément :
+- Existe-t-il un décalage entre valeurs déclarées et comportements réels ?
+- Quel rôle jouent les réseaux sociaux et les tendances ?
+- Peut-on identifier des profils psychologiques de consommateurs ?
 
 ---
 
 ## Structure du projet
 
-```
-project_root/
+FashionBehaviorAnalysis/
 │
-├── data/                 # Contient le fichier CSV avec les données
+├── data/
 │   └── La mode - LaMode.csv
 │
-├── notebooks/            # Contient les notebooks Jupyter
-│   └── analyse_mode.ipynb
+├── notebooks/
+│   └── notebook_visualisations.py
 │
-├── requirements.txt      # Dépendances Python nécessaires
+├── reports/
+│   ├── figures/
+│   ├── personas_clusters.csv
+│   ├── personas_moyennes_par_cluster.csv
+│   └── kmeans_elbow_silhouette.csv
 │
-└── README.md             # Documentation du projet
-```
+├── requirements.txt
+└── README.md
 
 ---
 
 ## Installation
 
-1. **Cloner le projet**
+### Cloner le projet
 
-```bash
-git clone <URL_DU_PROJET>
-cd project_root
-```
+git clone https://github.com/melissa-mariano/FashionBehaviorAnalysis.git
+cd FashionBehaviorAnalysis
 
-2. **Créer un environnement virtuel** (optionnel mais recommandé)
+### Créer un environnement virtuel (recommandé)
 
-```bash
 python -m venv venv
-# macOS / Linux
-source venv/bin/activate
-# Windows (PowerShell)
 venv\Scripts\Activate.ps1
-# Windows (cmd)
-venv\Scripts\activate.bat
-```
 
-3. **Installer les dépendances**
+### Installer les dépendances
 
-```bash
 pip install -r requirements.txt
-```
-
----
-
-## Contenu du projet
-
-- **data/**  
-  Contient le fichier CSV issu de l’enquête sur les comportements liés à la mode (`La mode - LaMode.csv`).
-
-- **notebooks/**  
-  Contient le notebook `analyse_mode.ipynb` avec l’ensemble des analyses, visualisations et calculs.
-
-- **requirements.txt**  
-  Liste des bibliothèques Python nécessaires à l’exécution du notebook.
 
 ---
 
 ## Utilisation
 
-1. Lancer Jupyter Notebook :
+python notebooks/notebook_visualisations.py
 
-```bash
-jupyter notebook notebooks/analyse_mode.ipynb
-```
-
-2. Exécuter les cellules dans l’ordre pour :
-
-- Nettoyer et standardiser les données (par ex. `df_clean`)  
-- Créer des visualisations :
-  - Diagrammes de Sankey
-  - Graphiques en barres
-  - Graphiques radar
-  - Scatter plots
-  - Heatmaps
-- Calculer l’indice **« Fashion Victim »**  
-- Identifier des **personas** de consommateurs
+Ce script :
+- nettoie et standardise les données de l’enquête
+- génère l’ensemble des visualisations
+- segmente les répondants en personas via clustering
+- exporte les résultats dans le dossier reports/
 
 ---
 
-## Dépendances principales
+## Visualisations principales
 
-- pandas  
-- numpy  
-- matplotlib  
-- seaborn  
-- plotly  
-- scikit-learn  
-- networkx
+## Galerie visuelle
 
-> Ajoutez d’autres packages dans `requirements.txt` si le notebook les utilise (ex. `pdfplumber`, `langdetect`, `spacy`, etc.).
+### Le Grand Paradoxe
+![Grand Paradoxe](reports/figures/grand_paradoxe.png)
+
+### Spirale de culpabilité
+![Spirale](reports/figures/spirale_culpabilite_reseaux.png)
+
+### Personas consommateurs
+![Personas](reports/figures/personas_scatter.png)
+
+### Carte des renoncements
+![Renoncements](reports/figures/carte_renoncements_par_cluster.png)
+
+### Obsolescence psychologique
+![Obsolescence](reports/figures/obsolescence_psy_par_cluster.png)
+
+### Heatmap des articles par cluster
+![Heatmap](reports/figures/heatmap_items_par_cluster.png)
+
+### Réseau des tendances
+![Reseau](reports/figures/reseau_items_tendance.png)
+
+### Éthique vs culpabilité
+![Ethique](reports/figures/ethique_vs_culpabilite_couleur_ff.png)
+
+### Arbre décisionnel
+![Arbre](reports/figures/arbre_decision_payer_plus.png)
+
+- Le Grand Paradoxe : discours éthique vs consommation réelle de fast fashion
+- Spirale de culpabilité : influence des réseaux sociaux et culpabilité post-achat
+- Personas consommateurs (K-Means)
+- Carte des renoncements
+- Arbre décisionnel
+- Sankey narratif du parcours d’achat
+
+---
+
+## Méthodologie
+
+- Nettoyage et normalisation des données
+- Transformation des échelles de type Likert
+- Feature engineering sociologique
+- Clustering K-Means
+- Arbre de décision
+- Visualisations narratives
 
 ---
 
 ## Objectifs du projet
 
-- Explorer le comportement des consommateurs dans l’industrie de la mode  
-- Identifier les contradictions entre intentions éthiques et comportements réels  
-- Visualiser les habitudes d’achat et les influences sociales  
-- Construire des personas et des indices pour analyser les tendances
+- Comprendre les dynamiques sociales derrière les choix vestimentaires
+- Mettre en évidence l’influence structurelle de l’industrie de la mode
+- Transformer un phénomène culturel en analyse data-driven
+- Construire un storytelling visuel basé sur des données réelles
 
 ---
 
-## Structure du notebook (résumé des étapes)
+## Dépendances principales
 
-1. Chargement des données (`data/La mode - LaMode.csv`)  
-2. Inspection initiale et traitement des valeurs manquantes  
-3. Nettoyage et standardisation (normalisation des colonnes, unification des langues, conversion de formats)  
-4. Feature engineering (calcul de l’indice « Fashion Victim », création de variables catégorielles)  
-5. Visualisations exploratoires et storytelling (Sankey, barres, radars, scatter, heatmaps)  
-6. Clustering / segmentation pour créer des personas  
-7. Synthèse et recommandations
+- pandas
+- numpy
+- matplotlib
+- plotly
+- scikit-learn
 
 ---
 
