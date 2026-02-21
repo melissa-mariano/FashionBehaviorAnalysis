@@ -81,39 +81,83 @@ Ce script :
 
 ## Galerie visuelle
 
-### Le Grand Paradoxe
-![Grand Paradoxe](reports/figures/grand_paradoxe.png)
+## Galerie Visuelle — Storytelling des Comportements Mode
 
-### Spirale de culpabilité
-![Spirale](reports/figures/spirale_culpabilite_reseaux.png)
+Parce que la mode n’est pas seulement esthétique, mais aussi décisionnelle, cette galerie visuelle présente les principales dynamiques observées dans les données.  
+Chaque visualisation contribue à raconter une histoire : celle des contradictions, des influences sociales et des choix individuels face à l’industrie de la mode.
 
-### Personas consommateurs
-![Personas](reports/figures/personas_scatter.png)
+---
 
-### Carte des renoncements
-![Renoncements](reports/figures/carte_renoncements_par_cluster.png)
+### Le Grand Paradoxe : éthique vs comportement réel
+![Grand paradoxe](reports/figures/grand_paradoxe.png)
 
-### Obsolescence psychologique
-![Obsolescence](reports/figures/obsolescence_psy_par_cluster.png)
+Malgré une conscience éthique élevée, les comportements d’achat restent souvent guidés par l’émotion, les tendances et la pression sociale.  
+Ce graphique met en lumière le décalage entre intentions déclarées et pratiques observées.
 
-### Heatmap des articles par cluster
-![Heatmap](reports/figures/heatmap_items_par_cluster.png)
+---
 
-### Réseau des tendances
-![Reseau](reports/figures/reseau_items_tendance.png)
+### Influence des réseaux sociaux et spirale de culpabilité
+![Spirale culpabilité réseaux](reports/figures/spirale_culpabilite_reseaux.png)
 
-### Éthique vs culpabilité
-![Ethique](reports/figures/ethique_vs_culpabilite_couleur_ff.png)
+L’exposition constante aux tendances crée une dynamique cyclique : désir, achat, culpabilité, puis retour à la consommation.  
+Une lecture essentielle pour comprendre les mécanismes psychologiques derrière la mode rapide.
 
-### Arbre décisionnel
-![Arbre](reports/figures/arbre_decision_payer_plus.png)
+---
 
-- Le Grand Paradoxe : discours éthique vs consommation réelle de fast fashion
-- Spirale de culpabilité : influence des réseaux sociaux et culpabilité post-achat
-- Personas consommateurs (K-Means)
-- Carte des renoncements
-- Arbre décisionnel
-- Sankey narratif du parcours d’achat
+### Personas et segmentation comportementale
+![Personas scatter](reports/figures/personas_scatter.png)
+
+Le clustering révèle plusieurs profils distincts de consommateurs.  
+Chaque persona incarne une relation différente à la mode : rationnelle, impulsive, engagée ou influencée.
+
+---
+
+### Cartographie des renoncements par cluster
+![Carte renoncements par cluster](reports/figures/carte_renoncements_par_cluster.png)
+
+Certains groupes expriment une volonté de consommer mieux, mais renoncent différemment selon leur rapport au prix, à l’image sociale ou à l’impact environnemental.
+
+---
+
+### Obsolescence psychologique selon les profils
+![Obsolescence psy](reports/figures/obsolescence_psy_par_cluster.png)
+
+La perception de l’obsolescence n’est pas seulement liée au produit, mais aussi à la pression symbolique des tendances.
+
+---
+
+### Réseau des items et tendances dominantes
+![Réseau items tendance](reports/figures/reseau_items_tendance.png)
+
+Une visualisation relationnelle qui montre comment certains thèmes se renforcent mutuellement dans l’imaginaire collectif.
+
+---
+
+### Heatmap des comportements par cluster
+![Heatmap items par cluster](reports/figures/heatmap_items_par_cluster.png)
+
+Cette heatmap synthétise les différences clés entre groupes, révélant des patterns invisibles dans une lecture linéaire des données.
+
+---
+
+### Arbre de décision — Acceptation de payer plus
+![Arbre décision payer plus](reports/figures/arbre_decision_payer_plus.png)
+
+Un modèle explicatif qui illustre les variables les plus influentes dans la disposition à payer davantage pour une mode plus responsable.
+
+---
+
+### Fin de vie des produits et fréquence d’achat
+![Fin de vie par fréquence](reports/figures/fin_de_vie_par_frequence.png)
+
+Une perspective concrète sur le cycle réel des vêtements : conservation, revente, don ou abandon.
+
+---
+
+### Lecture finale
+
+Entre aspiration éthique et plaisir esthétique, la mode apparaît comme un espace de tension permanente.  
+Ces visualisations proposent une approche analytique — mais assumée, sensible et contemporaine — de ce que signifie consommer la mode aujourd’hui.
 
 ---
 
