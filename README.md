@@ -1,5 +1,7 @@
-# FashionBehaviorAnalysis
-## Quand le bleu céruléen devient une donnée
+# Analyse des comportements de consommation de mode
+
+Explorer la mode comme un système de données :
+comportements d’achat, tensions éthiques et segmentation des profils consommateurs.
 
 ---
 
@@ -11,7 +13,7 @@ L’objectif est d’explorer une question centrale :
 
 **Comment l’industrie de la mode influence-t-elle les comportements et les décisions individuelles dans notre société ?**
 
-À partir d’une enquête quantitative menée auprès de 428 répondants, ce projet combine data science, sociologie de la mode et storytelling visuel pour analyser les paradoxes entre discours éthique, pression sociale et pratiques réelles.
+À partir d’une enquête quantitative menée auprès de 428 répondants, ce projet combine science des données et sociologie de la mode pour analyser les paradoxes entre discours éthique, pression sociale et pratiques réelles.
 
 ---
 
@@ -28,6 +30,7 @@ Plus précisément :
 
 ## Structure du projet
 
+```
 FashionBehaviorAnalysis/
 │
 ├── data/
@@ -44,6 +47,7 @@ FashionBehaviorAnalysis/
 │
 ├── requirements.txt
 └── README.md
+```
 
 ---
 
@@ -79,75 +83,102 @@ Ce script :
 
 ## Visualisations principales
 
-Parce que la mode n’est pas seulement esthétique, mais aussi décisionnelle, cette galerie visuelle présente les principales dynamiques observées dans les données.  
-Chaque visualisation contribue à raconter une histoire : celle des contradictions, des influences sociales et des choix individuels face à l’industrie de la mode.
+Cette section présente un ensemble de figures produites par le pipeline d’analyse.  
+Elles synthétisent (i) les comportements d’achat, (ii) les tensions entre attitudes éthiques et pratiques de consommation, et (iii) une segmentation exploratoire (K-means) permettant de caractériser des profils de répondants.
+
+> **Note** : les figures ci-dessous sont générées dans `reports/figures/`.  
+> Si tu changes ton dossier de sortie, adapte simplement les chemins.
 
 ---
 
-### Le Grand Paradoxe : éthique vs comportement réel
-![Grand paradoxe](reports/figures/grand_paradoxe.png)
+### 1) Le “Grand Paradoxe” : discours vs réalité
+Cette visualisation met en évidence l’écart entre **déclarations éthiques** (score élevé de souci éthique) et **usage effectif** de la fast fashion. Elle permet d’identifier la part de répondants relevant d’un paradoxe (valeurs déclarées vs comportements observés) et de comparer ce phénomène aux autres groupes.
 
-Malgré une conscience éthique élevée, les comportements d’achat restent souvent guidés par l’émotion, les tendances et la pression sociale.  
-Ce graphique met en lumière le décalage entre intentions déclarées et pratiques observées.
-
----
-
-### Influence des réseaux sociaux et spirale de culpabilité
-![Spirale culpabilité réseaux](reports/figures/spirale_culpabilite_reseaux.png)
-
-L’exposition constante aux tendances crée une dynamique cyclique : désir, achat, culpabilité, puis retour à la consommation.  
-Une lecture essentielle pour comprendre les mécanismes psychologiques derrière la mode rapide.
+![Le Grand Paradoxe](reports/figures/grand_paradoxe.png)
 
 ---
 
-### Personas et segmentation comportementale
-![Personas scatter](reports/figures/personas_scatter.png)
+### 2) Taux de paradoxe par âge
+Le paradoxe (déclarer un fort souci éthique tout en consommant de la fast fashion) est ici analysé **par tranches d’âge**. L’objectif est de tester l’hypothèse d’un effet générationnel sur la dissonance entre valeurs et comportements.
 
-Le clustering révèle plusieurs profils distincts de consommateurs.  
-Chaque persona incarne une relation différente à la mode : rationnelle, impulsive, engagée ou influencée.
-
----
-
-### Cartographie des renoncements par cluster
-![Carte renoncements par cluster](reports/figures/carte_renoncements_par_cluster.png)
-
-Certains groupes expriment une volonté de consommer mieux, mais renoncent différemment selon leur rapport au prix, à l’image sociale ou à l’impact environnemental.
+![Paradoxe par âge](reports/figures/paradoxe_par_age.png)
 
 ---
 
-### Obsolescence psychologique selon les profils
-![Obsolescence psy](reports/figures/obsolescence_psy_par_cluster.png)
+### 3) Paradoxe éthique par canal d’achat
+Cette figure compare le taux de paradoxe selon le **canal d’achat**. Elle éclaire le rôle possible des environnements de consommation (online/offline, seconde main, etc.) dans l’alignement – ou non – entre attitudes éthiques et pratiques.
 
-La perception de l’obsolescence n’est pas seulement liée au produit, mais aussi à la pression symbolique des tendances.
-
----
-
-### Réseau des items et tendances dominantes
-![Réseau items tendance](reports/figures/reseau_items_tendance.png)
-
-Une visualisation relationnelle qui montre comment certains thèmes se renforcent mutuellement dans l’imaginaire collectif.
+![Paradoxe par canal](reports/figures/paradoxe_par_canal.png)
 
 ---
 
-### Heatmap des comportements par cluster
-![Heatmap items par cluster](reports/figures/heatmap_items_par_cluster.png)
+### 4) Fréquence d’achat (distribution)
+Distribution descriptive des modalités de **fréquence d’achat**. Cette vue sert de base de contexte pour interpréter les analyses plus “comportementales” (fin de vie, fast fashion, clusters).
 
-Cette heatmap synthétise les différences clés entre groupes, révélant des patterns invisibles dans une lecture linéaire des données.
-
----
-
-### Arbre de décision — Acceptation de payer plus
-![Arbre décision payer plus](reports/figures/arbre_decision_payer_plus.png)
-
-Un modèle explicatif qui illustre les variables les plus influentes dans la disposition à payer davantage pour une mode plus responsable.
+![Fréquence d’achat](reports/figures/dist_frequence_achat.png)
 
 ---
 
-### Fin de vie des produits et fréquence d’achat
+### 5) Canaux d’achat (multi-choix)
+Comme la question est en **choix multiples**, la figure est construite après “explosion” des réponses (split sur `;`). Elle permet d’observer la hiérarchie des canaux (internet, magasin physique, seconde main, etc.).
+
+![Canaux d’achat](reports/figures/dist_canaux_achat.png)
+
+---
+
+### 6) Destination de fin de vie (multi-choix)
+Analyse de la **fin de vie des vêtements** (don, vente, stockage, recyclage, jet). Cette visualisation offre une lecture des pratiques de circularité (revente/don) vs pratiques de sortie (jet) au niveau global.
+
+![Destination fin de vie](reports/figures/dist_destination_fin_vie.png)
+
+---
+
+### 7) Fin de vie par fréquence d’achat (comparaison en %)
+Cette figure compare les options de fin de vie **en pourcentage, à l’intérieur de chaque groupe de fréquence d’achat**. Elle répond à une question analytique : les acheteurs fréquents ont-ils des comportements de fin de vie différents (don/vente/stockage/recyclage/jet) ?
+
 ![Fin de vie par fréquence](reports/figures/fin_de_vie_par_frequence.png)
 
-Une perspective concrète sur le cycle réel des vêtements : conservation, revente, don ou abandon.
+---
 
+### 8) Clustering : carte des renoncements (arbitrages par cluster)
+À partir d’un clustering (K-means) sur des variables d’attitudes et préférences, cette figure compare les **moyennes** par cluster sur des dimensions clés (prix, qualité, confort, éthique, tendance). Elle aide à interpréter les clusters comme des **profils** d’arbitrage.
+
+![Carte des renoncements](reports/figures/carte_renoncements_par_cluster.png)
+
+---
+
+### 9) Arbre de décision : règles associées au fait de payer +20% (éthique)
+Un arbre de décision (profondeur limitée) fournit une lecture interprétable des **règles** associées à une disposition à payer davantage pour un produit éthique. L’objectif est exploratoire : identifier les variables (et seuils) les plus discriminants.
+
+![Arbre de décision](reports/figures/arbre_decision_payer_plus.png)
+
+---
+
+### 10) Uniformisation des items “tendance” par cluster (heatmap)
+Cette heatmap présente, par cluster, le **taux d’adoption (%)** d’items tendance (variables multi-choix transformées en dummies). Elle permet de visualiser la structure “style/produit” associée à chaque profil.
+
+![Heatmap items par cluster](reports/figures/heatmap_items_par_cluster.png)
+
+---
+
+### 11) Obsolescence psychologique par cluster
+Mesure synthétique du rejet du “démodé” (moyenne par cluster). Elle vise à relier la segmentation à une dimension psycho-sociale : la sensibilité à l’obsolescence symbolique.
+
+![Obsolescence psychologique](reports/figures/obsolescence_psy_par_cluster.png)
+
+---
+
+### 12) Packs de tendances (réseau de co-achat)
+Réseau construit à partir des corrélations entre items tendance (dummies). Les liens représentent des associations au-dessus d’un seuil, suggérant des **co-adoptions** récurrentes (“packs”) dans les réponses.
+
+![Réseau items tendance](reports/figures/reseau_items_tendance.png)
+
+---
+
+### 13) Typologie des consommateurs (waffle chart)
+Représentation en grille des clusters (1 carré ≈ 1 répondant). L’objectif est de donner une lecture immédiate de la **répartition** des profils dans l’échantillon.
+
+![Waffle clusters](reports/figures/waffle_clusters_typologie.png)
 ---
 
 ### Lecture finale
