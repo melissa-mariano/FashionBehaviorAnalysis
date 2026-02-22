@@ -13,7 +13,7 @@ Sorties :
 """
 
 #%% =========================
-# IMPORTS & CONFIG
+# 0) IMPORTS & CONFIG (clean)
 # =========================
 from __future__ import annotations
 
@@ -27,6 +27,7 @@ import pandas as pd
 
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
+from cycler import cycler
 
 import plotly.graph_objects as go
 
@@ -34,29 +35,122 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 
-# ----- chemins
+#%% =========================
+# 0B) PALETTE (UNIQUE) : Cerulean
+# =========================
+PALETTE = {
+    "CERULEAN_DARK":  "#005B82",  # cerulean foncé
+    "CERULEAN":       "#007BA7",  # cerulean classic
+    "CERULEAN_LIGHT": "#4FB6E1",  # clair
+    "CERULEAN_SOFT":  "#A7D8F0",  # très clair
+    "NAVY":           "#083D5B",  # contraste bleu nuit
+    "GRID":           "#D6EAF5",  # grid léger bleu
+    "GRIS_CLAIR":     "#E9ECEF",
+    "NOIR":           "#0B1D26",
+}
+
+
+#%% =========================
+# 0C) COLORMAP (UNIQUE) : Heatmaps cerulean
+# =========================
+CERULEAN_CMAP = mcolors.LinearSegmentedColormap.from_list(
+    "cerulean_cmap",
+    ["#F3FBFF", PALETTE["CERULEAN_SOFT"], PALETTE["CERULEAN_LIGHT"], PALETTE["CERULEAN"], PALETTE["CERULEAN_DARK"]],
+    N=256
+)
+
+#%% =========================
+# 0D) DESIGN SYSTEM (premium look)
+#     -> objectif: mêmes marges, même typo, même grille, même lisibilité
+# =========================
+def apply_design_system() -> None:
+    """Applique un thème global Matplotlib cohérent (à appeler une seule fois au début)."""
+    plt.rcParams.update({
+        # canvas
+        "figure.facecolor": "white",
+        "axes.facecolor": "white",
+
+        # contours & texte
+        "axes.edgecolor": PALETTE["CERULEAN_DARK"],
+        "axes.labelcolor": PALETTE["CERULEAN_DARK"],
+        "text.color": PALETTE["CERULEAN_DARK"],
+        "xtick.color": PALETTE["CERULEAN_DARK"],
+        "ytick.color": PALETTE["CERULEAN_DARK"],
+
+        # grid “soft”
+        "axes.grid": True,
+        "grid.color": PALETTE["GRID"],
+        "grid.linestyle": "-",
+        "grid.linewidth": 0.8,
+
+        # typographie (simple mais propre)
+        "axes.titlesize": 18,
+        "axes.titleweight": "bold",
+        "axes.labelsize": 12,
+        "xtick.labelsize": 11,
+        "ytick.labelsize": 11,
+
+        # légende
+        "legend.frameon": True,
+        "legend.framealpha": 0.95,
+        "legend.edgecolor": PALETTE["GRID"],
+    })
+
+    # cycle de couleurs (évite couleurs random)
+    plt.rcParams["axes.prop_cycle"] = cycler(color=[
+        PALETTE["CERULEAN_DARK"],
+        PALETTE["CERULEAN"],
+        PALETTE["CERULEAN_LIGHT"],
+        PALETTE["NAVY"],
+    ])
+
+def set_editorial_axes(ax: plt.Axes, title: str | None = None, xlabel: str | None = None, ylabel: str | None = None) -> None:
+    """Uniformise un axe (respiration + style)."""
+    if title:
+        ax.set_title(title, pad=18, fontweight="bold")
+    if xlabel is not None:
+        ax.set_xlabel(xlabel)
+    if ylabel is not None:
+        ax.set_ylabel(ylabel)
+
+    # enlève le “cadre” trop lourd en haut/droite
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+
+    # grid légère uniquement en y (souvent plus chic)
+    ax.grid(True, axis="y", alpha=0.35)
+    ax.grid(False, axis="x")
+
+    # marge interne (évite éléments collés)
+    ax.margins(x=0.05, y=0.08)
+
+
+def export_png(path: Path) -> None:
+    """Export propre: marges + bbox pour éviter titres collés."""
+    # IMPORTANT: tight_layout AVANT savefig
+    plt.tight_layout(pad=1.6)
+    plt.savefig(path, dpi=240, bbox_inches="tight")
+    plt.close()
+
+
+# applique le design system une fois
+apply_design_system()
+
+#%% =========================
+# 0E) PATHS / OUTPUTS
+# =========================
 DATA_PATH = Path("data") / "La mode - LaMode.csv"
+
 OUT_DIR = Path("reports")
 FIG_DIR = OUT_DIR / "figures"
-OUT_DIR.mkdir(exist_ok=True)
-FIG_DIR.mkdir(exist_ok=True)
+OUT_DIR.mkdir(parents=True, exist_ok=True)
+FIG_DIR.mkdir(parents=True, exist_ok=True)
 
 RANDOM_STATE = 42
 
-PALETTE = {
-    "VIN": "#791401",
-    "BLEU": "#2980B9",
-    "VERT": "#1E5128",
-    "GRIS": "#7f7f7f",
-    "GRIS_CLAIR": "#d3d3d3",
-    "NOIR": "#111111",
-}
-
-def export_png(path: Path) -> None:
-    plt.tight_layout()
-    plt.savefig(path, dpi=220, bbox_inches="tight")
-    plt.close()
-
+#%% =========================
+# 0F) TEXT / NUM HELPERS (tes fonctions)
+# =========================
 def norm_text(s: str) -> str:
     s = str(s)
     s = unicodedata.normalize("NFKD", s)
@@ -65,16 +159,18 @@ def norm_text(s: str) -> str:
     s = re.sub(r"\s+", " ", s).strip()
     return s
 
+
 def safe_to_numeric(series: pd.Series) -> pd.Series:
     # gère virgules FR "7,5"
     s = series.astype(str).str.replace(",", ".", regex=False)
     return pd.to_numeric(s, errors="coerce")
 
+
 from pandas.api.types import is_string_dtype
 def map_likert_fr_to_num(series: pd.Series) -> pd.Series:
-    
     if not is_string_dtype(series):
         return series
+
     m = {
         "jamais": 1,
         "rarement": 2,
@@ -88,6 +184,7 @@ def map_likert_fr_to_num(series: pd.Series) -> pd.Series:
         "enormement": 5,
         "énormément": 5,
     }
+
     def conv(x):
         if pd.isna(x):
             return np.nan
@@ -101,7 +198,6 @@ def map_likert_fr_to_num(series: pd.Series) -> pd.Series:
                 return float(v)
         return np.nan
     return series.apply(conv)
-
 
 #%% =========================
 # DÉTECTION / RENOMMAGE ROBUSTE
@@ -389,7 +485,7 @@ if all(c in df.columns for c in ["Frequence_Achat", "Canal_Achat", "Utilise_Fast
         sources.append(s); targets.append(t); values.append(int(r["count"]))
 
     fig = go.Figure(data=[go.Sankey(
-        node=dict(pad=15, thickness=18, label=labels_list, color=PALETTE["VIN"]),
+        node=dict(pad=15, thickness=18, label=labels_list, color=PALETTE["CERULEAN"]),
         link=dict(source=sources, target=targets, value=values)
     )])
     fig.update_layout(title_text="Parcours consommateur (Sankey nettoyé)", font_size=10)
@@ -444,7 +540,7 @@ if all(c in df.columns for c in ["Frequence_Achat", "Canal_Achat", "Utilise_Fast
         sources.append(s); targets.append(t); values.append(int(r["count"]))
 
     fig = go.Figure(data=[go.Sankey(
-        node=dict(pad=15, thickness=18, label=labels_list, color=PALETTE["VIN"]),
+        node=dict(pad=15, thickness=18, label=labels_list, color=PALETTE["CERULEAN"]),
         link=dict(source=sources, target=targets, value=values)
     )])
     fig.update_layout(title_text="Cycle complet (Sankey - 4 étapes, nettoyé)", font_size=10)
@@ -501,24 +597,34 @@ if "Type_Articles_Achetes" in df.columns:
         angles = np.linspace(0, 2*np.pi, n, endpoint=False)
         pos = {nodes[i]: (np.cos(angles[i]), np.sin(angles[i])) for i in range(n)}
 
-        plt.figure(figsize=(10, 10))
+        plt.figure(figsize=(11, 11))
         # liens
         for a, b, w in edges:
             xa, ya = pos[a]
             xb, yb = pos[b]
-            plt.plot([xa, xb], [ya, yb], alpha=0.35, linewidth=1 + 4*w, color=PALETTE["GRIS"])
+            link_color = PALETTE["CERULEEN"] if w >= 0.30 else PALETTE["CERULEAN"]
+            plt.plot(
+                [xa, xb],
+                [ya, yb],
+                linewidth=1 + 4*w,
+                 alpha=0.65,
+                color=link_color,
+                zorder=1
+            )
         # noeuds
         sizes = (dummies.sum().reindex(nodes).fillna(0).values + 1) * 30
         xs = [pos[k][0] for k in nodes]
         ys = [pos[k][1] for k in nodes]
-        plt.scatter(xs, ys, s=sizes, color=PALETTE["VIN"], alpha=0.9, edgecolor="black")
+        plt.scatter(xs, ys, s=sizes, color=PALETTE["CERULEAN"], alpha=0.95, edgecolor="black", linewidth=0.8, zorder=3)
 
         # labels
         for k in nodes:
             x, y = pos[k]
-            plt.text(x*1.08, y*1.08, k.strip(), ha="center", va="center", fontsize=9)
+            plt.text(x*1.18, y*1.18, k.strip(), ha="center", va="center", color= "black", fontsize=12, zorder=4)
 
-        plt.title(f"Packs de tendances (corrélation > {threshold})", fontweight="bold")
+        plt.title(f"Packs de tendances (corrélation > {threshold})", fontsize=24, fontweight="bold", pad=22)
+        plt.xlim(-1.35, 1.35)
+        plt.ylim(-1.35, 1.35)
         plt.axis("off")
         export_png(FIG_DIR / "reseau_items_tendance.png")
     else:
@@ -611,20 +717,42 @@ else:
 #%% =========================
 # 6) HEATMAP UNIFORMISATION : % adoption items par cluster
 # =========================
+import seaborn as sns
+import matplotlib.colors as mcolors
+
+CERULEAN_CMAP = mcolors.LinearSegmentedColormap.from_list(
+    "cerulean",
+    ["#F3FBFF", "#A9D6E5", "#61A5C2", "#2A6F97", "#0047AB"],
+    N=256
+)
+
 if df_cluster is not None and "Type_Articles_Achetes" in df_cluster.columns:
     items = df_cluster["Type_Articles_Achetes"].dropna().astype(str)
     dummies = items.str.get_dummies(sep=";")
+
     if dummies.shape[1] >= 1:
         temp = pd.concat([df_cluster["Cluster"], dummies], axis=1).fillna(0)
         pct = temp.groupby("Cluster").mean() * 100
-        # heatmap matplotlib
-        plt.figure(figsize=(12, 6))
-        plt.imshow(pct.values, aspect="auto")
-        plt.colorbar(label="% d'adoption")
-        plt.yticks(range(len(pct.index)), [f"Cluster {i}" for i in pct.index])
-        plt.xticks(range(len(pct.columns)), [c.strip() for c in pct.columns], rotation=30, ha="right")
-        plt.title("Uniformisation : articles tendance par cluster (% adoption)", fontweight="bold")
+
+        plt.figure(figsize=(14, 6))
+        ax = sns.heatmap(
+            pct,
+            cmap=CERULEAN_CMAP,
+            vmin=0, vmax=100,
+            linewidths=0.5,
+            linecolor="white",
+            cbar_kws={"label": "% d'adoption"}
+        )
+
+        ax.set_title("Uniformisation : articles tendance par cluster (% adoption)", fontweight="bold")
+        ax.set_xlabel("")
+        ax.set_ylabel("")
+        plt.xticks(rotation=30, ha="right")
+        plt.yticks(rotation=0)
+
         export_png(FIG_DIR / "heatmap_items_par_cluster.png")
+    else:
+        warnings.warn("Heatmap items ignorée (pas d'items).")
 else:
     warnings.warn("Heatmap items ignorée.")
 
@@ -690,37 +818,60 @@ if df_cluster is not None:
 
 #%% =========================
 # 10) ARBRE DE DÉCISION : Qui paie +20% pour l'éthique ?
-# =========================
+def _recolor_tree_fills(ann_list, class_names=("Ne paie pas", "Paie")):
+    C_LIGHT = PALETTE["CERULEAN_LIGHT"]
+    C_DARK = PALETTE["CERULEAN_DARK"]
+    for o in ann_list:
+        txt_obj = o
+        txt_content = txt_obj.get_text()
+        bbox = txt_obj.get_bbox_patch()
+        
+        if "class =" in txt_content:
+            cls = txt_content.split("class =")[-1].strip()
+            
+            if cls == class_names[1]:  # "Paie"
+                bbox.set_facecolor(C_DARK)
+                bbox.set_edgecolor("white")
+                txt_obj.set_color("white") 
+            else:                    
+                bbox.set_facecolor(C_LIGHT)
+                bbox.set_edgecolor(C_DARK)
+                txt_obj.set_color("black")
 req = ["Pret_A_Payer_Plus", "Age", "Souci_Ethique", "Importance_Prix", "Importance_Qualite"]
+
 if all(c in df.columns for c in req):
     d = df.dropna(subset=req).copy()
-    y = (d["Pret_A_Payer_Plus"] >= 7).astype(int) 
-
+    y = (d["Pret_A_Payer_Plus"] >= 7).astype(int)
     feats = ["Age", "Souci_Ethique", "Importance_Prix", "Importance_Qualite"]
     X = d[feats].copy()
 
-    tree = DecisionTreeClassifier(
-    max_depth=3,
-    min_samples_leaf=20,
-    class_weight="balanced",
-    random_state=RANDOM_STATE
+    tree_model = DecisionTreeClassifier(
+        max_depth=3,
+        min_samples_leaf=20,
+        class_weight="balanced",
+        random_state=RANDOM_STATE
     )
-    tree.fit(X, y)
-
-    plt.figure(figsize=(14, 7))
+    tree_model.fit(X, y)
+    fig, ax = plt.subplots(figsize=(16, 9), facecolor='white')
+    
     ann = plot_tree(
-        tree,
+        tree_model,
         feature_names=feats,
         class_names=["Ne paie pas", "Paie"],
         filled=True,
         rounded=True,
-        fontsize=9
+        fontsize=11,
+        ax=ax,
+        precision=2 # Limita casas decimais para evitar poluição visual
     )
-    plt.title("Règles pour payer 20% plus cher (produit éthique)", fontweight="bold")
+    _recolor_tree_fills(ann, class_names=("Ne paie pas", "Paie"))
+
+    plt.title("Règles pour payer 20% plus cher (produit éthique)", fontsize=22, fontweight="bold", pad=20)
     export_png(FIG_DIR / "arbre_decision_payer_plus.png")
+    plt.show()
+
 else:
     warnings.warn("Arbre de décision ignoré (colonnes manquantes).")
-
 
 #%% =========================
 # 11) DESTINATION FIN DE VIE par fréquence d'achat (barres empilées)
@@ -1005,3 +1156,112 @@ if "Influence_Reseaux" in df.columns:
 (Path(OUT_DIR) / "resume_storytelling.md").write_text("\n".join(summary_lines), encoding="utf-8")
 print("OK - Visus complémentaires + exports storytelling générés.")
 
+#%% =========================
+# 13) WAFFLE CHART : Typologie des consommateurs (clusters)
+# =========================
+from matplotlib.patches import Rectangle
+
+# 1) Choisir la bonne table : df_cluster (prioritaire), sinon df si Cluster existe
+df_waffle = None
+if "df_cluster" in globals() and df_cluster is not None and "Cluster" in df_cluster.columns:
+    df_waffle = df_cluster.copy()
+elif "Cluster" in df.columns:
+    df_waffle = df.copy()
+
+if df_waffle is None:
+    warnings.warn("Waffle chart ignoré (colonne Cluster manquante).")
+else:
+    d = df_waffle.dropna(subset=["Cluster"]).copy()
+
+    # 2) Sécuriser : Cluster en int
+    d["Cluster"] = pd.to_numeric(d["Cluster"], errors="coerce")
+    d = d.dropna(subset=["Cluster"])
+    d["Cluster"] = d["Cluster"].astype(int)
+
+    counts = d["Cluster"].value_counts().sort_index()
+    labels = [f"Cluster {c}" for c in counts.index]
+    values = counts.values
+
+    # 3) Couleurs (TA palette existante)
+    base_colors = [
+        PALETTE["CERULEAN_DARK"],
+        PALETTE["CERULEAN"],
+        PALETTE["CERULEAN_LIGHT"],
+        PALETTE["CERULEAN_SOFT"],
+        PALETTE["NAVY"],
+    ]
+    colors = [base_colors[i % len(base_colors)] for i in range(len(values))]
+
+    # 4) Grille waffle (50x50 = 2500)
+    n_cols = 50
+    n_rows = 50
+    n_total = n_cols * n_rows
+
+    proportions = values / values.sum()
+    squares = np.floor(proportions * n_total).astype(int)
+
+    # Ajustement pour atteindre exactement 2500 cases
+    remainder = n_total - squares.sum()
+    if remainder > 0:
+        order = np.argsort(-(proportions * n_total - squares))  # plus grands restes
+        for i in order[:remainder]:
+            squares[i] += 1
+
+    # 5) Construire la grille (liste de catégories)
+    grid = []
+    for i, c in enumerate(squares):
+        grid += [i] * int(c)
+
+    # (sécurité)
+    grid = grid[:n_total]
+    if len(grid) < n_total:
+        grid += [len(values) - 1] * (n_total - len(grid))
+
+    # 6) Plot
+    fig, ax = plt.subplots(figsize=(10, 10), facecolor="white")
+    ax.set_facecolor("white")
+
+    # dessin des carrés (avec marges propres)
+    cell = 0.92  # espace entre carrés (plus premium)
+    for i, cat in enumerate(grid):
+        row = i // n_cols
+        col = i % n_cols
+
+        # origine en bas à gauche
+        x = col
+        y = (n_rows - 1 - row)
+
+        rect = Rectangle((x, y), cell, cell, facecolor=colors[cat], edgecolor="white", linewidth=0.4)
+        ax.add_patch(rect)
+
+    # marges visuelles (respiration)
+    ax.set_xlim(-1.5, n_cols + 1.5)
+    ax.set_ylim(-8, n_rows + 3.5)
+    ax.axis("off")
+
+    # titre
+    ax.text(
+        0, n_rows + 2.2,
+        "Typologie des consommateurs de mode (Waffle chart)",
+        fontsize=16, fontweight="bold", color=PALETTE["CERULEAN_DARK"]
+    )
+
+    # sous-titre (optionnel mais “académique”)
+    ax.text(
+        0, n_rows + 1.2,
+        f"{len(d)} répondants — 1 carré ≈ {max(1, int(round(len(d) / n_total)))} répondant(s)",
+        fontsize=10, color=PALETTE["NAVY"]
+    )
+
+    # légende éditoriale (une ligne par cluster)
+    y0 = -2.5
+    for i, (lab, val) in enumerate(zip(labels, values)):
+        ax.add_patch(Rectangle((0, y0 - i*1.2), 1.2, 0.7, facecolor=colors[i], edgecolor="none"))
+        ax.text(
+            1.5, y0 - i*1.2 + 0.35,
+            f"{lab} — {val} ({val/values.sum()*100:.1f}%)",
+            va="center", fontsize=10, color=PALETTE["NOIR"]
+        )
+
+    export_png(FIG_DIR / "waffle_clusters_typologie.png")
+    print("OK - Waffle exporté : reports/figures/waffle_clusters_typologie.png")
