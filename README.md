@@ -79,10 +79,6 @@ Ce script :
 
 ## Visualisations principales
 
-## Galerie visuelle
-
-## Galerie Visuelle — Storytelling des Comportements Mode
-
 Parce que la mode n’est pas seulement esthétique, mais aussi décisionnelle, cette galerie visuelle présente les principales dynamiques observées dans les données.  
 Chaque visualisation contribue à raconter une histoire : celle des contradictions, des influences sociales et des choix individuels face à l’industrie de la mode.
 
