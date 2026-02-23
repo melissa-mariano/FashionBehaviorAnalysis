@@ -360,24 +360,63 @@ for c in likert_5:
 req = ["Souci_Ethique", "Utilise_FastFashion"]
 if all(c in df.columns for c in req):
     d = df.copy()
-    d["FF_Oui"] = d["Utilise_FastFashion"].astype(str).str.contains("oui", case=False, na=False)
-    d["Ethique_Haute"] = d["Souci_Ethique"] >= 7
 
-    d["Comportement"] = "Autres"
-    d.loc[d["Ethique_Haute"] & d["FF_Oui"], "Comportement"] = "DIT éthique\nMAIS FF"
-    d.loc[d["Ethique_Haute"] & ~d["FF_Oui"], "Comportement"] = "DIT éthique\nET cohérent"
-    d.loc[~d["Ethique_Haute"] & d["FF_Oui"], "Comportement"] = "NE S'EN SOUCIE PAS\nET FF"
+    # 1) FastFashion: on force une lecture Oui/Non, sinon NaN -> "Autres"
+    ff_txt = d["Utilise_FastFashion"].astype(str).str.strip().str.lower()
 
+    d["FF"] = np.select(
+        [
+            ff_txt.str.contains(r"\boui\b", na=False),
+            ff_txt.str.contains(r"\bnon\b", na=False),
+        ],
+        [1, 0],
+        default=np.nan
+    )
+
+    # 2) Souci éthique: numeric + seuil
+    d["Souci_Ethique_num"] = pd.to_numeric(d["Souci_Ethique"], errors="coerce")
+    d["Ethique_Haute"] = d["Souci_Ethique_num"] >= 7
+
+    # 3) Groupes (4 cas) + Autres = seulement si on ne peut pas classer
+    d["Comportement"] = "Autres (données manquantes / non interprétables)"
+
+    d.loc[d["Ethique_Haute"] & (d["FF"] == 1), "Comportement"] = (
+        "Souci éthique élevé, mais achat de fast fashion"
+    )
+    d.loc[(~d["Ethique_Haute"]) & (d["FF"] == 1), "Comportement"] = (
+        "Souci éthique faible, et achat de fast fashion"
+    )
+    d.loc[d["Ethique_Haute"] & (d["FF"] == 0), "Comportement"] = (
+        "Souci éthique élevé, et pas de fast fashion (cohérent)"
+    )
+    d.loc[(~d["Ethique_Haute"]) & (d["FF"] == 0), "Comportement"] = (
+        "Souci éthique faible, et pas de fast fashion"
+    )
+
+    # 4) Pourcentages + ordre (labels non abrégés)
     counts = d["Comportement"].value_counts(normalize=True) * 100
-    order = ["DIT éthique\nMAIS FF", "NE S'EN SOUCIE PAS\nET FF", "DIT éthique\nET cohérent", "Autres"]
+
+    order = [
+        "Souci éthique élevé, mais achat de fast fashion",
+        "Souci éthique faible, et achat de fast fashion",
+        "Souci éthique élevé, et pas de fast fashion (cohérent)",
+        "Souci éthique faible, et pas de fast fashion",
+        "Autres (données manquantes / non interprétables)",
+    ]
     counts = counts.reindex(order).fillna(0)
 
-    plt.figure(figsize=(10, 5))
+    # 5) Plot
+    plt.figure(figsize=(12, 6))
     plt.barh(counts.index, counts.values, edgecolor="black")
     plt.gca().invert_yaxis()
     plt.title("Le Grand Paradoxe : discours vs réalité", fontweight="bold")
     plt.xlabel("%")
+    plt.ylabel("")
     export_png(FIG_DIR / "grand_paradoxe.png")
+
+    # (Optionnel) debug: voir ce que contient "Autres"
+    # print(d.loc[d["Comportement"].str.startswith("Autres"), "Utilise_FastFashion"].value_counts(dropna=False).head(20))
+
 else:
     warnings.warn("Grand paradoxe ignoré (colonnes manquantes).")
 
