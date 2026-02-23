@@ -13,7 +13,7 @@ L’objectif est d’explorer une question centrale :
 
 **Comment l’industrie de la mode influence-t-elle les comportements et les décisions individuelles dans notre société ?**
 
-À partir d’une enquête quantitative menée auprès de 428 répondants, ce projet combine science des données et sociologie de la mode pour analyser les paradoxes entre discours éthique, pression sociale et pratiques réelles.
+À partir d’une enquête quantitative menée auprès de 428 répondants, ce projet adopte une approche de data storytelling visuel afin de traduire des comportements sociaux en structures analytiques lisibles.
 
 ---
 
@@ -37,10 +37,14 @@ FashionBehaviorAnalysis/
 │   └── La mode - LaMode.csv
 │
 ├── notebooks/
-│   └── notebook_visualisations.py
+│   └── pipeline_visualisations.py
 │
 ├── reports/
+│   ├── reports/
 │   ├── figures/
+│   ├── sankey_parcours_3_etapes.html
+│   ├── sankey_cycle_complet_4_etapes.html
+│   ├── resume_storytelling.md
 │   ├── personas_clusters.csv
 │   ├── personas_moyennes_par_cluster.csv
 │   └── kmeans_elbow_silhouette.csv
@@ -71,13 +75,16 @@ pip install -r requirements.txt
 
 ## Utilisation
 
-python notebooks/notebook_visualisations.py
+python notebooks/pipeline_visualisations.py
 
-Ce script :
-- nettoie et standardise les données de l’enquête
-- génère l’ensemble des visualisations
-- segmente les répondants en personas via clustering
-- exporte les résultats dans le dossier reports/
+Ce script exécute l’intégralité du pipeline d’analyse :
+
+- nettoyage et normalisation robuste des variables
+- détection automatique et renommage des colonnes de l’enquête
+- génération des visualisations principales et complémentaires
+- segmentation exploratoire des répondants via clustering K-Means
+- création de graphiques narratifs (Sankey, heatmaps, réseaux, waffle chart)
+- export automatique des figures, tableaux et fichiers HTML dans le dossier reports/
 
 ---
 
@@ -204,7 +211,6 @@ Ces visualisations proposent une approche analytique — mais assumée, sensible
 - Comprendre les dynamiques sociales derrière les choix vestimentaires
 - Mettre en évidence l’influence structurelle de l’industrie de la mode
 - Transformer un phénomène culturel en analyse data-driven
-- Construire un storytelling visuel basé sur des données réelles
 
 ---
 
