@@ -230,11 +230,6 @@ Ce script exécute un **pipeline analytique complet** :
   <img src="reports/figures/reseaux_fastfashion_selon_influence.png" width="900" alt="Probabilité fast fashion - selon influence réseaux">
 </p>
 
-#### Spirale de la culpabilité — réseaux sociaux vs culpabilité (couleur = fast fashion)
-<p align="center">
-  <img src="reports/figures/spirale_culpabilite_reseaux.png" width="900" alt="Réseaux vs culpabilité - couleur fast fashion">
-</p>
-
 #### Culpabilité selon la consommation de fast fashion
 <p align="center">
   <img src="reports/figures/reseaux_culpabilite_fastfashion_boxplot.png" width="900" alt="Boxplot - culpabilité selon fast fashion">
