@@ -255,11 +255,18 @@ Ce script exécute un **pipeline analytique complet** :
 
 ---
 
-### 9) Modélisation explicative (arbre de décision)
+### 9) Modélisation explicative
 
-#### 9.1 Arbre de décision — « payer plus » (exemple)
-**Objectif :** expliquer les facteurs associés à la probabilité de payer plus cher pour un produit éthique.  
-**Lecture :** chaque nœud correspond à une règle de décision.  
+#### 9.1 Arbre de décision — payer plus (produit éthique)
+
+**Objectif :** identifier les facteurs et seuils associés à la probabilité de payer environ +20 % pour un produit perçu comme éthique.
+
+**Lecture :**  
+- Chaque nœud correspond à une règle (seuil sur une variable).  
+- Les branches indiquent les combinaisons de conditions menant à une décision.  
+- Les nœuds terminaux (dernière ligne) représentent des **décisions finales** (*Paie* / *Ne paie pas*).  
+- L’absence de critère dans ces nœuds signifie que, compte tenu des conditions précédentes, aucune séparation supplémentaire n’améliore la prédiction : la décision est considérée comme stable.
+
 ![Arbre de décision — payer plus](reports/figures/arbre_decision_payer_plus.png)
 
 ---
