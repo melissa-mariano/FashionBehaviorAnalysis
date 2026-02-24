@@ -17,7 +17,7 @@ Ce projet est inspiré du célèbre monologue du *bleu céruléen* dans **Le Dia
 Comment l’industrie de la mode impacte-t-elle le comportement et les choix vestimentaires ?
 
 Questions principales :
-- Existe-t-il un décalage entre valeurs déclarées et comportements réels (fast fashion) ?
+- Existe-t-il un décalage entre valeurs déclarées et comportements réels ?
 - Quel rôle jouent les réseaux sociaux, la tendance et la pression sociale ?
 - Peut-on identifier des profils (personas) via une segmentation exploratoire ?
 - Quels arbitrages structurent les décisions (prix, qualité, confort, éthique, tendance) ?
@@ -78,21 +78,36 @@ Ce script exécute un **pipeline analytique complet** :
 - construction d’indicateurs sociologiques (paradoxe éthique, obsolescence psychologique)
 - visualisations narratives (hexbin, Sankey, réseaux, heatmaps)
 - clustering exploratoire K-Means + projection PCA
-- arbre de décision interprétable (XAI léger)
+- arbre de décision interprétable 
 - génération automatique des exports (figures, diagnostics, tableaux)
 
 ---
 
 ## Logique analytique (chapitres)
 
-- Chapitre 1 — Discours vs réalité : le Grand Paradoxe
-- Chapitre 2 — Spirale des réseaux sociaux et culpabilité
-- Chapitre 3 — Machine à tendances (co-adoption d’items)
-- Chapitre 4 — Personas et segmentation
-- Chapitre 5 — Uniformisation et pression sociale
-- Chapitre 6 — Arbitrages structurés
-- Chapitre 7 — Décision explicable (payer plus pour l’éthique)
-- Chapitre 8 — Conséquences : fréquence d’achat et fin de vie
+- Chapitre 1 — Discours vs réalité : le Grand Paradoxe  
+  Analyse du décalage entre valeurs déclarées, culpabilité ressentie et comportements réels liés à la fast fashion.
+
+- Chapitre 2 — Réseaux sociaux, influence et dynamiques de tendances  
+  Exploration de l’influence perçue des réseaux sociaux, de leur lien avec les tendances et des corrélations psycho-sociales associées.
+
+- Chapitre 3 — Machine à tendances : co-adoption et structures d’items  
+  Identification des “packs” de tendances et des logiques d’adoption collective via réseaux d’items et heatmaps.
+
+- Chapitre 4 — Personas et segmentation comportementale  
+  Construction d’une typologie de consommateurs à partir du clustering K-means et projection PCA.
+
+- Chapitre 5 — Uniformisation et pression sociale  
+  Lecture des effets d’obsolescence psychologique, de pression sociale et d’homogénéisation des comportements.
+
+- Chapitre 6 — Arbitrages structurés et renoncements  
+  Analyse des compromis entre prix, éthique, confort et image sociale selon les clusters.
+
+- Chapitre 7 — Décision explicable : payer plus pour l’éthique  
+  Modélisation interprétable via arbre de décision pour comprendre les facteurs associés à la disposition à payer davantage.
+
+- Chapitre 8 — Conséquences comportementales : fréquence d’achat et fin de vie  
+  Mise en relation du rythme d’achat avec les pratiques de fin de vie des vêtements et les logiques de circularité.
 
 ---
 
@@ -108,12 +123,12 @@ Ce script exécute un **pipeline analytique complet** :
 #### 1.1 Sankey — parcours (3 étapes)
 **Objectif :** visualiser les enchaînements dominants entre fréquence d’achat, canal et fast fashion.  
 **Lecture :** l’épaisseur des flux indique la fréquence des parcours observés.  
-👉 [Ouvrir la visualisation Sankey — parcours (3 étapes)](reports/sankey_parcours_3_etapes.html)
+👉 Ouvrir : https://melissa-mariano.github.io/FashionBehaviorAnalysis/reports/sankey_parcours_3_etapes.html
 
 #### 1.2 Sankey — cycle complet (4 étapes)
 **Objectif :** représenter le cycle complet incluant la destination de fin de vie.  
 **Lecture :** met en évidence les trajectoires majoritaires et marginales.  
-👉 [Ouvrir la visualisation Sankey — cycle complet (4 étapes)](reports/sankey_cycle_complet_4_etapes.html)
+👉 Ouvrir : https://melissa-mariano.github.io/FashionBehaviorAnalysis/reports/sankey_cycle_complet_4_etapes.html
 
 ---
 
