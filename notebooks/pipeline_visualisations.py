@@ -1,20 +1,9 @@
-# -*- coding: utf-8 -*-
-"""
-notebook_visualisations.py  (mode notebook VS Code avec cellules #%%)
+# ============================================================
+# CHAPITRE 0 — SETUP & NORMALISATION (OBLIGATOIRE)
+# But : avoir une base propre et stable (sinon tout casse)
+# ============================================================
 
-But :
-- Reprendre le pipeline robuste (détection colonnes) + ajouter TOUTES les visualisations “valeur”
-- À exécuter en mode notebook (VS Code : Python: Run Cell / Run All)
-
-Sorties :
-- reports/figures/*.png
-- reports/*.html
-- reports/*.csv
-"""
-
-#%% =========================
-# 0) IMPORTS & CONFIG (clean)
-# =========================
+# [0A] Imports & config (clean)
 from __future__ import annotations
 
 from pathlib import Path
@@ -35,9 +24,9 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 
-#%% =========================
-# 0B) PALETTE (UNIQUE) : Cerulean
-# =========================
+import seaborn as sns
+
+# [0B] Palette cerulean + colormap cerulean
 PALETTE = {
     "CERULEAN_DARK":  "#005B82",  # cerulean foncé
     "CERULEAN":       "#007BA7",  # cerulean classic
@@ -49,20 +38,13 @@ PALETTE = {
     "NOIR":           "#0B1D26",
 }
 
-
-#%% =========================
-# 0C) COLORMAP (UNIQUE) : Heatmaps cerulean
-# =========================
 CERULEAN_CMAP = mcolors.LinearSegmentedColormap.from_list(
     "cerulean_cmap",
     ["#F3FBFF", PALETTE["CERULEAN_SOFT"], PALETTE["CERULEAN_LIGHT"], PALETTE["CERULEAN"], PALETTE["CERULEAN_DARK"]],
     N=256
 )
 
-#%% =========================
-# 0D) DESIGN SYSTEM (premium look)
-#     -> objectif: mêmes marges, même typo, même grille, même lisibilité
-# =========================
+# [0C] Design system
 def apply_design_system() -> None:
     """Applique un thème global Matplotlib cohérent (à appeler une seule fois au début)."""
     plt.rcParams.update({
@@ -136,9 +118,7 @@ def export_png(path: Path) -> None:
 # applique le design system une fois
 apply_design_system()
 
-#%% =========================
-# 0E) PATHS / OUTPUTS
-# =========================
+# [0D] Paths / outputs
 DATA_PATH = Path("data") / "La mode - LaMode.csv"
 
 OUT_DIR = Path("reports")
@@ -148,9 +128,7 @@ FIG_DIR.mkdir(parents=True, exist_ok=True)
 
 RANDOM_STATE = 42
 
-#%% =========================
-# 0F) TEXT / NUM HELPERS (tes fonctions)
-# =========================
+# [0E] Helpers texte/nombre
 def norm_text(s: str) -> str:
     s = str(s)
     s = unicodedata.normalize("NFKD", s)
@@ -199,9 +177,7 @@ def map_likert_fr_to_num(series: pd.Series) -> pd.Series:
         return np.nan
     return series.apply(conv)
 
-#%% =========================
-# DÉTECTION / RENOMMAGE ROBUSTE
-# =========================
+# [0F] Détection / renommage robuste
 def rename_robuste(df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     mapping: dict[str, str] = {}
     cols_norm = {c: norm_text(c) for c in df.columns}
@@ -308,9 +284,7 @@ def rename_robuste(df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     return df2, mapping
 
 
-#%% =========================
-# CHARGEMENT
-# =========================
+# [0G] Chargement + rename + anti-duplicats + diagnostic
 if not DATA_PATH.exists():
     raise FileNotFoundError(f"CSV introuvable : {DATA_PATH.resolve()}")
 
@@ -332,10 +306,7 @@ for k, v in mapping.items():
 print("OK - Diagnostic exporté : reports/diagnostic_colonnes.txt")
 
 
-#%% =========================
-# PRÉPARATION NUMÉRIQUE (colonnes clés)
-# =========================
-# conversions robustes (si présentes)
+# [0H] Préparation numérique (num_10 + likert_5)
 num_10 = [
     "Souci_Ethique", "Pret_A_Payer_Plus",
     "Influence_Tendances", "Influence_Reseaux",
@@ -353,10 +324,18 @@ for c in likert_5:
     if c in df.columns:
         df[c] = map_likert_fr_to_num(df[c])
 
+print("=== COLONNES DISPONIBLES ===")
+for c in df.columns:
+    print("-", c)
 
-#%% =========================
-# 1) GRAND PARADOXE (global)
-# =========================
+
+# ============================================================
+# CHAPITRE 1 — LE "SYSTÈME" (MACRO) : DISCOURS vs RÉALITÉ
+# But : prouver l’impact de l’industrie via contradictions
+# ============================================================
+
+# [1A] Grand Paradoxe (global)
+
 req = ["Souci_Ethique", "Utilise_FastFashion"]
 if all(c in df.columns for c in req):
     d = df.copy()
@@ -400,10 +379,13 @@ if all(c in df.columns for c in req):
         "Souci éthique élevé, mais achat de fast fashion",
         "Souci éthique faible, et achat de fast fashion",
         "Souci éthique élevé, et pas de fast fashion (cohérent)",
-        "Souci éthique faible, et pas de fast fashion",
+        "Souci éthique faible, et pas de fast fashion (indifférent)",
         "Autres (données manquantes / non interprétables)",
     ]
     counts = counts.reindex(order).fillna(0)
+
+    # enlever "Autres" s'il vaut 0
+    counts = counts[counts > 0]
 
     # 5) Plot
     plt.figure(figsize=(12, 6))
@@ -421,9 +403,8 @@ else:
     warnings.warn("Grand paradoxe ignoré (colonnes manquantes).")
 
 
-#%% =========================
-# 1B) GRAND PARADOXE PAR ÂGE (buckets)
-# =========================
+# [1B] Grand Paradoxe par âge
+
 req = ["Age", "Souci_Ethique", "Utilise_FastFashion"]
 if all(c in df.columns for c in req):
     d = df.dropna(subset=["Age", "Souci_Ethique", "Utilise_FastFashion"]).copy()
@@ -439,7 +420,7 @@ if all(c in df.columns for c in req):
     grp = d.groupby("Age_Groupe", observed=False)["Paradoxe"].mean() * 100
     plt.figure(figsize=(10, 5))
     plt.plot(grp.index.astype(str), grp.values, marker="o")
-    plt.title("Taux de paradoxe (DIT éthique MAIS FF) par âge", fontweight="bold")
+    plt.title("Taux de paradoxe (Souci éthique élevé, mais achat de fast fashion) par âge", fontweight="bold")
     plt.ylabel("% du groupe")
     plt.xlabel("Groupe d'âge")
     plt.grid(True, linestyle="--", alpha=0.4)
@@ -448,31 +429,12 @@ else:
     warnings.warn("Paradoxe par âge ignoré.")
 
 
-#%% =========================
-# 1C) GRAND PARADOXE PAR CANAL
-# =========================
-req = ["Canal_Achat", "Souci_Ethique", "Utilise_FastFashion"]
-if all(c in df.columns for c in req):
-    d = df.dropna(subset=req).copy()
-    d["FF_Oui"] = d["Utilise_FastFashion"].astype(str).str.contains("oui", case=False, na=False)
-    d["Ethique_Haute"] = d["Souci_Ethique"] >= 7
-    d["Paradoxe"] = (d["Ethique_Haute"] & d["FF_Oui"]).astype(int)
+# [1C] Paradoxe par canal (multi-choix)
 
-    grp = d.groupby("Canal_Achat")["Paradoxe"].mean().sort_values(ascending=False) * 100
-    plt.figure(figsize=(10, 5))
-    plt.bar(grp.index.astype(str), grp.values, edgecolor="black")
-    plt.title("Paradoxe éthique par canal d'achat", fontweight="bold")
-    plt.ylabel("% (DIT éthique MAIS FF)")
-    plt.xticks(rotation=20, ha="right")
-    export_png(FIG_DIR / "paradoxe_par_canal.png")
-else:
-    warnings.warn("Paradoxe par canal ignoré.")
-
-
+# helpers (DEVEM estar aqui, antes do code)
 def split_multi(series: pd.Series, sep=";") -> pd.Series:
-    # retorna lista de escolhas por linha
-    return series.fillna("Non spécifié").astype(str).apply(
-        lambda x: [t.strip() for t in x.split(sep) if t.strip()] if sep in x else [x.strip()]
+    return series.fillna("").astype(str).apply(
+        lambda x: [t.strip() for t in x.split(sep) if t.strip()]
     )
 
 def top_n_with_other(series: pd.Series, n=6, other="Autres") -> pd.Series:
@@ -480,10 +442,158 @@ def top_n_with_other(series: pd.Series, n=6, other="Autres") -> pd.Series:
     top = set(vc.head(n).index)
     return series.apply(lambda x: x if x in top else other)
 
+
+req = ["Canal_Achat", "Souci_Ethique", "Utilise_FastFashion"]
+if all(c in df.columns for c in req):
+    d = df.dropna(subset=req).copy()
+
+    # paradoxe = dit éthique (>=7) MAIS fast fashion
+    d["FF_Oui"] = d["Utilise_FastFashion"].astype(str).str.contains("oui", case=False, na=False)
+    d["Ethique_Haute"] = d["Souci_Ethique"] >= 7
+    d["Paradoxe"] = (d["Ethique_Haute"] & d["FF_Oui"]).astype(int)
+
+    # split multi-choix + explode
+    d["Canal_Achat_list"] = split_multi(d["Canal_Achat"], sep=";")
+    e = d.explode("Canal_Achat_list")
+    e["Canal_Achat_list"] = e["Canal_Achat_list"].astype(str).str.strip()
+    e = e[e["Canal_Achat_list"] != ""]
+
+    # top canaux + autres
+    e["Canal_Achat_clean"] = top_n_with_other(e["Canal_Achat_list"], n=6, other="Autres")
+
+    # taux de paradoxe (%)
+    grp = (
+        e.groupby("Canal_Achat_clean")["Paradoxe"]
+        .mean()
+        .mul(100)
+        .sort_values(ascending=False)
+    )
+
+    # plot lisible
+    plt.figure(figsize=(10, 5))
+    plt.barh(grp.index, grp.values, edgecolor="black")
+    plt.gca().invert_yaxis()
+    plt.title("Paradoxe éthique par canal d'achat", fontweight="bold")
+    plt.xlabel("% (Souci éthique élevé + fast fashion)")
+    export_png(FIG_DIR / "paradoxe_par_canal.png")
+
+else:
+    warnings.warn("Paradoxe par canal ignoré (colonnes manquantes).")
+
+# [1D] Culpabilité par paradoxe (boxplot)
+
+req = ["Souci_Ethique", "Utilise_FastFashion", "Sentiment_Culpabilite"]
+if all(c in df.columns for c in req):
+    d = df.dropna(subset=req).copy()
+
+    # Fast fashion => bool
+    ff = d["Utilise_FastFashion"].astype(str).str.contains("oui", case=False, na=False)
+    ethique_haute = d["Souci_Ethique"] >= 7
+
+    # Paradoxe = "DIT éthique" ET "consomme FF"
+    d["Paradoxe"] = (ethique_haute & ff).astype(int)
+
+    # Nettoyage numérique (sécurité)
+    d["Sentiment_Culpabilite"] = pd.to_numeric(d["Sentiment_Culpabilite"], errors="coerce")
+    d = d.dropna(subset=["Sentiment_Culpabilite"])
+
+    if len(d) >= 10 and d["Paradoxe"].nunique() >= 2:
+        data = [
+            d.loc[d["Paradoxe"] == 1, "Sentiment_Culpabilite"].values,
+            d.loc[d["Paradoxe"] == 0, "Sentiment_Culpabilite"].values,
+        ]
+
+        plt.figure(figsize=(10, 5))
+        bp = plt.boxplot(
+            data,
+            labels=["Paradoxe\n(éthique + FF)", "Non-paradoxe"],
+            patch_artist=True,
+            showfliers=False,
+            widths=0.55
+        )
+
+        # Couleurs (ta palette existante)
+        bp["boxes"][0].set_facecolor(PALETTE["CERULEAN_DARK"])
+        bp["boxes"][0].set_edgecolor(PALETTE["CERULEAN_DARK"])
+        bp["boxes"][1].set_facecolor(PALETTE["CERULEAN_LIGHT"])
+        bp["boxes"][1].set_edgecolor(PALETTE["CERULEAN_DARK"])
+
+        for median in bp["medians"]:
+            median.set_color("white")
+            median.set_linewidth(2.2)
+
+        plt.ylim(1, 10)
+        plt.ylabel("Culpabilité (1–10)")
+        plt.title("Culpabilité : paradoxe vs non-paradoxe", fontweight="bold")
+        export_png(FIG_DIR / "boxplot_culpabilite_par_paradoxe.png")
+    else:
+        warnings.warn("Boxplot culpabilité ignoré (pas assez de données / variance).")
+else:
+    warnings.warn("Boxplot culpabilité ignoré (colonnes manquantes).")
+
+
+# [1E] Densité Éthique × Culpabilité (hexbin)
+
+req = ["Souci_Ethique", "Sentiment_Culpabilite"]
+if all(c in df.columns for c in req):
+    d = df.dropna(subset=req).copy()
+
+    d["Souci_Ethique"] = pd.to_numeric(d["Souci_Ethique"], errors="coerce")
+    d["Sentiment_Culpabilite"] = pd.to_numeric(d["Sentiment_Culpabilite"], errors="coerce")
+    d = d.dropna(subset=req)
+
+    if len(d) >= 30:
+        plt.figure(figsize=(10, 6))
+
+        hb = plt.hexbin(
+            d["Souci_Ethique"],
+            d["Sentiment_Culpabilite"],
+            gridsize=20,
+            cmap=CERULEAN_CMAP,   # ton colormap cerulean déjà défini
+            mincnt=1
+        )
+
+        cb = plt.colorbar(hb)
+        cb.set_label("Densité (nombre de réponses)")
+
+        plt.xlim(1, 10)
+        plt.ylim(1, 10)
+        plt.xlabel("Souci éthique (1–10)")
+        plt.ylabel("Culpabilité (1–10)")
+        plt.title("Densité : éthique × culpabilité", fontweight="bold")
+
+        export_png(FIG_DIR / "heatmap_densite_ethique_culpabilite.png")
+    else:
+        warnings.warn("Heatmap densité ignorée (pas assez de lignes).")
+else:
+    warnings.warn("Heatmap densité ignorée (colonnes manquantes).")
+
+
+# ============================================================
+# CHAPITRE 2 — PARCOURS DÉCISIONNEL (COMMENT ON ARRIVE À L’ACHAT)
+# But : transformer “choix individuel” → “chemin structuré”
+# ============================================================
+
 #%% =========================
-# 2) SANKEY ÉTENDU (cycle complet si possible)
+# [2A] SPIRALE CULPABILITÉ : influence réseaux vs culpabilité, couleur FF
 # =========================
-# Variante courte : 3 étapes (toujours)
+req = ["Influence_Reseaux", "Sentiment_Culpabilite", "Utilise_FastFashion"]
+if all(c in df.columns for c in req):
+    d = df.dropna(subset=req).copy()
+    d["FF_Oui"] = d["Utilise_FastFashion"].astype(str).str.contains("oui", case=False, na=False).astype(int)
+
+    plt.figure(figsize=(10, 6))
+    plt.scatter(d["Influence_Reseaux"], d["Sentiment_Culpabilite"], c=d["FF_Oui"], cmap="coolwarm", alpha=0.55)
+    plt.title("Spirale de la culpabilité : Réseaux sociaux vs Culpabilité (couleur = FF)", fontweight="bold")
+    plt.xlabel("Influence réseaux (1–10)")
+    plt.ylabel("Culpabilité (1–10)")
+    plt.grid(True, linestyle="--", alpha=0.3)
+    export_png(FIG_DIR / "spirale_culpabilite_reseaux.png")
+else:
+    warnings.warn("Spirale culpabilité ignorée.")
+
+# [2B] Sankey 3 étapes : Fréquence → Canal → Fast fashion
+
 if all(c in df.columns for c in ["Frequence_Achat", "Canal_Achat", "Utilise_FastFashion"]):
     d0 = df[["Frequence_Achat", "Canal_Achat", "Utilise_FastFashion"]].copy()
 
@@ -531,7 +641,7 @@ if all(c in df.columns for c in ["Frequence_Achat", "Canal_Achat", "Utilise_Fast
     fig.write_html(OUT_DIR / "sankey_parcours_3_etapes.html", include_plotlyjs="cdn")
     print("OK - Sankey nettoyé : reports/sankey_parcours_3_etapes.html")
 
-# Variante longue : 4 étapes (si Destination_Fin_Vie existe)
+# [2C] Sankey 4 étapes : + Destination fin de vie
 if all(c in df.columns for c in ["Frequence_Achat", "Canal_Achat", "Utilise_FastFashion", "Destination_Fin_Vie"]):
     d0 = df[["Frequence_Achat", "Canal_Achat", "Utilise_FastFashion", "Destination_Fin_Vie"]].copy()
 
@@ -587,32 +697,16 @@ if all(c in df.columns for c in ["Frequence_Achat", "Canal_Achat", "Utilise_Fast
     print("OK - Sankey 4 étapes nettoyé : reports/sankey_cycle_complet_4_etapes.html")
 
 
-#%% =========================
-# 3) CARTE DU MENSONGE CONFORTABLE : Éthique vs FF, couleur = culpabilité
-# =========================
-req = ["Souci_Ethique", "Utilise_FastFashion", "Sentiment_Culpabilite"]
-if all(c in df.columns for c in req):
-    d = df.dropna(subset=req).copy()
-    d["FF_Oui"] = d["Utilise_FastFashion"].astype(str).str.contains("oui", case=False, na=False).astype(int)
-
-    # scatter : éthique (x), culpabilité (y), taille/couleur selon FF
-    plt.figure(figsize=(10, 6))
-    x = d["Souci_Ethique"].values
-    y = d["Sentiment_Culpabilite"].values
-    c = d["FF_Oui"].values
-    plt.scatter(x, y, c=c, cmap="coolwarm", alpha=0.6)
-    plt.title("Éthique vs Culpabilité (couleur = Fast Fashion)", fontweight="bold")
-    plt.xlabel("Souci éthique (1–10)")
-    plt.ylabel("Culpabilité (1–10)")
-    plt.grid(True, linestyle="--", alpha=0.3)
-    export_png(FIG_DIR / "ethique_vs_culpabilite_couleur_ff.png")
-else:
-    warnings.warn("Éthique vs culpabilité ignoré.")
 
 
-#%% =========================
-# 4) RÉSEAU / PACKS DE TENDANCES : co-achat des items tendance
-# =========================
+# ============================================================
+# CHAPITRE 3 — LA "MACHINE À TENDANCES" (MICRO) : PACKS D’ITEMS
+# But : montrer la diffusion des objets tendance (uniformisation)
+# ============================================================
+
+
+# [3A] Réseau / packs de tendances (co-achat des items)
+
 if "Type_Articles_Achetes" in df.columns:
     items = df["Type_Articles_Achetes"].dropna().astype(str)
     dummies = items.str.get_dummies(sep=";")
@@ -641,7 +735,7 @@ if "Type_Articles_Achetes" in df.columns:
         for a, b, w in edges:
             xa, ya = pos[a]
             xb, yb = pos[b]
-            link_color = PALETTE["CERULEEN"] if w >= 0.30 else PALETTE["CERULEAN"]
+            link_color = PALETTE["CERULEAN"] if w >= 0.30 else PALETTE["CERULEAN_DARK"]
             plt.plot(
                 [xa, xb],
                 [ya, yb],
@@ -672,9 +766,15 @@ else:
     warnings.warn("Réseau items ignoré (colonne manquante).")
 
 
+# ============================================================
+# CHAPITRE 4 — PERSONAS (SEGMENTATION) : QUI SUBIT QUOI ?
+# But : passer du macro (société) au micro (profils)
+# ============================================================
+
 #%% =========================
-# 5) CLUSTERING (Personas) + exports + visus
+# 4A) CLUSTERING (K-MEANS) : ÉVALUATION + MODÈLE + TABLE PERSONAS
 # =========================
+
 features = [
     "Age",
     "Influence_Tendances",
@@ -754,449 +854,7 @@ else:
 
 
 #%% =========================
-# 6) HEATMAP UNIFORMISATION : % adoption items par cluster
-# =========================
-import seaborn as sns
-import matplotlib.colors as mcolors
-
-CERULEAN_CMAP = mcolors.LinearSegmentedColormap.from_list(
-    "cerulean",
-    ["#F3FBFF", "#A9D6E5", "#61A5C2", "#2A6F97", "#0047AB"],
-    N=256
-)
-
-if df_cluster is not None and "Type_Articles_Achetes" in df_cluster.columns:
-    items = df_cluster["Type_Articles_Achetes"].dropna().astype(str)
-    dummies = items.str.get_dummies(sep=";")
-
-    if dummies.shape[1] >= 1:
-        temp = pd.concat([df_cluster["Cluster"], dummies], axis=1).fillna(0)
-        pct = temp.groupby("Cluster").mean() * 100
-
-        plt.figure(figsize=(14, 6))
-        ax = sns.heatmap(
-            pct,
-            cmap=CERULEAN_CMAP,
-            vmin=0, vmax=100,
-            linewidths=0.5,
-            linecolor="white",
-            cbar_kws={"label": "% d'adoption"}
-        )
-
-        ax.set_title("Uniformisation : articles tendance par cluster (% adoption)", fontweight="bold")
-        ax.set_xlabel("")
-        ax.set_ylabel("")
-        plt.xticks(rotation=30, ha="right")
-        plt.yticks(rotation=0)
-
-        export_png(FIG_DIR / "heatmap_items_par_cluster.png")
-    else:
-        warnings.warn("Heatmap items ignorée (pas d'items).")
-else:
-    warnings.warn("Heatmap items ignorée.")
-
-
-#%% =========================
-# 7) OBSOLESCENCE PSYCHOLOGIQUE : peur d'être démodé par cluster
-# =========================
-if df_cluster is not None and "Peur_Etre_Demode" in df_cluster.columns:
-    d = df_cluster.dropna(subset=["Peur_Etre_Demode"]).copy()
-    grp = d.groupby("Cluster")["Peur_Etre_Demode"].mean().sort_index()
-    plt.figure(figsize=(8, 5))
-    plt.bar([f"Cluster {i}" for i in grp.index], grp.values, edgecolor="black")
-    plt.ylim(1, 5)
-    plt.title("Obsolescence psychologique : rejet du 'démodé' (moyenne)", fontweight="bold")
-    plt.ylabel("Niveau (1=Jamais, 5=Toujours)")
-    export_png(FIG_DIR / "obsolescence_psy_par_cluster.png")
-else:
-    warnings.warn("Obsolescence psycho ignorée.")
-
-
-#%% =========================
-# 8) SPIRALE CULPABILITÉ : influence réseaux vs culpabilité, couleur FF
-# =========================
-req = ["Influence_Reseaux", "Sentiment_Culpabilite", "Utilise_FastFashion"]
-if all(c in df.columns for c in req):
-    d = df.dropna(subset=req).copy()
-    d["FF_Oui"] = d["Utilise_FastFashion"].astype(str).str.contains("oui", case=False, na=False).astype(int)
-
-    plt.figure(figsize=(10, 6))
-    plt.scatter(d["Influence_Reseaux"], d["Sentiment_Culpabilite"], c=d["FF_Oui"], cmap="coolwarm", alpha=0.55)
-    plt.title("Spirale de la culpabilité : Réseaux sociaux vs Culpabilité (couleur = FF)", fontweight="bold")
-    plt.xlabel("Influence réseaux (1–10)")
-    plt.ylabel("Culpabilité (1–10)")
-    plt.grid(True, linestyle="--", alpha=0.3)
-    export_png(FIG_DIR / "spirale_culpabilite_reseaux.png")
-else:
-    warnings.warn("Spirale culpabilité ignorée.")
-
-
-#%% =========================
-# 9) CARTE DES RENONCEMENTS : prix/qualité/confort/éthique/tendance par cluster
-# =========================
-if df_cluster is not None:
-    cols = [c for c in ["Importance_Prix", "Importance_Qualite", "Importance_Confort", "Souci_Ethique", "Importance_Tendance"] if c in df_cluster.columns]
-    if len(cols) >= 3:
-        grp = df_cluster.groupby("Cluster")[cols].mean().round(2)
-
-        x = np.arange(len(cols))
-        width = 0.18
-        plt.figure(figsize=(12, 5))
-        for i, cl in enumerate(grp.index):
-            plt.bar(x + (i - len(grp.index)/2)*width + width/2, grp.loc[cl].values, width=width, edgecolor="black", label=f"Cluster {cl}")
-
-        plt.xticks(x, cols, rotation=15, ha="right")
-        plt.ylim(0, 10.5)
-        plt.title("Carte des renoncements : arbitrages moyens par cluster", fontweight="bold")
-        plt.ylabel("Niveau moyen (1–10)")
-        plt.legend()
-        export_png(FIG_DIR / "carte_renoncements_par_cluster.png")
-    else:
-        warnings.warn("Carte des renoncements ignorée (colonnes insuffisantes).")
-
-
-#%% =========================
-# 10) ARBRE DE DÉCISION : Qui paie +20% pour l'éthique ?
-def _recolor_tree_fills(ann_list, class_names=("Ne paie pas", "Paie")):
-    C_LIGHT = PALETTE["CERULEAN_LIGHT"]
-    C_DARK = PALETTE["CERULEAN_DARK"]
-    for o in ann_list:
-        txt_obj = o
-        txt_content = txt_obj.get_text()
-        bbox = txt_obj.get_bbox_patch()
-        
-        if "class =" in txt_content:
-            cls = txt_content.split("class =")[-1].strip()
-            
-            if cls == class_names[1]:  # "Paie"
-                bbox.set_facecolor(C_DARK)
-                bbox.set_edgecolor("white")
-                txt_obj.set_color("white") 
-            else:                    
-                bbox.set_facecolor(C_LIGHT)
-                bbox.set_edgecolor(C_DARK)
-                txt_obj.set_color("black")
-req = ["Pret_A_Payer_Plus", "Age", "Souci_Ethique", "Importance_Prix", "Importance_Qualite"]
-
-if all(c in df.columns for c in req):
-    d = df.dropna(subset=req).copy()
-    y = (d["Pret_A_Payer_Plus"] >= 7).astype(int)
-    feats = ["Age", "Souci_Ethique", "Importance_Prix", "Importance_Qualite"]
-    X = d[feats].copy()
-
-    tree_model = DecisionTreeClassifier(
-        max_depth=3,
-        min_samples_leaf=20,
-        class_weight="balanced",
-        random_state=RANDOM_STATE
-    )
-    tree_model.fit(X, y)
-    fig, ax = plt.subplots(figsize=(16, 9), facecolor='white')
-    
-    ann = plot_tree(
-        tree_model,
-        feature_names=feats,
-        class_names=["Ne paie pas", "Paie"],
-        filled=True,
-        rounded=True,
-        fontsize=11,
-        ax=ax,
-        precision=2 # Limita casas decimais para evitar poluição visual
-    )
-    _recolor_tree_fills(ann, class_names=("Ne paie pas", "Paie"))
-
-    plt.title("Règles pour payer 20% plus cher (produit éthique)", fontsize=22, fontweight="bold", pad=20)
-    export_png(FIG_DIR / "arbre_decision_payer_plus.png")
-    plt.show()
-
-else:
-    warnings.warn("Arbre de décision ignoré (colonnes manquantes).")
-
-#%% =========================
-# 11) DESTINATION FIN DE VIE par fréquence d'achat (barres empilées)
-# =========================
-req = ["Frequence_Achat", "Destination_Fin_Vie"]
-if all(c in df.columns for c in req):
-    d = df.dropna(subset=req).copy()
-
-    dum = d["Destination_Fin_Vie"].astype(str).str.get_dummies(sep=";")
-    dum.columns = [c.strip() for c in dum.columns]
-    temp = pd.concat([d["Frequence_Achat"], dum], axis=1)
-
-    pct = temp.groupby("Frequence_Achat").mean() * 100
-
-    # garder top options pour lisibilité
-    top_cols = dum.sum().sort_values(ascending=False).head(6).index
-    pct = pct[top_cols]
-
-    x = np.arange(len(pct.index))
-    n = len(pct.columns)
-    width = min(0.8 / max(n, 1), 0.18)
-
-    plt.figure(figsize=(12, 6))
-    for i, col in enumerate(pct.columns):
-        plt.bar(x + (i - (n-1)/2)*width, pct[col].values, width=width,
-                edgecolor="black", label=col)
-
-    plt.xticks(x, pct.index.astype(str), rotation=20, ha="right")
-    plt.ylabel("% des répondants (dans le groupe)")
-    plt.title("Fin de vie : % des répondants par option (multi-choix)", fontweight="bold")
-    plt.legend(bbox_to_anchor=(1.02, 1), loc="upper left")
-    export_png(FIG_DIR / "fin_de_vie_par_frequence.png")
-else:
-    warnings.warn("Fin de vie par fréquence ignorée.")
-
-
-#%% =========================
-# 12) RAPPORT COURT (Markdown) : fichiers générés
-# =========================
-generated = [
-    "reports/diagnostic_colonnes.txt",
-    "reports/figures/grand_paradoxe.png",
-    "reports/figures/paradoxe_par_age.png",
-    "reports/figures/paradoxe_par_canal.png",
-    "reports/figures/ethique_vs_culpabilite_couleur_ff.png",
-    "reports/figures/reseau_items_tendance.png",
-    "reports/figures/personas_scatter.png",
-    "reports/personas_clusters.csv",
-    "reports/personas_moyennes_par_cluster.csv",
-    "reports/figures/heatmap_items_par_cluster.png",
-    "reports/figures/obsolescence_psy_par_cluster.png",
-    "reports/figures/spirale_culpabilite_reseaux.png",
-    "reports/figures/carte_renoncements_par_cluster.png",
-    "reports/figures/arbre_decision_payer_plus.png",
-    "reports/figures/fin_de_vie_par_frequence.png",
-    "reports/sankey_parcours_3_etapes.html",
-    "reports/sankey_cycle_complet_4_etapes.html",
-]
-
-md = ["# Résumé des exports\n", "Fichiers potentiellement générés :\n"]
-for p in generated:
-    md.append(f"- {p}")
-(OUT_DIR / "resume_exports.md").write_text("\n".join(md), encoding="utf-8")
-print("OK - Résumé : reports/resume_exports.md")
-
-#%% =========================
-# 12) VISUALISATIONS COMPLÉMENTAIRES
-# =========================
-
-# Dossiers 
-try:
-    OUT_DIR
-except NameError:
-    OUT_DIR = Path("reports")
-try:
-    FIG_DIR
-except NameError:
-    FIG_DIR = OUT_DIR / "figures"
-
-OUT_DIR.mkdir(parents=True, exist_ok=True)
-FIG_DIR.mkdir(parents=True, exist_ok=True)
-
-
-def _savefig(path: Path):
-    try:
-        export_png(path)  
-    except Exception:
-        plt.tight_layout()
-        plt.savefig(path, dpi=200, bbox_inches="tight")
-        plt.close()
-
-# -------- helpers --------
-def col_like(df: pd.DataFrame, must_contain: list[str]):
-    """Retourne la 1ère colonne dont le nom contient tous les fragments donnés."""
-    cols = []
-    for c in df.columns:
-        ok = True
-        cl = str(c).lower()
-        for frag in must_contain:
-            if frag.lower() not in cl:
-                ok = False
-                break
-        if ok:
-            cols.append(c)
-    return cols[0] if cols else None
-
-def split_multi(s: pd.Series, sep=";"):
-    """Gère multi-choix: split sur ';' et nettoyage."""
-    return (
-        s.fillna("")
-         .astype(str)
-         .str.split(sep)
-         .apply(lambda lst: [x.strip() for x in lst if x and x.strip()])
-    )
-
-def value_counts_pct(s: pd.Series, dropna=False):
-    vc = s.value_counts(dropna=dropna)
-    pct = (vc / vc.sum() * 100).round(1)
-    return pd.DataFrame({"count": vc, "pct": pct})
-
-def barh_counts(s: pd.Series, title: str, filename: str, top_n=12):
-    d = s.fillna("Non spécifié").astype(str).str.strip()
-    vc = d.value_counts().head(top_n)[::-1]
-    plt.figure(figsize=(10, 5))
-    plt.barh(vc.index, vc.values)
-    plt.title(title, fontweight="bold")
-    plt.xlabel("Nombre de réponses")
-    _savefig(FIG_DIR / filename)
-
-# -------- 1) créer des alias courts (si pas déjà présents) --------
-# IMPORTANT: on ne détruit rien, on crée juste des colonnes "propres" en plus
-
-ALIASES = {
-    "Frequence_Achat": ["fréquence", "achetez-vous", "vêtements"],
-    "Canal_Achat": ["où achetez-vous", "choix multiples"],
-    "Cycle_Vie": ["cycle de vie moyen"],
-    "Destination_Fin_Vie": ["que faites-vous", "séparer", "choix multiples"],
-    "Obsolescence_Apres_Achat": ["finissent-ils", "jamais être portés"],
-    "Influence_Tendances": ["tendances actuelles", "influencent"],
-    "Achat_Parce_Tendance": ["uniquement parce qu'il est tendance"],
-    "Pression_Sociale": ["pression sociale"],
-    "Evite_Plus_Mode": ["évité de porter", "plus à la mode"],
-    "Confiance": ["confiance en vous"],
-    "Bien_Shabiller_Social": ["bien s’habiller", "vie sociale"],
-    "Influence_Reseaux": ["réseaux sociaux", "dictent"],
-    "Publie_Photos_Tendance": ["publie", "photos", "achats"],
-    "Culpabilite_RS": ["culpabilité", "réseaux sociaux"],
-    "Perception_Sans_Tendance": ["différence", "perçu", "tendance"],
-    "Items_Achetes": ["acheté certains de ces articles", "choix multiples"],
-    "Connaissance_FF": ["connaissez-vous le concept", "fast fashion"],
-    "Utilise_FastFashion": ["avez-vous déjà consommé", "fast fashion"],
-    "Souci_Ethique": ["considérations éthiques", "environnementales"],
-    "Pret_A_Payer_Plus": ["coûtait 20 % plus cher", "prêt"],
-    "Raisons_FF": ["raisons achetez-vous", "fast fashion", "choix multiples"],
-    "Age": ["quel est votre âge"],
-    "Genre": ["êtes-vous :"],
-    "Expression_vs_Conformite": ["outil d'expression", "conformer"],
-    "Situation_Pro": ["situation professionnelle ?"],
-    "Importance_Prix": ["caractéristiques", "prix"],
-    "Importance_Qualite": ["caractéristiques", "qualité"],
-    "Importance_Marque": ["caractéristiques", "marque"],
-    "Importance_Mode": ["caractéristiques", "mode / tendances"],
-    "Importance_Confort": ["caractéristiques", "confort"],
-}
-
-for short, frags in ALIASES.items():
-    if short not in df.columns:
-        original = col_like(df, frags)
-        if original is not None:
-            df[short] = df[original]
-        else:
-            # pas grave: on laisse absent
-            pass
-
-# Nettoyage minimal sur les alias clés (évite erreurs .str sur DataFrame)
-for c in ["Frequence_Achat", "Canal_Achat", "Cycle_Vie", "Destination_Fin_Vie",
-          "Utilise_FastFashion", "Connaissance_FF", "Raisons_FF", "Items_Achetes", "Genre"]:
-    if c in df.columns:
-        df[c] = df[c].fillna("Non spécifié").astype(str).str.strip()
-
-# -------- 2) visus “classiques” (distributions) --------
-if "Frequence_Achat" in df.columns:
-    barh_counts(df["Frequence_Achat"], "Fréquence d’achat (top)", "dist_frequence_achat.png", top_n=12)
-
-if "Canal_Achat" in df.columns:
-    # multi-choix => explode
-    tmp = df[["Canal_Achat"]].copy()
-    tmp["Canal_Achat"] = split_multi(tmp["Canal_Achat"])
-    tmp = tmp.explode("Canal_Achat")
-    if tmp["Canal_Achat"].notna().any():
-        barh_counts(tmp["Canal_Achat"], "Canaux d’achat (multi-choix)", "dist_canaux_achat.png", top_n=15)
-
-if "Cycle_Vie" in df.columns:
-    barh_counts(df["Cycle_Vie"], "Cycle de vie moyen d’un vêtement", "dist_cycle_vie.png", top_n=12)
-
-if "Destination_Fin_Vie" in df.columns:
-    tmp = df[["Destination_Fin_Vie"]].copy()
-    tmp["Destination_Fin_Vie"] = split_multi(tmp["Destination_Fin_Vie"])
-    tmp = tmp.explode("Destination_Fin_Vie")
-    if tmp["Destination_Fin_Vie"].notna().any():
-        barh_counts(tmp["Destination_Fin_Vie"], "Destination fin de vie (multi-choix)", "dist_destination_fin_vie.png", top_n=15)
-
-if "Raisons_FF" in df.columns:
-    tmp = df[["Raisons_FF"]].copy()
-    tmp["Raisons_FF"] = split_multi(tmp["Raisons_FF"])
-    tmp = tmp.explode("Raisons_FF")
-    if tmp["Raisons_FF"].notna().any():
-        barh_counts(tmp["Raisons_FF"], "Raisons d’achat fast fashion (multi-choix)", "dist_raisons_fastfashion.png", top_n=15)
-
-# -------- 3) profils par cluster (si colonne Cluster existe) --------
-if "Cluster" in df.columns:
-    # Age par cluster (si numérique)
-    if "Age" in df.columns:
-        age_num = pd.to_numeric(df["Age"], errors="coerce")
-        if age_num.notna().any():
-            plt.figure(figsize=(10, 5))
-            for cl in sorted(df["Cluster"].dropna().unique()):
-                plt.hist(age_num[df["Cluster"] == cl].dropna(), bins=15, alpha=0.6, label=f"Cluster {cl}")
-            plt.title("Distribution de l’âge par cluster", fontweight="bold")
-            plt.xlabel("Âge")
-            plt.ylabel("Nombre")
-            plt.legend()
-            _savefig(FIG_DIR / "age_par_cluster_hist.png")
-
-    # Boxplots des scores (éthique / prix / qualité) par cluster
-    score_cols = [c for c in ["Souci_Ethique", "Importance_Prix", "Importance_Qualite", "Pret_A_Payer_Plus"] if c in df.columns]
-    for sc in score_cols:
-        s = pd.to_numeric(df[sc], errors="coerce")
-        if s.notna().any():
-            data = []
-            labels = []
-            for cl in sorted(df["Cluster"].dropna().unique()):
-                data.append(s[df["Cluster"] == cl].dropna().values)
-                labels.append(f"C{cl}")
-            if sum(len(x) for x in data) > 0:
-                plt.figure(figsize=(10, 5))
-                plt.boxplot(data, labels=labels, showfliers=False)
-                plt.title(f"{sc} par cluster (boxplot)", fontweight="bold")
-                plt.ylabel("Score")
-                _savefig(FIG_DIR / f"box_{sc.lower()}_par_cluster.png")
-
-    # Utilise_FastFashion (% oui/non) par cluster
-    if "Utilise_FastFashion" in df.columns:
-        t = (
-            df[["Cluster", "Utilise_FastFashion"]]
-            .dropna(subset=["Cluster"])
-            .copy()
-        )
-        t["Utilise_FastFashion"] = t["Utilise_FastFashion"].fillna("Non spécifié").astype(str).str.strip()
-        pivot = pd.crosstab(t["Cluster"], t["Utilise_FastFashion"], normalize="index") * 100
-        pivot = pivot.round(1)
-        pivot.to_csv(OUT_DIR / "utilise_fastfashion_pct_par_cluster.csv", index=True)
-
-        plt.figure(figsize=(10, 5))
-        bottom = np.zeros(len(pivot.index))
-        for col in pivot.columns:
-            plt.bar(pivot.index.astype(str), pivot[col].values, bottom=bottom, label=col)
-            bottom += pivot[col].values
-        plt.title("Fast fashion (en %) par cluster", fontweight="bold")
-        plt.xlabel("Cluster")
-        plt.ylabel("%")
-        plt.legend(loc="upper right")
-        _savefig(FIG_DIR / "fastfashion_pct_par_cluster.png")
-
-# -------- 4) exports “storytelling” en tables --------
-# Un mini résumé chiffré global (simple, utile pour l’article)
-summary_lines = []
-summary_lines.append(f"- N réponses: {len(df)}")
-if "Souci_Ethique" in df.columns:
-    s = pd.to_numeric(df["Souci_Ethique"], errors="coerce")
-    if s.notna().any():
-        summary_lines.append(f"- Souci éthique (moyenne): {s.mean():.2f} / 10")
-if "Pret_A_Payer_Plus" in df.columns:
-    s = pd.to_numeric(df["Pret_A_Payer_Plus"], errors="coerce")
-    if s.notna().any():
-        summary_lines.append(f"- Prêt à payer +20% (moyenne): {s.mean():.2f} / 10")
-if "Influence_Reseaux" in df.columns:
-    s = pd.to_numeric(df["Influence_Reseaux"], errors="coerce")
-    if s.notna().any():
-        summary_lines.append(f"- Influence réseaux (moyenne): {s.mean():.2f} / 10")
-
-(Path(OUT_DIR) / "resume_storytelling.md").write_text("\n".join(summary_lines), encoding="utf-8")
-print("OK - Visus complémentaires + exports storytelling générés.")
-
-#%% =========================
-# 13) WAFFLE CHART : Typologie des consommateurs (clusters)
+# 4B) WAFFLE CHART — RÉPARTITION PRINCIPALE DES CLUSTERS (À METTRE EN PREMIER)
 # =========================
 from matplotlib.patches import Rectangle
 
@@ -1304,3 +962,637 @@ else:
 
     export_png(FIG_DIR / "waffle_clusters_typologie.png")
     print("OK - Waffle exporté : reports/figures/waffle_clusters_typologie.png")
+
+
+#%% =========================
+# 4C) HEATMAP — UNIFORMISATION : % ADOPTION DES ITEMS PAR CLUSTER
+# =========================
+
+if df_cluster is not None and "Type_Articles_Achetes" in df_cluster.columns:
+    items = df_cluster["Type_Articles_Achetes"].dropna().astype(str)
+    dummies = items.str.get_dummies(sep=";")
+
+    if dummies.shape[1] >= 1:
+        temp = pd.concat([df_cluster["Cluster"], dummies], axis=1).fillna(0)
+        pct = temp.groupby("Cluster").mean() * 100
+
+        plt.figure(figsize=(14, 6))
+        ax = sns.heatmap(
+            pct,
+            cmap=CERULEAN_CMAP,   # ← reutiliza o colormap global
+            vmin=0,
+            vmax=100,
+            linewidths=0.5,
+            linecolor="white",
+            cbar_kws={"label": "% d'adoption"}
+        )
+
+        ax.set_title(
+            "Uniformisation : articles tendance par cluster (% adoption)",
+            fontweight="bold"
+        )
+        ax.set_xlabel("")
+        ax.set_ylabel("")
+        plt.xticks(rotation=30, ha="right")
+        plt.yticks(rotation=0)
+
+        export_png(FIG_DIR / "heatmap_items_par_cluster.png")
+
+    else:
+        warnings.warn("Heatmap items ignorée (pas d'items).")
+else:
+    warnings.warn("Heatmap items ignorée (df_cluster ou colonne manquante).")
+
+#%% =========================
+# 4D) OBSOLESCENCE PSYCHOLOGIQUE — PEUR D’ÊTRE DÉMODÉ PAR CLUSTER
+# =========================
+if df_cluster is not None and "Peur_Etre_Demode" in df_cluster.columns:
+    d = df_cluster.dropna(subset=["Peur_Etre_Demode"]).copy()
+    grp = d.groupby("Cluster")["Peur_Etre_Demode"].mean().sort_index()
+    plt.figure(figsize=(8, 5))
+    plt.bar([f"Cluster {i}" for i in grp.index], grp.values, edgecolor="black")
+    plt.ylim(1, 5)
+    plt.title("Obsolescence psychologique : rejet du 'démodé' (moyenne)", fontweight="bold")
+    plt.ylabel("Niveau (1=Jamais, 5=Toujours)")
+    export_png(FIG_DIR / "obsolescence_psy_par_cluster.png")
+else:
+    warnings.warn("Obsolescence psycho ignorée.")
+
+#%% =========================
+# 4E) FAST FASHION PAR CLUSTER — % OUI/NON (TABLE + BARRES EMPILÉES)
+# =========================
+if df_cluster is not None and "Utilise_FastFashion" in df_cluster.columns:
+    t = df_cluster[["Cluster", "Utilise_FastFashion"]].dropna(subset=["Cluster"]).copy()
+    t["Utilise_FastFashion"] = t["Utilise_FastFashion"].fillna("Non spécifié").astype(str).str.strip()
+
+    pivot = pd.crosstab(t["Cluster"], t["Utilise_FastFashion"], normalize="index") * 100
+    pivot = pivot.round(1)
+    pivot.to_csv(OUT_DIR / "utilise_fastfashion_pct_par_cluster.csv", index=True)
+    print("OK - Export : reports/utilise_fastfashion_pct_par_cluster.csv")
+
+    plt.figure(figsize=(10, 5))
+    bottom = np.zeros(len(pivot.index))
+    for col in pivot.columns:
+        plt.bar(pivot.index.astype(str), pivot[col].values, bottom=bottom, label=col)
+        bottom += pivot[col].values
+
+    plt.title("Fast fashion (en %) par cluster", fontweight="bold")
+    plt.xlabel("Cluster")
+    plt.ylabel("%")
+    plt.legend(loc="upper right")
+    export_png(FIG_DIR / "fastfashion_pct_par_cluster.png")
+else:
+    warnings.warn("Fast fashion par cluster ignoré (df_cluster / colonne manquante).")
+
+
+#%% =========================
+# 4F) CARTE DES RENONCEMENTS — ARBITRAGES MOYENS PAR CLUSTER
+# =========================
+if df_cluster is not None:
+    cols = [c for c in ["Importance_Prix", "Importance_Qualite", "Importance_Confort", "Souci_Ethique", "Importance_Tendance"] if c in df_cluster.columns]
+    if len(cols) >= 3:
+        grp = df_cluster.groupby("Cluster")[cols].mean().round(2)
+
+        x = np.arange(len(cols))
+        width = 0.18
+        plt.figure(figsize=(12, 5))
+        for i, cl in enumerate(grp.index):
+            plt.bar(x + (i - len(grp.index)/2)*width + width/2, grp.loc[cl].values, width=width, edgecolor="black", label=f"Cluster {cl}")
+
+        plt.xticks(x, cols, rotation=15, ha="right")
+        plt.ylim(0, 10.5)
+        plt.title("Carte des renoncements : arbitrages moyens par cluster", fontweight="bold")
+        plt.ylabel("Niveau moyen (1–10)")
+        plt.legend()
+        export_png(FIG_DIR / "carte_renoncements_par_cluster.png")
+    else:
+        warnings.warn("Carte des renoncements ignorée (colonnes insuffisantes).")
+
+
+
+# ============================================================
+# CHAPITRE 5 — STANDARDISATION & PRESSION SOCIALE (df_cluster)
+# Objectif : montrer l’uniformisation (mêmes items) + la pression sociale
+# ============================================================
+#%% =========================
+# 5A) HEATMAP — UNIFORMISATION : % ADOPTION DES ITEMS PAR CLUSTER
+# =========================
+# Ce que ça prouve :
+# - certains clusters adoptent plus certains items → la tendance n’est pas “au hasard”
+# - on observe des patterns d’uniformisation (packs / codes)
+
+if df_cluster is not None and "Type_Articles_Achetes" in df_cluster.columns:
+    items = df_cluster["Type_Articles_Achetes"].dropna().astype(str)
+    dummies = items.str.get_dummies(sep=";")
+
+    # Nettoyage noms colonnes (évite espaces)
+    dummies.columns = [c.strip() for c in dummies.columns]
+
+    if dummies.shape[1] >= 1:
+        temp = pd.concat([df_cluster["Cluster"], dummies], axis=1).fillna(0)
+
+        # % d'adoption par cluster (moyenne des dummies)
+        pct = temp.groupby("Cluster").mean(numeric_only=True) * 100
+
+        plt.figure(figsize=(14, 6))
+        ax = sns.heatmap(
+            pct,
+            cmap=CERULEAN_CMAP,   # colormap global déjà défini au début
+            vmin=0, vmax=100,
+            linewidths=0.5,
+            linecolor="white",
+            cbar_kws={"label": "% d'adoption"}
+        )
+        ax.set_title("Uniformisation : articles tendance par cluster (% adoption)", fontweight="bold")
+        ax.set_xlabel("")
+        ax.set_ylabel("")
+        plt.xticks(rotation=30, ha="right")
+        plt.yticks(rotation=0)
+
+        export_png(FIG_DIR / "heatmap_items_par_cluster.png")
+        print("OK - Export : reports/figures/heatmap_items_par_cluster.png")
+    else:
+        warnings.warn("Heatmap items ignorée (pas d'items).")
+else:
+    warnings.warn("Heatmap items ignorée (df_cluster ou colonne manquante).")
+
+
+
+#%% =========================
+# 5B) OBSOLESCENCE PSYCHOLOGIQUE — PEUR D’ÊTRE “DÉMODÉ” PAR CLUSTER
+# =========================
+# Ce que ça prouve :
+# - la pression sociale se traduit par l’évitement du “plus à la mode”
+# - certains clusters sont plus sensibles à cette obsolescence psychologique
+
+if df_cluster is not None and "Peur_Etre_Demode" in df_cluster.columns:
+    d = df_cluster.dropna(subset=["Peur_Etre_Demode"]).copy()
+
+    # Sécurité : au cas où la colonne serait en texte
+    d["Peur_Etre_Demode"] = pd.to_numeric(d["Peur_Etre_Demode"], errors="coerce")
+    d = d.dropna(subset=["Peur_Etre_Demode"])
+
+    if len(d) >= 10:
+        grp = d.groupby("Cluster")["Peur_Etre_Demode"].mean().sort_index()
+
+        plt.figure(figsize=(8, 5))
+        plt.bar([f"Cluster {i}" for i in grp.index], grp.values, edgecolor="black")
+        plt.ylim(1, 5)
+        plt.title("Obsolescence psychologique : rejet du 'démodé' (moyenne)", fontweight="bold")
+        plt.ylabel("Niveau (1=Jamais, 5=Toujours)")
+
+        export_png(FIG_DIR / "obsolescence_psy_par_cluster.png")
+        print("OK - Export : reports/figures/obsolescence_psy_par_cluster.png")
+    else:
+        warnings.warn("Obsolescence psycho ignorée (pas assez de données).")
+else:
+    warnings.warn("Obsolescence psycho ignorée (df_cluster / colonne manquante).")
+
+
+
+# ============================================================
+# CHAPITRE 6 — RÉSEAUX SOCIAUX (df)
+# Objectif : montrer le mécanisme "attention → désir → achat → culpabilité"
+# (pression sociale amplifiée par les plateformes), en lien direct avec la problématique.
+#
+# IMPORTANT :
+# - Cette partie reste en GLOBAL (df), car elle décrit un phénomène collectif.
+# - Aucune nouvelle importation ici.
+# ============================================================
+
+#%% =========================
+# 6A) SPIRALE CULPABILITÉ : influence réseaux vs culpabilité (couleur = fast fashion)
+# =========================
+req = ["Influence_Reseaux", "Sentiment_Culpabilite", "Utilise_FastFashion"]
+if all(c in df.columns for c in req):
+    d = df.dropna(subset=req).copy()
+    d["FF_Oui"] = d["Utilise_FastFashion"].astype(str).str.contains("oui", case=False, na=False).astype(int)
+
+    plt.figure(figsize=(10, 6))
+    plt.scatter(
+        d["Influence_Reseaux"],
+        d["Sentiment_Culpabilite"],
+        c=d["FF_Oui"],
+        cmap="coolwarm",
+        alpha=0.55
+    )
+    plt.title("Spirale de la culpabilité : Réseaux sociaux vs Culpabilité (couleur = FF)", fontweight="bold")
+    plt.xlabel("Influence réseaux (1–10)")
+    plt.ylabel("Culpabilité (1–10)")
+    plt.grid(True, linestyle="--", alpha=0.3)
+    export_png(FIG_DIR / "spirale_culpabilite_reseaux.png")
+    print("OK - Export : reports/figures/spirale_culpabilite_reseaux.png")
+else:
+    warnings.warn("Spirale culpabilité ignorée (colonnes manquantes).")
+
+
+
+# ============================================================
+# CHAPITRE 7 — ARBITRAGES (df_cluster)
+# Objectif : montrer que les “choix” sont des compromis structurés
+# (prix/qualité/confort/éthique/tendance) et qu’ils diffèrent selon les personas.
+#
+# IMPORTANT :
+# - Cette partie doit utiliser df_cluster (personas).
+# - Aucune nouvelle importation ici.
+# ============================================================
+
+#%% =========================
+# 7A) CARTE DES RENONCEMENTS : arbitrages moyens par cluster
+# =========================
+if df_cluster is not None:
+    cols = [
+        c for c in [
+            "Importance_Prix",
+            "Importance_Qualite",
+            "Importance_Confort",
+            "Souci_Ethique",
+            "Importance_Tendance",
+        ]
+        if c in df_cluster.columns
+    ]
+
+    if len(cols) >= 3:
+        grp = df_cluster.groupby("Cluster")[cols].mean().round(2)
+
+        x = np.arange(len(cols))
+        width = 0.18
+
+        plt.figure(figsize=(12, 5))
+        for i, cl in enumerate(grp.index):
+            plt.bar(
+                x + (i - len(grp.index)/2)*width + width/2,
+                grp.loc[cl].values,
+                width=width,
+                edgecolor="black",
+                label=f"Cluster {cl}"
+            )
+
+        plt.xticks(x, cols, rotation=15, ha="right")
+        plt.ylim(0, 10.5)
+        plt.title("Carte des renoncements : arbitrages moyens par cluster", fontweight="bold")
+        plt.ylabel("Niveau moyen (1–10)")
+        plt.legend()
+        export_png(FIG_DIR / "carte_renoncements_par_cluster.png")
+        print("OK - Export : reports/figures/carte_renoncements_par_cluster.png")
+    else:
+        warnings.warn("Carte des renoncements ignorée (colonnes insuffisantes).")
+else:
+    warnings.warn("Carte des renoncements ignorée (df_cluster manquant).")
+
+
+
+# ============================================================
+# CHAPITRE 8 — RÈGLES EXPLICABLES (df)
+# Objectif : rendre visible une logique de décision :
+# “Qui est prêt(e) à payer +20% pour l’éthique ?”
+# On termine par un modèle interprétable (arbre).
+#
+# IMPORTANT :
+# - Cette partie s’appuie sur df (global) avec variables clé.
+# - Aucune nouvelle importation ici.
+# ============================================================
+
+#%% =========================
+# 8A) ARBRE DE DÉCISION : Qui paie +20% pour l'éthique ?
+# =========================
+def _recolor_tree_fills(ann_list, class_names=("Ne paie pas", "Paie")):
+    C_LIGHT = PALETTE["CERULEAN_LIGHT"]
+    C_DARK = PALETTE["CERULEAN_DARK"]
+    for o in ann_list:
+        txt_obj = o
+        txt_content = txt_obj.get_text()
+        bbox = txt_obj.get_bbox_patch()
+
+        if "class =" in txt_content:
+            cls = txt_content.split("class =")[-1].strip()
+
+            if cls == class_names[1]:  # "Paie"
+                bbox.set_facecolor(C_DARK)
+                bbox.set_edgecolor("white")
+                txt_obj.set_color("white")
+            else:  # "Ne paie pas"
+                bbox.set_facecolor(C_LIGHT)
+                bbox.set_edgecolor(C_DARK)
+                txt_obj.set_color("black")
+
+
+req = ["Pret_A_Payer_Plus", "Age", "Souci_Ethique", "Importance_Prix", "Importance_Qualite"]
+
+if all(c in df.columns for c in req):
+    d = df.dropna(subset=req).copy()
+
+    # cible binaire : prêt(e) si >= 7
+    y = (d["Pret_A_Payer_Plus"] >= 7).astype(int)
+
+    feats = ["Age", "Souci_Ethique", "Importance_Prix", "Importance_Qualite"]
+    X = d[feats].copy()
+
+    # sécuriser numeric
+    for c in feats:
+        X[c] = pd.to_numeric(X[c], errors="coerce")
+    X = X.dropna()
+    y = y.loc[X.index]
+
+    if len(X) >= 50 and y.nunique() >= 2:
+        tree_model = DecisionTreeClassifier(
+            max_depth=3,
+            min_samples_leaf=20,
+            class_weight="balanced",
+            random_state=RANDOM_STATE
+        )
+        tree_model.fit(X, y)
+
+        fig, ax = plt.subplots(figsize=(16, 9), facecolor="white")
+
+        ann = plot_tree(
+            tree_model,
+            feature_names=feats,
+            class_names=["Ne paie pas", "Paie"],
+            filled=True,
+            rounded=True,
+            fontsize=11,
+            ax=ax,
+            precision=2
+        )
+        _recolor_tree_fills(ann, class_names=("Ne paie pas", "Paie"))
+
+        plt.title("Règles pour payer 20% plus cher (produit éthique)", fontsize=22, fontweight="bold", pad=20)
+        export_png(FIG_DIR / "arbre_decision_payer_plus.png")
+        print("OK - Export : reports/figures/arbre_decision_payer_plus.png")
+        plt.show()
+    else:
+        warnings.warn("Arbre de décision ignoré (pas assez de données / pas de variance).")
+else:
+    warnings.warn("Arbre de décision ignoré (colonnes manquantes).")
+
+
+
+# ============================================================
+# CHAPITRE 9 — CONSÉQUENCES (df)
+# Objectif : boucler la boucle “industrie → achats → fin de vie”.
+# On relie la fréquence d’achat aux comportements de séparation.
+#
+# IMPORTANT :
+# - Cette partie est globale (df).
+# - Aucune nouvelle importation ici.
+# ============================================================
+
+#%% =========================
+# 9A) DESTINATION FIN DE VIE par fréquence d'achat (barres empilées)
+# =========================
+req = ["Frequence_Achat", "Destination_Fin_Vie"]
+if all(c in df.columns for c in req):
+    d = df.dropna(subset=req).copy()
+
+    dum = d["Destination_Fin_Vie"].astype(str).str.get_dummies(sep=";")
+    dum.columns = [c.strip() for c in dum.columns]
+    temp = pd.concat([d["Frequence_Achat"], dum], axis=1)
+
+    pct = temp.groupby("Frequence_Achat").mean(numeric_only=True) * 100
+
+    # garder top options pour lisibilité
+    top_cols = dum.sum().sort_values(ascending=False).head(6).index
+    pct = pct[top_cols]
+
+    x = np.arange(len(pct.index))
+    n = len(pct.columns)
+    width = min(0.8 / max(n, 1), 0.18)
+
+    plt.figure(figsize=(12, 6))
+    for i, col in enumerate(pct.columns):
+        plt.bar(
+            x + (i - (n-1)/2)*width,
+            pct[col].values,
+            width=width,
+            edgecolor="black",
+            label=col
+        )
+
+    plt.xticks(x, pct.index.astype(str), rotation=20, ha="right")
+    plt.ylabel("% des répondants (dans le groupe)")
+    plt.title("Fin de vie : % des répondants par option (multi-choix)", fontweight="bold")
+    plt.legend(bbox_to_anchor=(1.02, 1), loc="upper left")
+    export_png(FIG_DIR / "fin_de_vie_par_frequence.png")
+    print("OK - Export : reports/figures/fin_de_vie_par_frequence.png")
+else:
+    warnings.warn("Fin de vie par fréquence ignorée (colonnes manquantes).")
+
+
+
+# ============================================================
+# CHAPITRE 10 — ANNEXES DESCRIPTIVES (df)
+# Objectif : compléter avec les distributions “classiques”
+# (utile pour contextualiser l’échantillon, mais après l’histoire principale).
+#
+# IMPORTANT :
+# - On ne supprime rien : on garde tes helpers + alias + distributions + exports md
+# - Aucune nouvelle importation ici.
+# ============================================================
+
+#%% =========================
+# 10A) VISUALISATIONS COMPLÉMENTAIRES (distributions de base)
+# =========================
+
+# Dossiers (sécurité) — déjà définis normalement, mais on ne casse pas si notebook partiel
+try:
+    OUT_DIR
+except NameError:
+    OUT_DIR = Path("reports")
+try:
+    FIG_DIR
+except NameError:
+    FIG_DIR = OUT_DIR / "figures"
+
+OUT_DIR.mkdir(parents=True, exist_ok=True)
+FIG_DIR.mkdir(parents=True, exist_ok=True)
+
+def _savefig(path: Path):
+    try:
+        export_png(path)
+    except Exception:
+        plt.tight_layout()
+        plt.savefig(path, dpi=200, bbox_inches="tight")
+        plt.close()
+
+# -------- helpers --------
+def col_like(df: pd.DataFrame, must_contain: list[str]):
+    """Retourne la 1ère colonne dont le nom contient tous les fragments donnés."""
+    cols = []
+    for c in df.columns:
+        ok = True
+        cl = str(c).lower()
+        for frag in must_contain:
+            if frag.lower() not in cl:
+                ok = False
+                break
+        if ok:
+            cols.append(c)
+    return cols[0] if cols else None
+
+def split_multi(s: pd.Series, sep=";"):
+    """Gère multi-choix: split sur ';' et nettoyage."""
+    return (
+        s.fillna("")
+         .astype(str)
+         .str.split(sep)
+         .apply(lambda lst: [x.strip() for x in lst if x and x.strip()])
+    )
+
+def value_counts_pct(s: pd.Series, dropna=False):
+    vc = s.value_counts(dropna=dropna)
+    pct = (vc / vc.sum() * 100).round(1)
+    return pd.DataFrame({"count": vc, "pct": pct})
+
+def barh_counts(s: pd.Series, title: str, filename: str, top_n=12):
+    d = s.fillna("Non spécifié").astype(str).str.strip()
+    vc = d.value_counts().head(top_n)[::-1]
+    plt.figure(figsize=(10, 5))
+    plt.barh(vc.index, vc.values)
+    plt.title(title, fontweight="bold")
+    plt.xlabel("Nombre de réponses")
+    _savefig(FIG_DIR / filename)
+
+# -------- 1) créer des alias courts (si pas déjà présents) --------
+# IMPORTANT: on ne détruit rien, on crée juste des colonnes "propres" en plus
+
+ALIASES = {
+    "Frequence_Achat": ["fréquence", "achetez-vous", "vêtements"],
+    "Canal_Achat": ["où achetez-vous", "choix multiples"],
+    "Cycle_Vie": ["cycle de vie moyen"],
+    "Destination_Fin_Vie": ["que faites-vous", "séparer", "choix multiples"],
+    "Obsolescence_Apres_Achat": ["finissent-ils", "jamais être portés"],
+    "Influence_Tendances": ["tendances actuelles", "influencent"],
+    "Achat_Parce_Tendance": ["uniquement parce qu'il est tendance"],
+    "Pression_Sociale": ["pression sociale"],
+    "Evite_Plus_Mode": ["évité de porter", "plus à la mode"],
+    "Confiance": ["confiance en vous"],
+    "Bien_Shabiller_Social": ["bien s’habiller", "vie sociale"],
+    "Influence_Reseaux": ["réseaux sociaux", "dictent"],
+    "Publie_Photos_Tendance": ["publie", "photos", "achats"],
+    "Culpabilite_RS": ["culpabilité", "réseaux sociaux"],
+    "Perception_Sans_Tendance": ["différence", "perçu", "tendance"],
+    "Items_Achetes": ["acheté certains de ces articles", "choix multiples"],
+    "Connaissance_FF": ["connaissez-vous le concept", "fast fashion"],
+    "Utilise_FastFashion": ["avez-vous déjà consommé", "fast fashion"],
+    "Souci_Ethique": ["considérations éthiques", "environnementales"],
+    "Pret_A_Payer_Plus": ["coûtait 20 % plus cher", "prêt"],
+    "Raisons_FF": ["raisons achetez-vous", "fast fashion", "choix multiples"],
+    "Age": ["quel est votre âge"],
+    "Genre": ["êtes-vous :"],
+    "Expression_vs_Conformite": ["outil d'expression", "conformer"],
+    "Situation_Pro": ["situation professionnelle ?"],
+    "Importance_Prix": ["caractéristiques", "prix"],
+    "Importance_Qualite": ["caractéristiques", "qualité"],
+    "Importance_Marque": ["caractéristiques", "marque"],
+    "Importance_Mode": ["caractéristiques", "mode / tendances"],
+    "Importance_Confort": ["caractéristiques", "confort"],
+}
+
+for short, frags in ALIASES.items():
+    if short not in df.columns:
+        original = col_like(df, frags)
+        if original is not None:
+            df[short] = df[original]
+        else:
+            pass
+
+# Nettoyage minimal sur les alias clés (évite erreurs .str sur DataFrame)
+for c in [
+    "Frequence_Achat", "Canal_Achat", "Cycle_Vie", "Destination_Fin_Vie",
+    "Utilise_FastFashion", "Connaissance_FF", "Raisons_FF", "Items_Achetes", "Genre"
+]:
+    if c in df.columns:
+        df[c] = df[c].fillna("Non spécifié").astype(str).str.strip()
+
+# -------- 2) visus “classiques” (distributions) --------
+if "Frequence_Achat" in df.columns:
+    barh_counts(df["Frequence_Achat"], "Fréquence d’achat (top)", "dist_frequence_achat.png", top_n=12)
+
+if "Canal_Achat" in df.columns:
+    tmp = df[["Canal_Achat"]].copy()
+    tmp["Canal_Achat"] = split_multi(tmp["Canal_Achat"])
+    tmp = tmp.explode("Canal_Achat")
+    if tmp["Canal_Achat"].notna().any():
+        barh_counts(tmp["Canal_Achat"], "Canaux d’achat (multi-choix)", "dist_canaux_achat.png", top_n=15)
+
+if "Cycle_Vie" in df.columns:
+    barh_counts(df["Cycle_Vie"], "Cycle de vie moyen d’un vêtement", "dist_cycle_vie.png", top_n=12)
+
+if "Destination_Fin_Vie" in df.columns:
+    tmp = df[["Destination_Fin_Vie"]].copy()
+    tmp["Destination_Fin_Vie"] = split_multi(tmp["Destination_Fin_Vie"])
+    tmp = tmp.explode("Destination_Fin_Vie")
+    if tmp["Destination_Fin_Vie"].notna().any():
+        barh_counts(tmp["Destination_Fin_Vie"], "Destination fin de vie (multi-choix)", "dist_destination_fin_vie.png", top_n=15)
+
+if "Raisons_FF" in df.columns:
+    tmp = df[["Raisons_FF"]].copy()
+    tmp["Raisons_FF"] = split_multi(tmp["Raisons_FF"])
+    tmp = tmp.explode("Raisons_FF")
+    if tmp["Raisons_FF"].notna().any():
+        barh_counts(tmp["Raisons_FF"], "Raisons d’achat fast fashion (multi-choix)", "dist_raisons_fastfashion.png", top_n=15)
+
+# -------- 3) exports “storytelling” en tables --------
+summary_lines = []
+summary_lines.append(f"- N réponses: {len(df)}")
+
+if "Souci_Ethique" in df.columns:
+    s = pd.to_numeric(df["Souci_Ethique"], errors="coerce")
+    if s.notna().any():
+        summary_lines.append(f"- Souci éthique (moyenne): {s.mean():.2f} / 10")
+
+if "Pret_A_Payer_Plus" in df.columns:
+    s = pd.to_numeric(df["Pret_A_Payer_Plus"], errors="coerce")
+    if s.notna().any():
+        summary_lines.append(f"- Prêt à payer +20% (moyenne): {s.mean():.2f} / 10")
+
+if "Influence_Reseaux" in df.columns:
+    s = pd.to_numeric(df["Influence_Reseaux"], errors="coerce")
+    if s.notna().any():
+        summary_lines.append(f"- Influence réseaux (moyenne): {s.mean():.2f} / 10")
+
+(Path(OUT_DIR) / "resume_storytelling.md").write_text("\n".join(summary_lines), encoding="utf-8")
+print("OK - Export : reports/resume_storytelling.md")
+
+#%% =========================
+# 10B) RÉSUMÉ DES EXPORTS (liste)
+# =========================
+generated = [
+    "reports/diagnostic_colonnes.txt",
+    "reports/figures/grand_paradoxe.png",
+    "reports/figures/paradoxe_par_age.png",
+    "reports/figures/paradoxe_par_canal.png",
+    "reports/figures/boxplot_culpabilite_par_paradoxe.png",
+    "reports/figures/heatmap_densite_ethique_culpabilite.png",
+    "reports/figures/spirale_culpabilite_reseaux.png",
+    "reports/sankey_parcours_3_etapes.html",
+    "reports/sankey_cycle_complet_4_etapes.html",
+    "reports/figures/reseau_items_tendance.png",
+    "reports/figures/personas_scatter.png",
+    "reports/personas_clusters.csv",
+    "reports/personas_moyennes_par_cluster.csv",
+    "reports/figures/waffle_clusters_typologie.png",
+    "reports/figures/heatmap_items_par_cluster.png",
+    "reports/figures/obsolescence_psy_par_cluster.png",
+    "reports/utilise_fastfashion_pct_par_cluster.csv",
+    "reports/figures/fastfashion_pct_par_cluster.png",
+    "reports/figures/carte_renoncements_par_cluster.png",
+    "reports/figures/arbre_decision_payer_plus.png",
+    "reports/figures/fin_de_vie_par_frequence.png",
+    "reports/figures/dist_frequence_achat.png",
+    "reports/figures/dist_canaux_achat.png",
+    "reports/figures/dist_cycle_vie.png",
+    "reports/figures/dist_destination_fin_vie.png",
+    "reports/figures/dist_raisons_fastfashion.png",
+    "reports/resume_storytelling.md",
+]
+
+md = ["# Résumé des exports\n", "Fichiers potentiellement générés :\n"]
+for p in generated:
+    md.append(f"- {p}")
+
+(OUT_DIR / "resume_exports.md").write_text("\n".join(md), encoding="utf-8")
+print("OK - Export : reports/resume_exports.md")
+
+print("OK - Annexes descriptives + résumés exports générés.")
