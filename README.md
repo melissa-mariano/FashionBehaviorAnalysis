@@ -1,27 +1,27 @@
-﻿# Analyse des comportements de consommation de mode
+# Analyse des comportements de consommation de mode
 
-Explorer la mode comme un systÃ¨me de donnÃ©es : comportements dâ€™achat, tensions Ã©thiques, pression sociale et segmentation des profils consommateurs.
+Explorer la mode comme un système de données : comportements d’achat, tensions éthiques, pression sociale et segmentation des profils consommateurs.
 
 ---
 
 ## Contexte
 
-Ce projet est inspirÃ© du cÃ©lÃ¨bre monologue du *bleu cÃ©rulÃ©en* dans **Le Diable sâ€™habille en Prada**, qui illustre comment les tendances â€” souvent perÃ§ues comme des choix individuels â€” sont en rÃ©alitÃ© faÃ§onnÃ©es par un systÃ¨me industriel structurÃ©.
+Ce projet est inspiré du célèbre monologue du *bleu céruléen* dans **Le Diable s’habille en Prada**, qui illustre comment les tendances — souvent perçues comme des choix individuels — sont en réalité façonnées par un système industriel structuré.
 
-Ã€ partir dâ€™une enquÃªte quantitative menÃ©e auprÃ¨s de **428 rÃ©pondants**, le pipeline propose une analyse orientÃ©e **data storytelling**, traduisant des comportements sociaux (achat, influence, culpabilitÃ©, arbitrages, fin de vie) en structures analytiques lisibles Ã  lâ€™aide de visualisations avancÃ©es et dâ€™exports automatisÃ©s.
+À partir d’une enquête quantitative menée auprès de **428 répondants**, le pipeline propose une analyse orientée **data storytelling**, traduisant des comportements sociaux (achat, influence, culpabilité, arbitrages, fin de vie) en structures analytiques lisibles à l’aide de visualisations avancées et d’exports automatisés.
 
 ---
 
-## ProblÃ©matique
+## Problématique
 
-Comment lâ€™industrie de la mode impacte-t-elle le comportement et les choix vestimentaires ?
+Comment l’industrie de la mode impacte-t-elle le comportement et les choix vestimentaires ?
 
 Questions principales :
-- Existe-t-il un dÃ©calage entre valeurs dÃ©clarÃ©es et comportements rÃ©els (fast fashion) ?
-- Quel rÃ´le jouent les rÃ©seaux sociaux, la tendance et la pression sociale ?
+- Existe-t-il un décalage entre valeurs déclarées et comportements réels (fast fashion) ?
+- Quel rôle jouent les réseaux sociaux, la tendance et la pression sociale ?
 - Peut-on identifier des profils (personas) via une segmentation exploratoire ?
-- Quels arbitrages structurent les dÃ©cisions (prix, qualitÃ©, confort, Ã©thique, tendance) ?
-- Comment la frÃ©quence dâ€™achat est-elle liÃ©e Ã  la fin de vie des vÃªtements ?
+- Quels arbitrages structurent les décisions (prix, qualité, confort, éthique, tendance) ?
+- Comment la fréquence d’achat est-elle liée à la fin de vie des vêtements ?
 
 ---
 
@@ -29,17 +29,17 @@ Questions principales :
 
 ```
 FashionBehaviorAnalysis/
-â”‚
-â”œâ”€â”€ data/
-â”‚   â””â”€â”€ La mode - LaMode.csv
-â”‚
-â”œâ”€â”€ notebooks/
-â”‚   â””â”€â”€ pipeline_visualisations.py
-â”‚
-â”œâ”€â”€ reports/
-â”‚
-â”œâ”€â”€ requirements.txt
-â””â”€â”€ README.md
+│
+├── data/
+│   └── La mode - LaMode.csv
+│
+├── notebooks/
+│   └── pipeline_visualisations.py
+│
+├── reports/
+│
+├── requirements.txt
+└── README.md
 ```
 
 ---
@@ -51,7 +51,7 @@ FashionBehaviorAnalysis/
 git clone https://github.com/melissa-mariano/FashionBehaviorAnalysis.git  
 cd FashionBehaviorAnalysis
 
-### CrÃ©er un environnement virtuel (recommandÃ©)
+### Créer un environnement virtuel (recommandé)
 
 Windows (PowerShell) :
 python -m venv venv  
@@ -61,7 +61,7 @@ macOS / Linux :
 python3 -m venv venv  
 source venv/bin/activate
 
-### Installer les dÃ©pendances
+### Installer les dépendances
 
 pip install -r requirements.txt
 
@@ -71,28 +71,28 @@ pip install -r requirements.txt
 
 python notebooks/pipeline_visualisations.py
 
-Ce script exÃ©cute un **pipeline analytique complet** :
+Ce script exécute un **pipeline analytique complet** :
 
-- normalisation robuste des Ã©chelles Likert (dÃ©tection automatique)
-- design system visuel inspirÃ© du bleu cÃ©rulÃ©en
-- construction dâ€™indicateurs sociologiques (paradoxe Ã©thique, obsolescence psychologique)
-- visualisations narratives (hexbin, Sankey, rÃ©seaux, heatmaps)
+- normalisation robuste des échelles Likert (détection automatique)
+- design system visuel inspiré du bleu céruléen
+- construction d’indicateurs sociologiques (paradoxe éthique, obsolescence psychologique)
+- visualisations narratives (hexbin, Sankey, réseaux, heatmaps)
 - clustering exploratoire K-Means + projection PCA
-- arbre de dÃ©cision interprÃ©table (XAI lÃ©ger)
-- gÃ©nÃ©ration automatique des exports (figures, diagnostics, tableaux)
+- arbre de décision interprétable (XAI léger)
+- génération automatique des exports (figures, diagnostics, tableaux)
 
 ---
 
 ## Logique analytique (chapitres)
 
-- Chapitre 1 â€” Discours vs rÃ©alitÃ© : le Grand Paradoxe
-- Chapitre 2 â€” Spirale des rÃ©seaux sociaux et culpabilitÃ©
-- Chapitre 3 â€” Machine Ã  tendances (co-adoption dâ€™items)
-- Chapitre 4 â€” Personas et segmentation
-- Chapitre 5 â€” Uniformisation et pression sociale
-- Chapitre 6 â€” Arbitrages structurÃ©s
-- Chapitre 7 â€” DÃ©cision explicable (payer plus pour lâ€™Ã©thique)
-- Chapitre 8 â€” ConsÃ©quences : frÃ©quence dâ€™achat et fin de vie
+- Chapitre 1 — Discours vs réalité : le Grand Paradoxe
+- Chapitre 2 — Spirale des réseaux sociaux et culpabilité
+- Chapitre 3 — Machine à tendances (co-adoption d’items)
+- Chapitre 4 — Personas et segmentation
+- Chapitre 5 — Uniformisation et pression sociale
+- Chapitre 6 — Arbitrages structurés
+- Chapitre 7 — Décision explicable (payer plus pour l’éthique)
+- Chapitre 8 — Conséquences : fréquence d’achat et fin de vie
 
 ---
 
@@ -100,15 +100,11 @@ Ce script exÃ©cute un **pipeline analytique complet** :
 
 ### 1) Parcours & structure des comportements
 
-#### Sankey â€” parcours (3 Ã©tapes)
-<p align="center">
-  <img src="reports/figures/sankey_parcours_3_etapes.png" width="900" alt="Sankey - parcours 3 Ã©tapes">
-</p>
+#### Sankey — parcours (3 étapes)
+👉 [Ouvrir la visualisation](reports/sankey_parcours_3_etapes.html)
 
-#### Sankey â€” cycle complet (4 Ã©tapes)
-<p align="center">
-  <img src="reports/figures/sankey_cycle_complet_4_etapes.png" width="900" alt="Sankey - cycle complet 4 Ã©tapes">
-</p>
+#### Sankey — cycle complet (4 étapes)
+👉 [Ouvrir la visualisation](reports/sankey_cycle_complet_4_etapes.html)
 
 
 ### 2) Segmentation (K-means) & personas
@@ -118,60 +114,60 @@ Ce script exÃ©cute un **pipeline analytique complet** :
   <img src="reports/figures/waffle_clusters_typologie.png" width="900" alt="Waffle - typologie par cluster">
 </p>
 
-#### Personas â€” projection PCA 2D
+#### Personas — projection PCA 2D
 <p align="center">
   <img src="reports/figures/personas_pca_2d.png" width="900" alt="PCA 2D - personas par cluster">
 </p>
 
-#### Heatmap â€” items / variables par cluster
+#### Heatmap — items / variables par cluster
 <p align="center">
   <img src="reports/figures/heatmap_items_par_cluster.png" width="900" alt="Heatmap - variables par cluster">
 </p>
 
-#### Obsolescence psychologique â€” rejet du â€œdÃ©modÃ©â€ (moyenne)
+#### Obsolescence psychologique — rejet du “démodé” (moyenne)
 <p align="center">
   <img src="reports/figures/obsolescence_psy_par_cluster.png" width="900" alt="Obsolescence psychologique - par cluster">
 </p>
 
 
-### 3) Fast fashion & Ã©thique (cohÃ©rence / paradoxe)
+### 3) Fast fashion & éthique (cohérence / paradoxe)
 
 #### Fast fashion (en %) par cluster
 <p align="center">
   <img src="reports/figures/fastfashion_pct_par_cluster.png" width="900" alt="Fast fashion - pourcentage par cluster">
 </p>
 
-#### Carte des renoncements â€” arbitrages moyens par cluster
+#### Carte des renoncements — arbitrages moyens par cluster
 <p align="center">
   <img src="reports/figures/carte_renoncements_par_cluster.png" width="900" alt="Carte des renoncements - par cluster">
 </p>
 
-#### RÃ¨gles pour payer 20% plus cher (produit Ã©thique) â€” arbre de dÃ©cision
+#### Règles pour payer 20% plus cher (produit éthique) — arbre de décision
 <p align="center">
-  <img src="reports/figures/arbre_decision_payer_plus.png" width="900" alt="Arbre de dÃ©cision - payer 20% plus cher">
+  <img src="reports/figures/arbre_decision_payer_plus.png" width="900" alt="Arbre de décision - payer 20% plus cher">
 </p>
 
-#### Le â€œGrand Paradoxeâ€ â€” discours vs rÃ©alitÃ©
+#### Le “Grand Paradoxe” — discours vs réalité
 <p align="center">
-  <img src="reports/figures/grand_paradoxe.png" width="900" alt="Grand paradoxe - discours vs rÃ©alitÃ©">
+  <img src="reports/figures/grand_paradoxe.png" width="900" alt="Grand paradoxe - discours vs réalité">
 </p>
 
-#### CulpabilitÃ© : paradoxe vs non-paradoxe
+#### Culpabilité : paradoxe vs non-paradoxe
 <p align="center">
-  <img src="reports/figures/boxplot_culpabilite_par_paradoxe.png" width="900" alt="Boxplot - culpabilitÃ© paradoxe vs non-paradoxe">
+  <img src="reports/figures/boxplot_culpabilite_par_paradoxe.png" width="900" alt="Boxplot - culpabilité paradoxe vs non-paradoxe">
 </p>
 
-#### DensitÃ© â€” Ã©thique Ã— culpabilitÃ©
+#### Densité — éthique × culpabilité
 <p align="center">
-  <img src="reports/figures/heatmap_densite_ethique_culpabilite.png" width="900" alt="Heatmap densitÃ© - Ã©thique x culpabilitÃ©">
+  <img src="reports/figures/heatmap_densite_ethique_culpabilite.png" width="900" alt="Heatmap densité - éthique x culpabilité">
 </p>
 
-#### Taux de paradoxe par Ã¢ge
+#### Taux de paradoxe par âge
 <p align="center">
-  <img src="reports/figures/paradoxe_par_age.png" width="900" alt="Paradoxe - taux par Ã¢ge">
+  <img src="reports/figures/paradoxe_par_age.png" width="900" alt="Paradoxe - taux par âge">
 </p>
 
-#### Paradoxe Ã©thique par canal d'achat
+#### Paradoxe éthique par canal d'achat
 <p align="center">
   <img src="reports/figures/paradoxe_par_canal.png" width="900" alt="Paradoxe - par canal d'achat">
 </p>
@@ -179,14 +175,14 @@ Ce script exÃ©cute un **pipeline analytique complet** :
 
 ### 4) Achat & fin de vie (descriptif)
 
-#### Canaux dâ€™achat (multi-choix)
+#### Canaux d’achat (multi-choix)
 <p align="center">
   <img src="reports/figures/dist_canaux_achat.png" width="900" alt="Canaux d'achat - distribution">
 </p>
 
-#### FrÃ©quence dâ€™achat (top)
+#### Fréquence d’achat (top)
 <p align="center">
-  <img src="reports/figures/dist_frequence_achat.png" width="900" alt="FrÃ©quence d'achat - top rÃ©ponses">
+  <img src="reports/figures/dist_frequence_achat.png" width="900" alt="Fréquence d'achat - top réponses">
 </p>
 
 #### Destination fin de vie (multi-choix)
@@ -194,76 +190,76 @@ Ce script exÃ©cute un **pipeline analytique complet** :
   <img src="reports/figures/dist_destination_fin_vie.png" width="900" alt="Destination fin de vie - distribution">
 </p>
 
-#### Fin de vie par frÃ©quence dâ€™achat
+#### Fin de vie par fréquence d’achat
 <p align="center">
-  <img src="reports/figures/fin_de_vie_par_frequence.png" width="900" alt="Fin de vie - selon frÃ©quence d'achat">
+  <img src="reports/figures/fin_de_vie_par_frequence.png" width="900" alt="Fin de vie - selon fréquence d'achat">
 </p>
 
 
-### 5) Tendances : adoption & â€œpacksâ€
+### 5) Tendances : adoption & “packs”
 
-#### Uniformisation â€” articles tendance par cluster (% adoption)
+#### Uniformisation — articles tendance par cluster (% adoption)
 <p align="center">
   <img src="reports/figures/heatmap_items_par_cluster.png" width="900" alt="Uniformisation - adoption des items par cluster">
 </p>
 
-#### Packs de tendances (corrÃ©lation > 0.15)
+#### Packs de tendances (corrélation > 0.15)
 <p align="center">
-  <img src="reports/figures/reseau_items_tendance.png" width="900" alt="RÃ©seau - packs de tendances">
+  <img src="reports/figures/reseau_items_tendance.png" width="900" alt="Réseau - packs de tendances">
 </p>
 
 
-### 6) RÃ©seaux sociaux
+### 6) Réseaux sociaux
 
-#### RÃ©seaux sociaux â€” distribution de lâ€™influence dÃ©clarÃ©e (1â€“10)
+#### Réseaux sociaux — distribution de l’influence déclarée (1–10)
 <p align="center">
-  <img src="reports/figures/reseaux_dist_influence.png" width="900" alt="RÃ©seaux sociaux - distribution influence 1-10">
+  <img src="reports/figures/reseaux_dist_influence.png" width="900" alt="Réseaux sociaux - distribution influence 1-10">
 </p>
 
-#### RÃ©seaux sociaux vs tendances â€” densitÃ© des rÃ©ponses
+#### Réseaux sociaux vs tendances — densité des réponses
 <p align="center">
-  <img src="reports/figures/reseaux_influence_vs_tendances.png" width="900" alt="RÃ©seaux vs tendances - densitÃ©">
+  <img src="reports/figures/reseaux_influence_vs_tendances.png" width="900" alt="Réseaux vs tendances - densité">
 </p>
 
-#### RÃ©seaux sociaux â€” probabilitÃ© de fast fashion selon lâ€™influence
+#### Réseaux sociaux — probabilité de fast fashion selon l’influence
 <p align="center">
-  <img src="reports/figures/reseaux_fastfashion_selon_influence.png" width="900" alt="ProbabilitÃ© fast fashion - selon influence rÃ©seaux">
+  <img src="reports/figures/reseaux_fastfashion_selon_influence.png" width="900" alt="Probabilité fast fashion - selon influence réseaux">
 </p>
 
-#### CulpabilitÃ© selon la consommation de fast fashion
+#### Culpabilité selon la consommation de fast fashion
 <p align="center">
-  <img src="reports/figures/reseaux_culpabilite_fastfashion_boxplot.png" width="900" alt="Boxplot - culpabilitÃ© selon fast fashion">
+  <img src="reports/figures/reseaux_culpabilite_fastfashion_boxplot.png" width="900" alt="Boxplot - culpabilité selon fast fashion">
 </p>
 
-#### RÃ©seaux sociaux â€” corrÃ©lations des variables psycho-sociales
+#### Réseaux sociaux — corrélations des variables psycho-sociales
 <p align="center">
-  <img src="reports/figures/reseaux_heatmap_correlations.png" width="900" alt="Heatmap - corrÃ©lations psycho-sociales">
+  <img src="reports/figures/reseaux_heatmap_correlations.png" width="900" alt="Heatmap - corrélations psycho-sociales">
 </p>
 
 ---
 
-## MÃ©thodologie
+## Méthodologie
 
-- Nettoyage et normalisation des donnÃ©es (formats FR, Likert)
-- Renommage robuste et dÃ©tection automatique des variables
+- Nettoyage et normalisation des données (formats FR, Likert)
+- Renommage robuste et détection automatique des variables
 - Feature engineering sociologique
-- Analyse de densitÃ© (hexbin)
+- Analyse de densité (hexbin)
 - Clustering K-Means + PCA
-- RÃ©seaux de corrÃ©lation (packs de tendances)
-- Arbre de dÃ©cision interprÃ©table
+- Réseaux de corrélation (packs de tendances)
+- Arbre de décision interprétable
 - Data storytelling visuel
 
 ---
 
 ## Objectifs du projet
 
-- Comprendre les dynamiques sociales derriÃ¨re les choix vestimentaires
-- Mettre en Ã©vidence lâ€™influence structurelle de lâ€™industrie de la mode
-- Transformer un phÃ©nomÃ¨ne culturel en analyse data-driven
+- Comprendre les dynamiques sociales derrière les choix vestimentaires
+- Mettre en évidence l’influence structurelle de l’industrie de la mode
+- Transformer un phénomène culturel en analyse data-driven
 
 ---
 
-## DÃ©pendances principales
+## Dépendances principales
 
 - pandas
 - numpy
@@ -277,4 +273,3 @@ Ce script exÃ©cute un **pipeline analytique complet** :
 ## Auteur
 
 Melissa Albuquerque
-
