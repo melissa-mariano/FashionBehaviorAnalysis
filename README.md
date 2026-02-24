@@ -123,12 +123,12 @@ Ce script exécute un **pipeline analytique complet** :
 #### 1.1 Sankey — parcours (3 étapes)
 **Objectif :** visualiser les enchaînements dominants entre fréquence d’achat, canal et fast fashion.  
 **Lecture :** l’épaisseur des flux indique la fréquence des parcours observés.  
-👉 Ouvrir : https://melissa-mariano.github.io/FashionBehaviorAnalysis/reports/sankey_parcours_3_etapes.html
+👉 Ouvrir : https://raw.githack.com/melissa-mariano/FashionBehaviorAnalysis/main/reports/sankey_parcours_3_etapes.html
 
 #### 1.2 Sankey — cycle complet (4 étapes)
 **Objectif :** représenter le cycle complet incluant la destination de fin de vie.  
 **Lecture :** met en évidence les trajectoires majoritaires et marginales.  
-👉 Ouvrir : https://melissa-mariano.github.io/FashionBehaviorAnalysis/reports/sankey_cycle_complet_4_etapes.html
+👉 Ouvrir : https://raw.githack.com/melissa-mariano/FashionBehaviorAnalysis/main/reports/sankey_cycle_complet_4_etapes.html
 
 ---
 
