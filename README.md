@@ -98,143 +98,154 @@ Ce script exécute un **pipeline analytique complet** :
 
 ## Galerie des visualisations
 
+> **Note :** toutes les images sont stockées dans `reports/figures/`.  
+> Les visualisations **Sankey** sont interactives (`.html`) et accessibles via lien.
+
+---
+
 ### 1) Parcours & structure des comportements
 
-#### Sankey — parcours (3 étapes)
-👉 [Ouvrir la visualisation](reports/sankey_parcours_3_etapes.html)
+#### 1.1 Sankey — parcours (3 étapes)
+**Objectif :** visualiser les enchaînements dominants entre fréquence d’achat, canal et fast fashion.  
+**Lecture :** l’épaisseur des flux indique la fréquence des parcours observés.  
+👉 [Ouvrir la visualisation Sankey — parcours (3 étapes)](reports/sankey_parcours_3_etapes.html)
 
-#### Sankey — cycle complet (4 étapes)
-👉 [Ouvrir la visualisation](reports/sankey_cycle_complet_4_etapes.html)
+#### 1.2 Sankey — cycle complet (4 étapes)
+**Objectif :** représenter le cycle complet incluant la destination de fin de vie.  
+**Lecture :** met en évidence les trajectoires majoritaires et marginales.  
+👉 [Ouvrir la visualisation Sankey — cycle complet (4 étapes)](reports/sankey_cycle_complet_4_etapes.html)
 
+---
 
 ### 2) Segmentation (K-means) & personas
 
-#### Typologie des consommateurs (waffle)
-<p align="center">
-  <img src="reports/figures/waffle_clusters_typologie.png" width="900" alt="Waffle - typologie par cluster">
-</p>
+#### 2.1 Typologie des consommateurs (waffle chart)
+**Objectif :** visualiser le poids relatif de chaque cluster dans l’échantillon.  
+**Lecture :** 1 carré ≈ 1 répondant.  
+![Typologie des consommateurs](reports/figures/waffle_clusters_typologie.png)
 
-#### Personas — projection PCA 2D
-<p align="center">
-  <img src="reports/figures/personas_pca_2d.png" width="900" alt="PCA 2D - personas par cluster">
-</p>
+#### 2.2 Projection des personas (PCA 2D)
+**Objectif :** observer la séparation (ou le recouvrement) des clusters dans un espace réduit.  
+**Lecture :** des groupes bien distincts suggèrent une segmentation robuste.  
+![Personas PCA 2D](reports/figures/personas_pca_2d.png)
 
-#### Heatmap — items / variables par cluster
-<p align="center">
-  <img src="reports/figures/heatmap_items_par_cluster.png" width="900" alt="Heatmap - variables par cluster">
-</p>
+#### 2.3 Heatmap — items par cluster
+**Objectif :** comparer les clusters sur l’adoption d’items et variables clés.  
+**Lecture :** intensité de couleur = niveau moyen ou taux d’adoption.  
+![Heatmap items par cluster](reports/figures/heatmap_items_par_cluster.png)
 
-#### Obsolescence psychologique — rejet du “démodé” (moyenne)
-<p align="center">
-  <img src="reports/figures/obsolescence_psy_par_cluster.png" width="900" alt="Obsolescence psychologique - par cluster">
-</p>
+---
 
+### 3) Réseaux sociaux & tendances
 
-### 3) Fast fashion & éthique (cohérence / paradoxe)
+#### 3.1 Réseaux sociaux vs tendances — densité des réponses
+**Objectif :** analyser la relation entre l’influence perçue des réseaux sociaux et celle des tendances.  
+**Lecture :** les zones les plus foncées correspondent aux combinaisons de réponses les plus fréquentes.  
+![Réseaux sociaux vs tendances](reports/figures/reseaux_influence_vs_tendances.png)
 
-#### Fast fashion (en %) par cluster
-<p align="center">
-  <img src="reports/figures/fastfashion_pct_par_cluster.png" width="900" alt="Fast fashion - pourcentage par cluster">
-</p>
+#### 3.2 Distribution — influence des réseaux sociaux
+**Objectif :** décrire la répartition des scores d’influence des réseaux (1–10).  
+**Lecture :** permet d’identifier le niveau d’exposition dominant.  
+![Distribution influence réseaux](reports/figures/reseaux_dist_influence.png)
 
-#### Carte des renoncements — arbitrages moyens par cluster
-<p align="center">
-  <img src="reports/figures/carte_renoncements_par_cluster.png" width="900" alt="Carte des renoncements - par cluster">
-</p>
+#### 3.3 Fast fashion selon l’influence des réseaux
+**Objectif :** tester l’association entre influence des réseaux et consommation de fast fashion.  
+**Lecture :** comparaison des pratiques selon le niveau d’influence.  
+![Fast fashion selon influence réseaux](reports/figures/reseaux_fastfashion_selon_influence.png)
 
-#### Règles pour payer 20% plus cher (produit éthique) — arbre de décision
-<p align="center">
-  <img src="reports/figures/arbre_decision_payer_plus.png" width="900" alt="Arbre de décision - payer 20% plus cher">
-</p>
+#### 3.4 Heatmap — corrélations (réseaux, tendances, fast fashion)
+**Objectif :** synthétiser les corrélations entre variables clés.  
+**Lecture :** utile pour repérer des relations fortes à approfondir.  
+![Heatmap corrélations réseaux](reports/figures/reseaux_heatmap_correlations.png)
 
-#### Le “Grand Paradoxe” — discours vs réalité
-<p align="center">
-  <img src="reports/figures/grand_paradoxe.png" width="900" alt="Grand paradoxe - discours vs réalité">
-</p>
+---
 
-#### Culpabilité : paradoxe vs non-paradoxe
-<p align="center">
-  <img src="reports/figures/boxplot_culpabilite_par_paradoxe.png" width="900" alt="Boxplot - culpabilité paradoxe vs non-paradoxe">
-</p>
+### 4) Culpabilité, éthique & paradoxe
 
-#### Densité — éthique × culpabilité
-<p align="center">
-  <img src="reports/figures/heatmap_densite_ethique_culpabilite.png" width="900" alt="Heatmap densité - éthique x culpabilité">
-</p>
+#### 4.1 Densité — éthique vs culpabilité
+**Objectif :** visualiser la distribution conjointe de la sensibilité éthique et de la culpabilité.  
+**Lecture :** les zones denses indiquent les profils majoritaires.  
+![Densité éthique vs culpabilité](reports/figures/heatmap_densite_ethique_culpabilite.png)
 
-#### Taux de paradoxe par âge
-<p align="center">
-  <img src="reports/figures/paradoxe_par_age.png" width="900" alt="Paradoxe - taux par âge">
-</p>
+#### 4.2 Boxplot — culpabilité par paradoxe
+**Objectif :** comparer la culpabilité selon la présence d’un paradoxe valeurs/comportements.  
+**Lecture :** médiane et dispersion par groupe.  
+![Culpabilité par paradoxe](reports/figures/boxplot_culpabilite_par_paradoxe.png)
 
-#### Paradoxe éthique par canal d'achat
-<p align="center">
-  <img src="reports/figures/paradoxe_par_canal.png" width="900" alt="Paradoxe - par canal d'achat">
-</p>
+#### 4.3 Le « grand paradoxe »
+**Objectif :** illustrer la coexistence entre conscience éthique élevée et pratiques contradictoires.  
+**Lecture :** visuel de synthèse du décalage valeurs / actions.  
+![Grand paradoxe](reports/figures/grand_paradoxe.png)
 
+#### 4.4 Paradoxe par âge
+**Objectif :** analyser les variations générationnelles du paradoxe.  
+**Lecture :** comparaison par tranches d’âge.  
+![Paradoxe par âge](reports/figures/paradoxe_par_age.png)
 
-### 4) Achat & fin de vie (descriptif)
+#### 4.5 Paradoxe par canal d’achat
+**Objectif :** examiner le rôle du canal d’achat dans l’expression du paradoxe.  
+**Lecture :** mise en relation des pratiques et du contexte d’achat.  
+![Paradoxe par canal](reports/figures/paradoxe_par_canal.png)
 
-#### Canaux d’achat (multi-choix)
-<p align="center">
-  <img src="reports/figures/dist_canaux_achat.png" width="900" alt="Canaux d'achat - distribution">
-</p>
+---
 
-#### Fréquence d’achat (top)
-<p align="center">
-  <img src="reports/figures/dist_frequence_achat.png" width="900" alt="Fréquence d'achat - top réponses">
-</p>
+### 5) Obsolescence psychologique & fast fashion
 
-#### Destination fin de vie (multi-choix)
-<p align="center">
-  <img src="reports/figures/dist_destination_fin_vie.png" width="900" alt="Destination fin de vie - distribution">
-</p>
+#### 5.1 Obsolescence psychologique par cluster
+**Objectif :** mesurer la sensibilité au « démodé » selon les profils.  
+**Lecture :** identification des clusters les plus exposés à la pression symbolique.  
+![Obsolescence psychologique](reports/figures/obsolescence_psy_par_cluster.png)
 
-#### Fin de vie par fréquence d’achat
-<p align="center">
-  <img src="reports/figures/fin_de_vie_par_frequence.png" width="900" alt="Fin de vie - selon fréquence d'achat">
-</p>
+#### 5.2 Fast fashion — part par cluster
+**Objectif :** comparer la consommation de fast fashion entre clusters.  
+**Lecture :** repérage des segments les plus consommateurs.  
+![Fast fashion par cluster](reports/figures/fastfashion_pct_par_cluster.png)
 
+---
 
-### 5) Tendances : adoption & “packs”
+### 6) Fréquence d’achat & fin de vie
 
-#### Uniformisation — articles tendance par cluster (% adoption)
-<p align="center">
-  <img src="reports/figures/heatmap_items_par_cluster.png" width="900" alt="Uniformisation - adoption des items par cluster">
-</p>
+#### 6.1 Distribution — fréquence d’achat
+**Objectif :** décrire le rythme d’achat des répondants.  
+**Lecture :** distinction entre acheteurs occasionnels et fréquents.  
+![Fréquence d’achat](reports/figures/dist_frequence_achat.png)
 
-#### Packs de tendances (corrélation > 0.15)
-<p align="center">
-  <img src="reports/figures/reseau_items_tendance.png" width="900" alt="Réseau - packs de tendances">
-</p>
+#### 6.2 Distribution — destination de fin de vie
+**Objectif :** analyser les pratiques de fin de vie des vêtements.  
+**Lecture :** don, revente, recyclage, stockage, jet.  
+![Destination fin de vie](reports/figures/dist_destination_fin_vie.png)
 
+#### 6.3 Fin de vie selon la fréquence d’achat
+**Objectif :** relier intensité d’achat et comportements de fin de vie.  
+**Lecture :** met en évidence des logiques de renoncement ou d’accumulation.  
+![Fin de vie par fréquence](reports/figures/fin_de_vie_par_frequence.png)
 
-### 6) Réseaux sociaux
+---
 
-#### Réseaux sociaux — distribution de l’influence déclarée (1–10)
-<p align="center">
-  <img src="reports/figures/reseaux_dist_influence.png" width="900" alt="Réseaux sociaux - distribution influence 1-10">
-</p>
+### 7) Canaux d’achat
 
-#### Réseaux sociaux vs tendances — densité des réponses
-<p align="center">
-  <img src="reports/figures/reseaux_influence_vs_tendances.png" width="900" alt="Réseaux vs tendances - densité">
-</p>
+#### 7.1 Distribution — canaux d’achat
+**Objectif :** identifier les canaux dominants de consommation.  
+**Lecture :** contextualise les comportements observés.  
+![Canaux d’achat](reports/figures/dist_canaux_achat.png)
 
-#### Réseaux sociaux — probabilité de fast fashion selon l’influence
-<p align="center">
-  <img src="reports/figures/reseaux_fastfashion_selon_influence.png" width="900" alt="Probabilité fast fashion - selon influence réseaux">
-</p>
+---
 
-#### Culpabilité selon la consommation de fast fashion
-<p align="center">
-  <img src="reports/figures/reseaux_culpabilite_fastfashion_boxplot.png" width="900" alt="Boxplot - culpabilité selon fast fashion">
-</p>
+### 8) Renoncements & arbitrages
 
-#### Réseaux sociaux — corrélations des variables psycho-sociales
-<p align="center">
-  <img src="reports/figures/reseaux_heatmap_correlations.png" width="900" alt="Heatmap - corrélations psycho-sociales">
-</p>
+#### 8.1 Carte — renoncements par cluster
+**Objectif :** montrer les arbitrages et renoncements selon les segments.  
+**Lecture :** met en évidence les clusters les plus enclins au changement.  
+![Renoncements par cluster](reports/figures/carte_renoncements_par_cluster.png)
+
+---
+
+### 9) Modélisation explicative (arbre de décision)
+
+#### 9.1 Arbre de décision — « payer plus » (exemple)
+**Objectif :** expliquer les facteurs associés à la probabilité de payer plus cher pour un produit éthique.  
+**Lecture :** chaque nœud correspond à une règle de décision.  
+![Arbre de décision — payer plus](reports/figures/arbre_decision_payer_plus.png)
 
 ---
 
