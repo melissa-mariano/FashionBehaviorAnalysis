@@ -29,6 +29,9 @@ from sklearn.decomposition import PCA
 
 import seaborn as sns
 
+import os
+
+
 # [0B] Palette cerulean + colormap cerulean
 PALETTE = {
     "CERULEAN_DARK":  "#005B82",  # cerulean foncé
@@ -1244,43 +1247,197 @@ else:
     warnings.warn("Obsolescence psycho ignorée (df_cluster / colonne manquante).")
 
 
-
 # ============================================================
 # CHAPITRE 6 — RÉSEAUX SOCIAUX (df)
 # Objectif : montrer le mécanisme "attention → désir → achat → culpabilité"
-# (pression sociale amplifiée par les plateformes), en lien direct avec la problématique.
-#
 # IMPORTANT :
-# - Cette partie reste en GLOBAL (df), car elle décrit un phénomène collectif.
+# - Partie globale (df)
 # - Aucune nouvelle importation ici.
 # ============================================================
 
 #%% =========================
-# 6A) SPIRALE CULPABILITÉ : influence réseaux vs culpabilité (couleur = fast fashion)
+# 6A) Helpers robustes (échelles 1–10)
+# =========================
+def _to_scale_1_10(series: pd.Series) -> pd.Series:
+    """
+    Convertit une série vers une échelle 1–10 robuste :
+    - gère '7,5' (virgule FR)
+    - gère textes parasites
+    - clip [1,10]
+    - arrondi à l'entier le plus proche (Int64)
+    """
+    if series is None:
+        return pd.Series(dtype="Int64")
+    s = series.copy()
+    # si jamais c'est un DataFrame (cas de colonnes dupliquées mal gérées)
+    if isinstance(s, pd.DataFrame):
+        s = s.bfill(axis=1).iloc[:, 0]
+    s = s.astype(str).str.replace(",", ".", regex=False).str.strip()
+    s = pd.to_numeric(s, errors="coerce")
+    s = s.clip(1, 10)
+    s = s.round().astype("Int64")
+    return s
+
+def _ff_binary(series: pd.Series) -> pd.Series:
+    """Fast fashion Oui/Non -> 1/0 (Int64), NaN sinon."""
+    if series is None:
+        return pd.Series(dtype="Int64")
+    s = series.copy()
+    if isinstance(s, pd.DataFrame):
+        s = s.bfill(axis=1).iloc[:, 0]
+    txt = s.astype(str).str.lower().str.strip()
+    out = pd.Series(np.nan, index=txt.index, dtype="float")
+    out[txt.str.contains(r"\boui\b", na=False)] = 1
+    out[txt.str.contains(r"\bnon\b", na=False)] = 0
+    return out.astype("Int64")
+
+def _counts_1_10(s_int: pd.Series) -> pd.Series:
+    """Retourne counts sur 1..10, même si des valeurs manquent."""
+    vc = s_int.dropna().astype(int).value_counts().sort_index()
+    return vc.reindex(range(1, 11), fill_value=0)
+
+#%% =========================
+# 6B) Réseaux : distribution de l'influence (barres 1..10)
+# =========================
+req = ["Influence_Reseaux"]
+if all(c in df.columns for c in req):
+    d = df.copy()
+    infl_rs = _to_scale_1_10(d["Influence_Reseaux"])
+    counts = _counts_1_10(infl_rs)
+
+    plt.figure(figsize=(10, 5))
+    plt.bar(counts.index.astype(str), counts.values, edgecolor="black")
+    plt.title("Réseaux sociaux : distribution de l'influence déclarée (1–10)", fontweight="bold")
+    plt.xlabel("Influence des réseaux sociaux (1–10)")
+    plt.ylabel("Nombre de répondants")
+    export_png(FIG_DIR / "reseaux_dist_influence.png")
+else:
+    warnings.warn("Réseaux sociaux (6B) ignoré : colonne Influence_Reseaux manquante.")
+
+#%% =========================
+# 6C) Réseaux vs Tendances : relation (hexbin, plus lisible qu'un scatter bruité)
+# =========================
+req = ["Influence_Reseaux", "Influence_Tendances"]
+if all(c in df.columns for c in req):
+    d = df.copy()
+    x = _to_scale_1_10(d["Influence_Reseaux"]).astype("float")
+    y = _to_scale_1_10(d["Influence_Tendances"]).astype("float")
+    dd = pd.DataFrame({"x": x, "y": y}).dropna()
+
+    if len(dd) >= 30:
+        plt.figure(figsize=(10, 6))
+        hb = plt.hexbin(dd["x"], dd["y"], gridsize=12, cmap=CERULEAN_CMAP, mincnt=1)
+        cb = plt.colorbar(hb)
+        cb.set_label("Densité (nombre de réponses)")
+        plt.xlim(1, 10); plt.ylim(1, 10)
+        plt.xlabel("Influence réseaux (1–10)")
+        plt.ylabel("Influence des tendances (1–10)")
+        plt.title("Réseaux sociaux vs tendances : densité des réponses", fontweight="bold")
+        export_png(FIG_DIR / "reseaux_influence_vs_tendances.png")
+    else:
+        warnings.warn("Réseaux sociaux (6C) ignoré : pas assez de données.")
+else:
+    warnings.warn("Réseaux sociaux (6C) ignoré : colonnes manquantes.")
+
+#%% =========================
+# 6D) Réseaux → culpabilité : comparaison Fast Fashion Oui/Non (boxplot)
 # =========================
 req = ["Influence_Reseaux", "Sentiment_Culpabilite", "Utilise_FastFashion"]
 if all(c in df.columns for c in req):
-    d = df.dropna(subset=req).copy()
-    d["FF_Oui"] = d["Utilise_FastFashion"].astype(str).str.contains("oui", case=False, na=False).astype(int)
+    d = df.copy()
+    infl_rs = _to_scale_1_10(d["Influence_Reseaux"]).astype("float")
+    culp = _to_scale_1_10(d["Sentiment_Culpabilite"]).astype("float")
+    ff = _ff_binary(d["Utilise_FastFashion"])
 
-    plt.figure(figsize=(10, 6))
-    plt.scatter(
-        d["Influence_Reseaux"],
-        d["Sentiment_Culpabilite"],
-        c=d["FF_Oui"],
-        cmap="coolwarm",
-        alpha=0.55
-    )
-    plt.title("Spirale de la culpabilité : Réseaux sociaux vs Culpabilité (couleur = FF)", fontweight="bold")
-    plt.xlabel("Influence réseaux (1–10)")
-    plt.ylabel("Culpabilité (1–10)")
-    plt.grid(True, linestyle="--", alpha=0.3)
-    export_png(FIG_DIR / "spirale_culpabilite_reseaux.png")
-    print("OK - Export : reports/figures/spirale_culpabilite_reseaux.png")
+    dd = pd.DataFrame({"infl_rs": infl_rs, "culp": culp, "ff": ff}).dropna(subset=["culp", "ff"])
+    if len(dd) >= 20 and dd["ff"].nunique() >= 2:
+        data = [
+            dd.loc[dd["ff"] == 1, "culp"].values,
+            dd.loc[dd["ff"] == 0, "culp"].values,
+        ]
+        plt.figure(figsize=(10, 5))
+        bp = plt.boxplot(
+            data,
+            labels=["Fast fashion : OUI", "Fast fashion : NON"],
+            patch_artist=True,
+            showfliers=False,
+            widths=0.55
+        )
+        bp["boxes"][0].set_facecolor(PALETTE["CERULEAN_DARK"])
+        bp["boxes"][0].set_edgecolor(PALETTE["CERULEAN_DARK"])
+        bp["boxes"][1].set_facecolor(PALETTE["CERULEAN_LIGHT"])
+        bp["boxes"][1].set_edgecolor(PALETTE["CERULEAN_DARK"])
+        for median in bp["medians"]:
+            median.set_color("white")
+            median.set_linewidth(2.2)
+
+        plt.ylim(1, 10)
+        plt.ylabel("Culpabilité (1–10)")
+        plt.title("Culpabilité selon la consommation de fast fashion", fontweight="bold")
+        export_png(FIG_DIR / "reseaux_culpabilite_fastfashion_boxplot.png")
+    else:
+        warnings.warn("Réseaux sociaux (6D) ignoré : pas assez de données / variance.")
 else:
-    warnings.warn("Spirale culpabilité ignorée (colonnes manquantes).")
+    warnings.warn("Réseaux sociaux (6D) ignoré : colonnes manquantes.")
 
+#%% =========================
+# 6E) Probabilité de fast fashion selon l'influence réseaux (barres %)
+# =========================
+req = ["Influence_Reseaux", "Utilise_FastFashion"]
+if all(c in df.columns for c in req):
+    d = df.copy()
+    infl_rs = _to_scale_1_10(d["Influence_Reseaux"]).astype("float")
+    ff = _ff_binary(d["Utilise_FastFashion"]).astype("float")
 
+    dd = pd.DataFrame({"infl_rs": infl_rs, "ff": ff}).dropna()
+    if len(dd) >= 30:
+        grp = dd.groupby("infl_rs")["ff"].mean().mul(100).reindex(range(1, 11))
+        plt.figure(figsize=(10, 5))
+        plt.bar(grp.index.astype(int).astype(str), grp.values, edgecolor="black")
+        plt.ylim(0, 100)
+        plt.xlabel("Influence réseaux (1–10)")
+        plt.ylabel("% déclarant consommer de la fast fashion")
+        plt.title("Réseaux sociaux : probabilité de fast fashion selon l’influence", fontweight="bold")
+        export_png(FIG_DIR / "reseaux_fastfashion_selon_influence.png")
+    else:
+        warnings.warn("Réseaux sociaux (6E) ignoré : pas assez de données.")
+else:
+    warnings.warn("Réseaux sociaux (6E) ignoré : colonnes manquantes.")
+
+#%% =========================
+# 6F) Carte des corrélations (mécanisme psycho-social)
+# =========================
+vars_corr = [
+    "Influence_Reseaux",
+    "Influence_Tendances",
+    "Pression_Sociale",
+    "Peur_Etre_Demode",
+    "Impact_Confiance",
+    "Sentiment_Culpabilite",
+]
+available_corr = [c for c in vars_corr if c in df.columns]
+if len(available_corr) >= 3:
+    d = df.copy()
+    mat = pd.DataFrame({c: _to_scale_1_10(d[c]).astype("float") for c in available_corr})
+    mat = mat.dropna()
+    if len(mat) >= 40:
+        corr = mat.corr()
+        plt.figure(figsize=(9, 6))
+        ax = sns.heatmap(
+            corr,
+            cmap=CERULEAN_CMAP,
+            vmin=-1, vmax=1,
+            linewidths=0.5, linecolor="white",
+            cbar_kws={"label": "Corrélation (Pearson)"}
+        )
+        ax.set_title("Réseaux sociaux : corrélations des variables psycho-sociales", fontweight="bold")
+        plt.xticks(rotation=30, ha="right")
+        plt.yticks(rotation=0)
+        export_png(FIG_DIR / "reseaux_heatmap_correlations.png")
+    else:
+        warnings.warn("Réseaux sociaux (6F) ignoré : pas assez de données.")
+else:
+    warnings.warn("Réseaux sociaux (6F) ignoré : variables insuffisantes.")
 
 # ============================================================
 # CHAPITRE 7 — ARBITRAGES (df_cluster)
