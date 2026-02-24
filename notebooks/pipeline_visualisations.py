@@ -580,25 +580,7 @@ else:
 # But : transformer “choix individuel” → “chemin structuré”
 # ============================================================
 
-#%% =========================
-# [2A] SPIRALE CULPABILITÉ : influence réseaux vs culpabilité, couleur FF
-# =========================
-req = ["Influence_Reseaux", "Sentiment_Culpabilite", "Utilise_FastFashion"]
-if all(c in df.columns for c in req):
-    d = df.dropna(subset=req).copy()
-    d["FF_Oui"] = d["Utilise_FastFashion"].astype(str).str.contains("oui", case=False, na=False).astype(int)
-
-    plt.figure(figsize=(10, 6))
-    plt.scatter(d["Influence_Reseaux"], d["Sentiment_Culpabilite"], c=d["FF_Oui"], cmap="coolwarm", alpha=0.55)
-    plt.title("Spirale de la culpabilité : Réseaux sociaux vs Culpabilité (couleur = FF)", fontweight="bold")
-    plt.xlabel("Influence réseaux (1–10)")
-    plt.ylabel("Culpabilité (1–10)")
-    plt.grid(True, linestyle="--", alpha=0.3)
-    export_png(FIG_DIR / "spirale_culpabilite_reseaux.png")
-else:
-    warnings.warn("Spirale culpabilité ignorée.")
-
-# [2B] Sankey 3 étapes : Fréquence → Canal → Fast fashion
+# [2A] Sankey 3 étapes : Fréquence → Canal → Fast fashion
 
 if all(c in df.columns for c in ["Frequence_Achat", "Canal_Achat", "Utilise_FastFashion"]):
     d0 = df[["Frequence_Achat", "Canal_Achat", "Utilise_FastFashion"]].copy()
@@ -647,7 +629,7 @@ if all(c in df.columns for c in ["Frequence_Achat", "Canal_Achat", "Utilise_Fast
     fig.write_html(OUT_DIR / "sankey_parcours_3_etapes.html", include_plotlyjs="cdn")
     print("OK - Sankey nettoyé : reports/sankey_parcours_3_etapes.html")
 
-# [2C] Sankey 4 étapes : + Destination fin de vie
+# [2B] Sankey 4 étapes : + Destination fin de vie
 if all(c in df.columns for c in ["Frequence_Achat", "Canal_Achat", "Utilise_FastFashion", "Destination_Fin_Vie"]):
     d0 = df[["Frequence_Achat", "Canal_Achat", "Utilise_FastFashion", "Destination_Fin_Vie"]].copy()
 
@@ -1817,7 +1799,6 @@ generated = [
     "reports/figures/paradoxe_par_canal.png",
     "reports/figures/boxplot_culpabilite_par_paradoxe.png",
     "reports/figures/heatmap_densite_ethique_culpabilite.png",
-    "reports/figures/spirale_culpabilite_reseaux.png",
     "reports/sankey_parcours_3_etapes.html",
     "reports/sankey_cycle_complet_4_etapes.html",
     "reports/figures/reseau_items_tendance.png",
