@@ -101,14 +101,10 @@ Ce script exécute un **pipeline analytique complet** :
 ### 1) Parcours & structure des comportements
 
 #### Sankey — parcours (3 étapes)
-<p align="center">
-  <img src="reports/figures/sankey_parcours_3_etapes.png" width="900" alt="Sankey - parcours 3 étapes">
-</p>
+👉 [Ouvrir la visualisation](reports/sankey_parcours_3_etapes.html)
 
 #### Sankey — cycle complet (4 étapes)
-<p align="center">
-  <img src="reports/figures/sankey_cycle_complet_4_etapes.png" width="900" alt="Sankey - cycle complet 4 étapes">
-</p>
+👉 [Ouvrir la visualisation](reports/sankey_cycle_complet_4_etapes.html)
 
 
 ### 2) Segmentation (K-means) & personas
