@@ -16,6 +16,8 @@ import pandas as pd
 
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
+from matplotlib.patches import Rectangle
+
 from cycler import cycler
 
 import plotly.graph_objects as go
@@ -23,6 +25,7 @@ import plotly.graph_objects as go
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.decomposition import PCA
 
 import seaborn as sns
 
@@ -769,11 +772,21 @@ else:
 # ============================================================
 # CHAPITRE 4 — PERSONAS (SEGMENTATION) : QUI SUBIT QUOI ?
 # But : passer du macro (société) au micro (profils)
+#
+# Pré-requis (déjà dans tes imports en haut du fichier) :
+# - import seaborn as sns
+# - from matplotlib.patches import Rectangle
+# - from sklearn.decomposition import PCA
+# - CERULEAN_CMAP, PALETTE, export_png, safe_to_numeric, StandardScaler, KMeans, RANDOM_STATE, OUT_DIR, FIG_DIR
 # ============================================================
+
 
 #%% =========================
 # 4A) CLUSTERING (K-MEANS) : ÉVALUATION + MODÈLE + TABLE PERSONAS
+# Objectif : construire df_cluster (base de toutes les visus Personas)
 # =========================
+
+df_cluster = None  # sécurité : défini même si clustering ignoré
 
 features = [
     "Age",
@@ -786,16 +799,19 @@ features = [
     "Importance_Tendance",
     "Importance_Confort",
 ]
+
 available = [c for c in features if c in df.columns]
+
 if len(available) >= 4:
     d = df[available].copy()
 
-    # conversions numeric déjà faites, mais on sécurise
+    # conversions numeric (sécurise)
     for c in available:
         d[c] = safe_to_numeric(d[c])
 
     # imputation simple
     d = d.fillna(d.median(numeric_only=True)).dropna()
+
     if len(d) >= 30:
         scaler = StandardScaler()
         X = scaler.fit_transform(d[available])
@@ -808,78 +824,70 @@ if len(available) >= 4:
 
         for k in K:
             km = KMeans(n_clusters=k, random_state=RANDOM_STATE, n_init=10)
-            labels = km.fit_predict(X)
+            labels_k = km.fit_predict(X)
             inertias.append(km.inertia_)
-            silhouettes.append(silhouette_score(X, labels))
-        
+            silhouettes.append(silhouette_score(X, labels_k))
+
         df_kmeans_eval = pd.DataFrame({
             "k": list(K),
             "inertia": inertias,
             "silhouette": silhouettes
         })
-
         df_kmeans_eval.to_csv(OUT_DIR / "kmeans_elbow_silhouette.csv", index=False)
         print("OK - Export : reports/kmeans_elbow_silhouette.csv")
 
+        # === MODÈLE FINAL (k=4) ===
         kmeans = KMeans(n_clusters=4, random_state=RANDOM_STATE, n_init=10)
         d["Cluster"] = kmeans.fit_predict(X)
 
-        # join contexte utile
-        ctx_cols = [c for c in ["Utilise_FastFashion", "Souci_Ethique", "Pression_Sociale", "Sentiment_Culpabilite", "Peur_Etre_Demode", "Type_Articles_Achetes", "Canal_Achat"] if c in df.columns]
+        # join contexte utile (variables “histoire”)
+        ctx_cols = [
+            c for c in [
+                "Utilise_FastFashion",
+                "Souci_Ethique",
+                "Pression_Sociale",
+                "Sentiment_Culpabilite",
+                "Peur_Etre_Demode",
+                "Type_Articles_Achetes",
+                "Canal_Achat",
+            ]
+            if c in df.columns
+        ]
         d_ctx = df.loc[d.index, ctx_cols].copy() if ctx_cols else pd.DataFrame(index=d.index)
+
         df_cluster = pd.concat([d, d_ctx], axis=1)
 
         df_cluster.to_csv(OUT_DIR / "personas_clusters.csv", index=False)
         print("OK - Export : reports/personas_clusters.csv")
 
-        # scatter matplotlib pur (âge vs réseaux)
-        if "Age" in df_cluster.columns and "Influence_Reseaux" in df_cluster.columns:
-            plt.figure(figsize=(10, 6))
-            plt.scatter(df_cluster["Age"], df_cluster["Influence_Reseaux"], c=df_cluster["Cluster"], cmap="tab10", alpha=0.75)
-            plt.title("Clusters (K-Means) : Âge vs Influence réseaux", fontweight="bold")
-            plt.xlabel("Âge"); plt.ylabel("Influence réseaux")
-            export_png(FIG_DIR / "personas_scatter.png")
-
-        # moyennes par cluster (table)
         means = df_cluster.groupby("Cluster")[available].mean().round(2)
         means.to_csv(OUT_DIR / "personas_moyennes_par_cluster.csv")
         print("OK - Export : reports/personas_moyennes_par_cluster.csv")
 
     else:
         warnings.warn("Clustering ignoré (pas assez de lignes après nettoyage).")
-        df_cluster = None
 else:
     warnings.warn("Clustering ignoré (pas assez de variables).")
-    df_cluster = None
+
 
 
 #%% =========================
-# 4B) WAFFLE CHART — RÉPARTITION PRINCIPALE DES CLUSTERS (À METTRE EN PREMIER)
+# 4B) WAFFLE CHART — RÉPARTITION PRINCIPALE DES CLUSTERS (INTRO PERSONAS)
+# Objectif : montrer “qui est majoritaire” avant de détailler les différences
 # =========================
-from matplotlib.patches import Rectangle
 
-# 1) Choisir la bonne table : df_cluster (prioritaire), sinon df si Cluster existe
-df_waffle = None
-if "df_cluster" in globals() and df_cluster is not None and "Cluster" in df_cluster.columns:
-    df_waffle = df_cluster.copy()
-elif "Cluster" in df.columns:
-    df_waffle = df.copy()
-
-if df_waffle is None:
-    warnings.warn("Waffle chart ignoré (colonne Cluster manquante).")
+if df_cluster is None or "Cluster" not in df_cluster.columns:
+    warnings.warn("Waffle chart ignoré (df_cluster / colonne Cluster manquante).")
 else:
-    d = df_waffle.dropna(subset=["Cluster"]).copy()
+    d_w = df_cluster.dropna(subset=["Cluster"]).copy()
+    d_w["Cluster"] = pd.to_numeric(d_w["Cluster"], errors="coerce")
+    d_w = d_w.dropna(subset=["Cluster"])
+    d_w["Cluster"] = d_w["Cluster"].astype(int)
 
-    # 2) Sécuriser : Cluster en int
-    d["Cluster"] = pd.to_numeric(d["Cluster"], errors="coerce")
-    d = d.dropna(subset=["Cluster"])
-    d["Cluster"] = d["Cluster"].astype(int)
-
-    counts = d["Cluster"].value_counts().sort_index()
+    counts = d_w["Cluster"].value_counts().sort_index()
     labels = [f"Cluster {c}" for c in counts.index]
     values = counts.values
 
-    # 3) Couleurs (TA palette existante)
     base_colors = [
         PALETTE["CERULEAN_DARK"],
         PALETTE["CERULEAN"],
@@ -889,7 +897,7 @@ else:
     ]
     colors = [base_colors[i % len(base_colors)] for i in range(len(values))]
 
-    # 4) Grille waffle (50x50 = 2500)
+    # grille waffle (50x50 = 2500)
     n_cols = 50
     n_rows = 50
     n_total = n_cols * n_rows
@@ -897,60 +905,49 @@ else:
     proportions = values / values.sum()
     squares = np.floor(proportions * n_total).astype(int)
 
-    # Ajustement pour atteindre exactement 2500 cases
+    # ajuster pour atteindre exactement 2500 cases
     remainder = n_total - squares.sum()
     if remainder > 0:
-        order = np.argsort(-(proportions * n_total - squares))  # plus grands restes
+        order = np.argsort(-(proportions * n_total - squares))
         for i in order[:remainder]:
             squares[i] += 1
 
-    # 5) Construire la grille (liste de catégories)
+    # construire la grille
     grid = []
     for i, c in enumerate(squares):
         grid += [i] * int(c)
 
-    # (sécurité)
     grid = grid[:n_total]
     if len(grid) < n_total:
         grid += [len(values) - 1] * (n_total - len(grid))
 
-    # 6) Plot
     fig, ax = plt.subplots(figsize=(10, 10), facecolor="white")
     ax.set_facecolor("white")
 
-    # dessin des carrés (avec marges propres)
-    cell = 0.92  # espace entre carrés (plus premium)
+    cell = 0.92
     for i, cat in enumerate(grid):
         row = i // n_cols
         col = i % n_cols
-
-        # origine en bas à gauche
         x = col
         y = (n_rows - 1 - row)
-
         rect = Rectangle((x, y), cell, cell, facecolor=colors[cat], edgecolor="white", linewidth=0.4)
         ax.add_patch(rect)
 
-    # marges visuelles (respiration)
     ax.set_xlim(-1.5, n_cols + 1.5)
     ax.set_ylim(-8, n_rows + 3.5)
     ax.axis("off")
 
-    # titre
     ax.text(
         0, n_rows + 2.2,
         "Typologie des consommateurs de mode (Waffle chart)",
         fontsize=16, fontweight="bold", color=PALETTE["CERULEAN_DARK"]
     )
-
-    # sous-titre (optionnel mais “académique”)
     ax.text(
         0, n_rows + 1.2,
-        f"{len(d)} répondants — 1 carré ≈ {max(1, int(round(len(d) / n_total)))} répondant(s)",
+        f"{len(d_w)} répondants — 1 carré ≈ {max(1, int(round(len(d_w) / n_total)))} répondant(s)",
         fontsize=10, color=PALETTE["NAVY"]
     )
 
-    # légende éditoriale (une ligne par cluster)
     y0 = -2.5
     for i, (lab, val) in enumerate(zip(labels, values)):
         ax.add_patch(Rectangle((0, y0 - i*1.2), 1.2, 0.7, facecolor=colors[i], edgecolor="none"))
@@ -961,72 +958,145 @@ else:
         )
 
     export_png(FIG_DIR / "waffle_clusters_typologie.png")
-    print("OK - Waffle exporté : reports/figures/waffle_clusters_typologie.png")
+    print("OK - Export : reports/figures/waffle_clusters_typologie.png")
+
 
 
 #%% =========================
-# 4C) HEATMAP — UNIFORMISATION : % ADOPTION DES ITEMS PAR CLUSTER
+# 4C) PCA 2D — SÉPARATION DES PERSONAS (MEILLEUR QUE ÂGE vs RÉSEAUX)
+# Objectif : visualiser la séparation basée sur les 9 variables utilisées par K-Means
+# =========================
+
+if df_cluster is None:
+    warnings.warn("PCA 2D ignorée (df_cluster manquant).")
+else:
+    # Refaire la matrice X sur les mêmes lignes que df_cluster (cohérent)
+    d_pca = df_cluster[available].copy()
+    for c in available:
+        d_pca[c] = safe_to_numeric(d_pca[c])
+    d_pca = d_pca.fillna(d_pca.median(numeric_only=True)).dropna()
+
+    # Standardisation identique
+    X_pca = StandardScaler().fit_transform(d_pca[available])
+
+    pca = PCA(n_components=2, random_state=RANDOM_STATE)
+    Z = pca.fit_transform(X_pca)
+
+    z_df = pd.DataFrame(Z, columns=["PC1", "PC2"], index=d_pca.index)
+    z_df["Cluster"] = df_cluster.loc[d_pca.index, "Cluster"].astype(int)
+
+    centroids = z_df.groupby("Cluster")[["PC1", "PC2"]].mean()
+
+    plt.figure(figsize=(10, 6))
+    plt.scatter(
+        z_df["PC1"], z_df["PC2"],
+        c=z_df["Cluster"],
+        cmap="tab10",
+        alpha=0.55,
+        s=35,
+        edgecolor="none"
+    )
+    plt.scatter(
+        centroids["PC1"], centroids["PC2"],
+        c=centroids.index,
+        cmap="tab10",
+        s=240,
+        marker="X",
+        edgecolor="black",
+        linewidth=1.2
+    )
+
+    var1 = pca.explained_variance_ratio_[0] * 100
+    var2 = pca.explained_variance_ratio_[1] * 100
+
+    plt.title(f"Personas (PCA) : projection 2D — PC1 {var1:.1f}% / PC2 {var2:.1f}%", fontweight="bold")
+    plt.xlabel("PC1")
+    plt.ylabel("PC2")
+    plt.grid(True, linestyle="--", alpha=0.25)
+
+    export_png(FIG_DIR / "personas_pca_2d.png")
+    print("OK - Export : reports/figures/personas_pca_2d.png")
+
+
+
+#%% =========================
+# 4D) HEATMAP — UNIFORMISATION : % ADOPTION DES ITEMS PAR CLUSTER
+# Objectif : montrer la standardisation des tendances par profil
 # =========================
 
 if df_cluster is not None and "Type_Articles_Achetes" in df_cluster.columns:
     items = df_cluster["Type_Articles_Achetes"].dropna().astype(str)
     dummies = items.str.get_dummies(sep=";")
+    dummies.columns = [c.strip() for c in dummies.columns]
 
     if dummies.shape[1] >= 1:
         temp = pd.concat([df_cluster["Cluster"], dummies], axis=1).fillna(0)
-        pct = temp.groupby("Cluster").mean() * 100
+        pct = temp.groupby("Cluster").mean(numeric_only=True) * 100
 
         plt.figure(figsize=(14, 6))
         ax = sns.heatmap(
             pct,
-            cmap=CERULEAN_CMAP,   # ← reutiliza o colormap global
-            vmin=0,
-            vmax=100,
+            cmap=CERULEAN_CMAP,
+            vmin=0, vmax=100,
             linewidths=0.5,
             linecolor="white",
             cbar_kws={"label": "% d'adoption"}
         )
-
-        ax.set_title(
-            "Uniformisation : articles tendance par cluster (% adoption)",
-            fontweight="bold"
-        )
+        ax.set_title("Uniformisation : articles tendance par cluster (% adoption)", fontweight="bold")
         ax.set_xlabel("")
         ax.set_ylabel("")
         plt.xticks(rotation=30, ha="right")
         plt.yticks(rotation=0)
 
         export_png(FIG_DIR / "heatmap_items_par_cluster.png")
-
+        print("OK - Export : reports/figures/heatmap_items_par_cluster.png")
     else:
         warnings.warn("Heatmap items ignorée (pas d'items).")
 else:
     warnings.warn("Heatmap items ignorée (df_cluster ou colonne manquante).")
 
-#%% =========================
-# 4D) OBSOLESCENCE PSYCHOLOGIQUE — PEUR D’ÊTRE DÉMODÉ PAR CLUSTER
-# =========================
-if df_cluster is not None and "Peur_Etre_Demode" in df_cluster.columns:
-    d = df_cluster.dropna(subset=["Peur_Etre_Demode"]).copy()
-    grp = d.groupby("Cluster")["Peur_Etre_Demode"].mean().sort_index()
-    plt.figure(figsize=(8, 5))
-    plt.bar([f"Cluster {i}" for i in grp.index], grp.values, edgecolor="black")
-    plt.ylim(1, 5)
-    plt.title("Obsolescence psychologique : rejet du 'démodé' (moyenne)", fontweight="bold")
-    plt.ylabel("Niveau (1=Jamais, 5=Toujours)")
-    export_png(FIG_DIR / "obsolescence_psy_par_cluster.png")
-else:
-    warnings.warn("Obsolescence psycho ignorée.")
+
 
 #%% =========================
-# 4E) FAST FASHION PAR CLUSTER — % OUI/NON (TABLE + BARRES EMPILÉES)
+# 4E) OBSOLESCENCE PSYCHOLOGIQUE — PEUR D’ÊTRE DÉMODÉ PAR CLUSTER
+# Objectif : mesurer la pression sociale (rejet du “plus à la mode”) par persona
 # =========================
+
+if df_cluster is not None and "Peur_Etre_Demode" in df_cluster.columns:
+    d_obs = df_cluster.dropna(subset=["Peur_Etre_Demode"]).copy()
+    d_obs["Peur_Etre_Demode"] = pd.to_numeric(d_obs["Peur_Etre_Demode"], errors="coerce")
+    d_obs = d_obs.dropna(subset=["Peur_Etre_Demode"])
+
+    if len(d_obs) >= 10:
+        grp = d_obs.groupby("Cluster")["Peur_Etre_Demode"].mean().sort_index()
+
+        plt.figure(figsize=(8, 5))
+        plt.bar([f"Cluster {i}" for i in grp.index], grp.values, edgecolor="black")
+        plt.ylim(1, 5)
+        plt.title("Obsolescence psychologique : rejet du 'démodé' (moyenne)", fontweight="bold")
+        plt.ylabel("Niveau (1=Jamais, 5=Toujours)")
+
+        export_png(FIG_DIR / "obsolescence_psy_par_cluster.png")
+        print("OK - Export : reports/figures/obsolescence_psy_par_cluster.png")
+    else:
+        warnings.warn("Obsolescence psycho ignorée (pas assez de données).")
+else:
+    warnings.warn("Obsolescence psycho ignorée (df_cluster / colonne manquante).")
+
+
+
+#%% =========================
+# 4F) FAST FASHION PAR CLUSTER — % OUI/NON (TABLE + BARRES EMPILÉES)
+# Objectif : relier “discours” et “pratique” selon les personas
+# =========================
+
 if df_cluster is not None and "Utilise_FastFashion" in df_cluster.columns:
     t = df_cluster[["Cluster", "Utilise_FastFashion"]].dropna(subset=["Cluster"]).copy()
     t["Utilise_FastFashion"] = t["Utilise_FastFashion"].fillna("Non spécifié").astype(str).str.strip()
 
     pivot = pd.crosstab(t["Cluster"], t["Utilise_FastFashion"], normalize="index") * 100
     pivot = pivot.round(1)
+
     pivot.to_csv(OUT_DIR / "utilise_fastfashion_pct_par_cluster.csv", index=True)
     print("OK - Export : reports/utilise_fastfashion_pct_par_cluster.csv")
 
@@ -1040,34 +1110,59 @@ if df_cluster is not None and "Utilise_FastFashion" in df_cluster.columns:
     plt.xlabel("Cluster")
     plt.ylabel("%")
     plt.legend(loc="upper right")
+
     export_png(FIG_DIR / "fastfashion_pct_par_cluster.png")
+    print("OK - Export : reports/figures/fastfashion_pct_par_cluster.png")
 else:
     warnings.warn("Fast fashion par cluster ignoré (df_cluster / colonne manquante).")
 
 
+
 #%% =========================
-# 4F) CARTE DES RENONCEMENTS — ARBITRAGES MOYENS PAR CLUSTER
+# 4G) CARTE DES RENONCEMENTS — ARBITRAGES MOYENS PAR CLUSTER
+# Objectif : montrer que les “choix” sont des compromis structurés (prix/qualité/tendance/éthique)
 # =========================
+
 if df_cluster is not None:
-    cols = [c for c in ["Importance_Prix", "Importance_Qualite", "Importance_Confort", "Souci_Ethique", "Importance_Tendance"] if c in df_cluster.columns]
+    cols = [
+        c for c in [
+            "Importance_Prix",
+            "Importance_Qualite",
+            "Importance_Confort",
+            "Souci_Ethique",
+            "Importance_Tendance",
+        ]
+        if c in df_cluster.columns
+    ]
+
     if len(cols) >= 3:
         grp = df_cluster.groupby("Cluster")[cols].mean().round(2)
 
         x = np.arange(len(cols))
         width = 0.18
+
         plt.figure(figsize=(12, 5))
         for i, cl in enumerate(grp.index):
-            plt.bar(x + (i - len(grp.index)/2)*width + width/2, grp.loc[cl].values, width=width, edgecolor="black", label=f"Cluster {cl}")
+            plt.bar(
+                x + (i - len(grp.index)/2)*width + width/2,
+                grp.loc[cl].values,
+                width=width,
+                edgecolor="black",
+                label=f"Cluster {cl}"
+            )
 
         plt.xticks(x, cols, rotation=15, ha="right")
         plt.ylim(0, 10.5)
         plt.title("Carte des renoncements : arbitrages moyens par cluster", fontweight="bold")
         plt.ylabel("Niveau moyen (1–10)")
         plt.legend()
+
         export_png(FIG_DIR / "carte_renoncements_par_cluster.png")
+        print("OK - Export : reports/figures/carte_renoncements_par_cluster.png")
     else:
         warnings.warn("Carte des renoncements ignorée (colonnes insuffisantes).")
-
+else:
+    warnings.warn("Carte des renoncements ignorée (df_cluster manquant).")
 
 
 # ============================================================
