@@ -1,4 +1,4 @@
-# Analyse des comportements de consommation de mode
+# Le céruléen n’est jamais “juste du bleu” : comment l’industrie de la mode façonne nos choix et notre rapport à nous-mêmes
 
 Explorer la mode comme un système de données : comportements d’achat, tensions éthiques, pression sociale et segmentation des profils consommateurs.
 
